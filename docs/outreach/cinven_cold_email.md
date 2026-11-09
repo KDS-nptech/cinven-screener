@@ -1,8 +1,8 @@
 # Cinven email to Samy Jazaerli
 
-Drafted 9 November 2026 from the top-30 review (docs/qa/top30_review.md). Samy Jazaerli is a Senior Principal in Cinven's Financial Services team in London; Steve Taylor (Managing Partner, Geodesic Solutions) introduced Kyle to him in October 2026. Replace the bracketed fields, check each figure against the company page before sending, and share the site link first (the published page is private until shared).
+Drafted 9 November 2026 from the top-30 review (docs/qa/top30_review.md). Samy Jazaerli is a Senior Principal in Cinven's Financial Services team in London; Steve Taylor (Managing Partner, Geodesic Solutions) introduced Kyle to him in October 2026. All eight picks were checked against the company pages on 9 November. The site link is private until Kyle sets the artifact's General access to "Anyone with the link".
 
-Picks come from the 91 companies ranked after the hand review. Figures are from the latest accounts at Companies House; Mattioli Woods' and Evolution Money's were read from a PDF by a model and carry a ~. Financial Services is the thinnest sector in this build (2 of 91 ranked), and the email says so plainly because Samy sits on that team.
+Picks come from the 91 companies ranked after the hand review. Figures are from the latest accounts at Companies House; Mattioli Woods' and Evolution Money's were read from a PDF by a model and checked by eye against the filed pages on 9 November (revenue £134,198k and turnover £55,827,874). Financial Services is the thinnest sector in this build (2 of 91 ranked), and the email says so plainly because Samy sits on that team.
 
 Reserves if a pick drops out: Lofthouse of Fleetwood (Fisherman's Friend, family-owned), AESSEAL (mechanical seals, founder-owned), Kite Packaging, Turners (Soham), Oakland Care (Synova).
 
@@ -22,12 +22,12 @@ It reads every active UK company filing full or group accounts on Companies Hous
 4. Wernick Group (Wickford): modular building and site accommodation hire; operating profit of £40M in 2025; owned by three members of the Wernick family.
 5. Swanton Care (Coventry): specialist care; turnover of £136M, up 39%, in 2025; Apposite Capital has been on the register for nine years.
 6. Wilson Power Solutions (Leeds): power and distribution transformers; turnover of £86M and EBITDA of ~£19M in the period to March 2025; family-owned.
-7. Mattioli Woods (Leicester): wealth management and pensions; turnover of ~£134M in the year to May 2025; Pollen Street Capital took it private in 2024.
-8. Evolution Money (Manchester): second-charge mortgage lender; turnover of ~£56M in the year to March 2026; founder-owned.
+7. Mattioli Woods (Leicester): wealth management and pensions; turnover of £134M in the year to May 2025; Pollen Street Capital took it private in 2024.
+8. Evolution Money (Manchester): second-charge mortgage lender; turnover of £56M in the year to March 2026; founder-owned.
 
-One honest gap: only two of the 91 are in Financial Services, because most UK financial groups at this size file scanned accounts that the screener has only begun to read. The site has the evidence behind each company, plus a back-test on Cinven's UK entries that shows where the approach falls short: [link to the site]
+One honest gap: only two of the 91 are in Financial Services, because most UK financial groups at this size file scanned accounts that the screener has only begun to read. The site has the evidence behind each company, plus a back-test on Cinven's UK entries that shows where the approach falls short: https://claude.ai/artifact/7tEbHt4kox8Tc3viFCKUdo
 
-I'm applying for private equity internships in London for summer 2027 and would be grateful for 20 minutes, in person or by phone, to hear what you would change. I'm in London until [date you leave] and happy to come to you.
+I'm applying for private equity internships in London for summer 2027 and would be grateful for 20 minutes, in person or by phone, to hear what you would change. I'm in London until 19 December and happy to come to you.
 
 Best,
 Kyle D'Souza
@@ -43,9 +43,9 @@ Steve Taylor introduced us in October. I'm a Duke junior spending this term at K
 
 Four from the ranked list: Psychiatry UK (Queen's Park Equity, turnover £160M over 18 months), Wood Mackenzie (Veritas Capital since 2023, turnover £299M), Uniserve (one owner aged about 63, operating profit £26M) and Wernick Group (family-owned, operating profit £40M).
 
-The site with the evidence and a back-test on Cinven's UK deals: [link to the site]
+The site with the evidence and a back-test on Cinven's UK deals: https://claude.ai/artifact/7tEbHt4kox8Tc3viFCKUdo
 
-Would you have 20 minutes before [date you leave London] to tell me what you would change? I'm applying for London private equity internships for summer 2027.
+Would you have 20 minutes before 19 December to tell me what you would change? I'm applying for London private equity internships for summer 2027.
 
 Best,
 Kyle D'Souza
