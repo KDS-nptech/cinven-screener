@@ -10,7 +10,7 @@ Build a sourcing screener for Cinven (London) on public data, the same architect
 - Bug fixed 22:15: consolidated PDF figures were dropped in the wide build; at-scale actionable heads went 180 to 412.
 - QA (checker Claude Sonnet 5.5): PDF reader 28 of 28 on turnover, 26 of 28 on operating profit; labels 80% agree on 40; rubric 85% within one point on 98 sub-scores, pipeline ~9 points more generous.
 - Data: document API ~4,500 documents read (2,400 general GROUP pass, 905 FS-coded, plus the resumed general pass); ~3,300 GROUP-account actionable heads unread. Websites: 1,783 searched, model-suggested pass verified 58 at-scale sites; 114 at-scale companies still have none.
-- Artifact: https://claude.ai/artifact/7tEbHt4kox8Tc3viFCKUdo (private). Email draft: docs/outreach/cinven_cold_email.md.
+- Public site: https://kds-nptech.github.io/cinven-screener/ (repo public since 9 Nov 22:50; steve98654 invited as collaborator). Artifact: https://claude.ai/artifact/7tEbHt4kox8Tc3viFCKUdo (private). Email draft: docs/outreach/cinven_cold_email.md.
 
 ## Next
 1. Resume the general document pass (4 shards, GROUP then FULL), then `--build-wide`, universe, routes, discovery for new at-scale names, `src.enrich.suggest`, classify, rubric, `scripts/score_tail.sh`; review new ranked names before republishing.
