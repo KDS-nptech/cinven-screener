@@ -1,47 +1,97 @@
-# 03: Cinven UK deals and Companies House records (PARTIAL, in progress)
+# 03: Cinven UK deals and Companies House records
 
-Status: research started 2026-11-09 14:45 UTC, this version 15:08 UTC. Overwritten every 10 to 15 minutes. Companion JSON: 03_uk_deals_companies_house.json. Raw pages: raw/03/.
+Status: v6, written 2026-11-09 17:45 UTC after a 3-hour pass. Companion JSON (machine-readable, same facts): 03_uk_deals_companies_house.json. Raw pages: raw/03/ (Cinven portfolio and press pages, Companies House API responses under profiles/, psc/, filings/, accounts PDFs and OCR text under docs/). Open items are listed at the end.
 
-## Conclusion (draft)
-Cinven's own portfolio pages, filtered by region United Kingdom (raw/03/cinven_portfolio_uk_realised.html and cinven_portfolio_uk.html), give 18 realised and 10 current UK-tagged investments. Of these, 20 were entered in 2010 or later: Enserve (Dec 2010), Guardian Financial Services (Nov 2011), CPA Global (Mar 2012, Jersey registered), AMCo (Aug 2012), HEG (Aug 2013), Northgate Public Services (Dec 2014), Premium Credit (Feb 2015), Kurt Geiger (Feb 2016), NewDay (Jan 2017), JLA (Aug 2018), LGC (Apr 2020), Compre (Apr 2021, SFF), Miller (Mar 2021 to Mar 2024), True Potential (Jan 2022), IFGL (Jan 2023, Isle of Man, SFF), Policy Expert (Jan 2025, SFF), Grant Thornton UK (Apr 2025, tagged under the US GT Advisors deal), Smart Communications (Oct 2025), Objectway (Nov 2025, Milan headquartered but UK-tagged), Flint Global (Dec 2025). Four pre-2010 entries were exited in the window: Spire Healthcare (IPO Jul 2014, final sale Jul 2015), Gondola (Jan 2015), Partnership Assurance (IPO Jun 2013, sell-down to Jan 2018), Partnerships in Care (Jun 2014). Hobbycraft is not a Cinven investment (Bridgepoint). Domia Group is French and Taxwell is US; both rejected.
+## Conclusion
 
-Size bands, deal-type mix, PSC and pre-deal accounts: pending (Companies House profile, PSC and filing-history pulls in progress).
+**Count:** Cinven's own portfolio pages, filtered to the United Kingdom region, give 20 UK-tagged platform investments entered from 2010 to November 2026 (18 realised and current UK-tagged companies, plus Grant Thornton UK and Objectway which Cinven tags differently but are in the brief). Of the 20, only 7 are clean UK operating-company buyouts of the kind the screener targets: Kurt Geiger (2015), JLA (2018), True Potential (2021), Flint Global (2025), AMCo (2012), HEG (2013) and Northgate Public Services (2014). The other 13 are flagged as outliers: 7 Financial Services deals that are lenders, insurers, an LLP broker or an MGA (Premium Credit, NewDay, Guardian, Compre, Miller, IFGL, Policy Expert), 2 non-UK registered groups (CPA Global in Jersey, Objectway in Milan), 1 mega-deal (LGC, £3B EV), 1 partnership carve-out routed through a US platform (Grant Thornton UK), 1 public-to-private that ended in a break-up (Enserve) and 1 ~£1.4B global SaaS whose UK filing covers only part of the group (Smart Communications). Four pre-2010 entries were exited in the window (Spire, Gondola, Partnership Assurance, Partnerships in Care) and are listed separately.
 
-## Companies House numbers located so far
-| Company | Operating entity | Number | Inc. | Vehicles found |
-|---|---|---|---|---|
-| Premium Credit | PREMIUM CREDIT LIMITED | 02015200 | 1986-04-29 | pending |
-| Kurt Geiger | KURT GEIGER LIMITED | 00968046 | 1969-12-10 | pending |
-| NewDay | NEWDAY LTD | 07297722 | 2010-06-28 | NEWDAY GROUP UK LIMITED 10438970 (2016-10-20), NEWDAY BONDCO LIMITED 10466251 (2016-11-07), NEWDAY GROUP LIMITED 13665450 (2021-10-06) |
-| JLA | JLA LIMITED | 01094178 | 1973-02-05 | JLA HOLDCO LIMITED 11360209 (2018-05-14) |
-| LGC | LGC SCIENCE GROUP LIMITED | 07110945 | 2009-12-22 | LGC SCIENCE GROUP HOLDINGS LIMITED 12315541 (2019-11-14), LGC SCIENCE CORPORATION LIMITED 12319244 (2019-11-18) |
-| Compre | COMPRE HOLDINGS LIMITED | 02579785 | 1991-02-05 | pending |
-| Miller | MILLER INSURANCE SERVICES LLP | OC301468 | 2002-02-12 | MILLER INSURANCE HOLDINGS LIMITED 00830141 |
-| True Potential | TRUE POTENTIAL LLP | OC380771 | 2012-12-05 | KANE BIDCO LIMITED FC040927 (Jersey, 2022-01-21); TRUE POTENTIAL GROUP LIMITED 09917444 |
-| Guardian Financial Services | GUARDIAN ASSURANCE LIMITED | 00038921 | 1893-05-25 | pending |
-| Northgate Public Services | NORTHGATE PUBLIC SERVICES LIMITED | 09338960 | 2014-12-03 | pending |
-| HEG | HOST EUROPE GROUP LIMITED | 08509568 | 2013-04-30 | HOST EUROPE INVESTMENTS LIMITED 08615808 (2013-07-18) |
-| Enserve | MORFIND 2025 LIMITED (ex Spice plc, to verify) | 03250709 | 1996-09-17 | pending |
-| AMCo | MERCURY PHARMA GROUP LIMITED | 02330913 | 1988-12-23 | AMDIPHARM MERCURY UK LIMITED 08169596 (2012-08-06), AMDIPHARM MERCURY MIDCO UK LIMITED 08177295 (2012-08-13), AMDIPHARM MERCURY HOLDCO UK LIMITED 08189816 (2012-08-23); AMDIPHARM UK LIMITED 04606340 |
-| Policy Expert | QMETRIC GROUP LIMITED | 07151701 | 2010-02-09 | QMETRIC GROUP HOLDINGS LIMITED 06594543 |
-| Flint Global | FLINT GLOBAL LTD | 09766786 | 2015-09-08 | pending |
-| Grant Thornton UK | GRANT THORNTON UK LLP | OC307742 | 2004-04-24 | GRANT THORNTON UK ADVISORY & TAX LLP OC454533 (2024-11-15) |
-| Spire Healthcare | SPIRE HEALTHCARE GROUP PLC | 09084066 | 2014-06-12 | SPIRE HEALTHCARE LIMITED 01522532 |
-| Gondola | GONDOLA GROUP LIMITED | 05953163 | 2006-10-02 | n/a |
-| Partnership Assurance | PARTNERSHIP ASSURANCE GROUP LIMITED | 08419490 | 2013-02-26 | PARTNERSHIP LIFE ASSURANCE COMPANY LIMITED 05465261 |
-| Partnerships in Care | PARTNERSHIPS IN CARE LIMITED | 02622784 | 1991-06-21 | n/a |
-| Smart Communications | pending (no obvious match in CH search) | | | |
-| Objectway | OBJECTWAY LIMITED (UK subsidiary) | 02760212 | 1992-10-29 | parent is Italian |
-| IFGL | not on Companies House (Isle of Man) | | | |
-| CPA Global | not on Companies House (Jersey) | | | |
+**Size at entry, from the last accounts filed before announcement (GBP):** for the clean operating platforms with a UK filing: turnover £30.6M (Flint Global, FY2024), £117.8M (JLA group, FY Oct 2017), £181.0M (NPS division, FY Apr 2014), £184.9M (True Potential group, FY2020), £251.8M (Kurt Geiger, FY2014), ~£250M (AMCo combined, press); EBITDA £21.3M (Kurt Geiger), £35.5M (JLA), £42.0M (NPS), £74.0M (True Potential), ~£100M EBITA (AMCo); headcount 93 (Flint), 763 (JLA), 305 (True Potential), 1,805 (Kurt Geiger), ~2,050 (NPS). The flagship-fund operating deals therefore cluster at turnover ~£100M to £250M and EBITDA ~£20M to £75M, with Flint Global (Eighth Fund, 2025) a clear step down in size and LGC (£387M turnover, £106M EBITDA) a step up. Reported EVs for the clean set: ~£245M (Kurt Geiger), £438M (HEG), £462M (Premium Credit), £600M+ (JLA), £832M (AMCo).
 
-## Table
-(pending)
+**Deal-type mix (20 platforms):** 11 secondary buyouts from another fund (Kurt Geiger from Sycamore, JLA from Hg, LGC from KKR, Premium Credit from GTCR, NewDay from Värde, HEG from Montagu, Compre from CBPE, IFGL from Vitruvian, Smart Communications from Accel-KKR, Mercury Pharma from Hg, Policy Expert's 50% from ADIA); 5 primaries from founders, families or partners (Amdipharm, CPA Global, True Potential, Grant Thornton UK, Flint Global; Objectway is also founder-led); 3 carve-outs (Guardian from Aegon, NPS from Northgate Information Solutions, Miller from Willis Towers Watson); 1 public-to-private (Spice plc). Secondaries dominate: 11 of 20.
+
+**Sector mix:** Financial Services 10, Business Services 4, TMT 3, Healthcare 2, Consumer 1. Half the UK activity is the Financial Services team, much of it through the Strategic Financials Fund (Compre, Miller, IFGL, Policy Expert).
+
+**PSC before the deal:** the PSC register only starts in April 2016, so it covers 11 of the 20 deals. Of those, 3 had an individual founder or family as PSC of record immediately before Cinven: True Potential (David Harrison, 25 to 50%), Flint Global (Ed Richards and Simon Fraser 25 to 50% each until the 2021 GCP minority, then a PE bidco), and Grant Thornton UK (individual CEO registered with significant influence). Policy Expert's founder Philip James was PSC until ADIA bought him out in November 2023, fourteen months before Cinven. The other 7 had a fund or corporate vehicle as PSC (Hg, KKR, CBPE, WTW, Accel-KKR, ADIA, Värde era vehicles).
+
+**Companies House coverage:** 14 of the 20 have a UK filing from before the deal with usable P&L figures; 9 of those are group or group-head accounts. Six cannot be back-tested from Companies House at all (CPA Global, IFGL, Objectway are foreign; Guardian is an insurer; NewDay's and AMCo's UK filings are holding or service companies). Codename vehicle chains were recovered for 13 deals (Cilantro, Devon, Argon, Pomegranate, Mercury Aquisitions, Nemean, Wharfedale, Loire UK, Ben Nevis, Kane, Firebird, Pacioli UK, Fox UK).
+
+## Table: UK platforms 2010 to 2026
+
+| Platform | Entry (ann.) | Deal type, seller | Fund | EV £M | Rank number (group head before deal) | Pre-deal accounts: period, turnover, EBITDA or op. profit, staff | PSC before deal | Exit | Outlier |
+|---|---|---|---|---|---|---|---|---|---|
+| Enserve (Spice plc) | 2010-09 | P2P, listed shareholders | Fourth | 251 equity (70p/share) | 03250709 (Spice plc) | FY Apr 2010 group; not read | n/a (listed) | 2013 Inenco; 2016 remaining divisions | Yes: P2P, break-up |
+| Guardian Financial Services | 2011-08 | carve-out, Aegon | Fourth | ~275 (medium) | 00038921 | insurer, no turnover line | n/a; Aegon | 2016 Swiss Re Admin Re, £1.6B | Yes: life insurer |
+| CPA Global | 2012-02 | primary, founding IP law firms + ICG | Fourth | ~950 (medium) | none (Jersey) | n/a | n/a | 2017 Leonard Green, ~£2.4B | Yes: Jersey |
+| AMCo (Mercury Pharma + Amdipharm) | 2012-08 | secondary (Hg, £465M) + primary (Patel family, £367M) | Fourth | 832 | 02330913 (holding co only) | FY Mar 2012 holding co; press: combined revenue ~£250M, EBITA ~£100M | n/a; Hg and founders | 2015 Concordia, £2.3B | No |
+| HEG (Host Europe) | 2013-07 | secondary, Montagu | Fifth | 438 | 08509568 (ex Devon Bidco) | Montagu-era UK head not located | n/a; Montagu | 2017 GoDaddy, €1.69B | No |
+| Northgate Public Services | 2014-12 | carve-out, Northgate Information Solutions (KKR) | Fifth | undisclosed (~350 low) | 06442582 (parent group) | FY Apr 2014 division: £181.0M, EBITDA £42.0M, ~2,050 staff | n/a; KKR | 2018 NEC, £475M | No |
+| Premium Credit | 2015-01 | secondary, GTCR | Fifth | 462 | 02015200 | FY2013 full: £110.7M, op. profit £67.2M, 337 staff | n/a; GTCR (Mizzen) | 2022 TowerBrook, undisclosed | Yes: lender |
+| Kurt Geiger | 2015-12 | secondary, Sycamore | Fifth | ~245 (medium) | 00968046 | FY2014 full: £251.8M, EBITDA £21.3M, op. profit £11.2M, 1,805 staff | n/a; Sycamore (Jasper Footwear) | 2025 Steve Madden, £289M | No |
+| NewDay | 2016-10 | secondary, Värde (with CVC 50:50) | Sixth | ~1,000 (medium) | 07795882 (holding co) | FY2015: no UK consolidated accounts | Värde (pre-register) | partial: receivables to KKR Sep 2025; KKR now PSC | Yes: lender, club |
+| JLA | 2018-05 | secondary, Hg | Sixth | 600+ (medium) | 07195122 JLA Equityco (group) | FY Oct 2017 group: £117.8M, EBITDA £35.5M, op. profit £20.5M, 763 staff | Hg (Inhoco 3498 / JLA New Equityco Jersey) | current | No |
+| LGC | 2019-11 | secondary, KKR (with Astorg) | Seventh | 3,000 | 09903564 Teddington 3 (group) | FY Mar 2019 group: £387.5M, adj. EBITDA £106.1M, op. profit £35.4M, 2,805 staff | KKR (Teddington 3 / Figaro Topco) | current | Yes: mega-deal |
+| Compre | 2020-11 | secondary, CBPE (with BCI) | SFF | undisclosed | 02579785 (UK service co) | FY2019: £3.3M recharges; group in Malta | CBPE Capital VIII GP LP | current | Yes: SFF, insurer |
+| Miller | 2020-11 | carve-out, Willis Towers Watson (with GIC) | SFF | undisclosed | OC301468 LLP | FY2019 LLP: £150.3M, op. profit £67.3M before partner pay, 640 staff | Miller 2015 Ltd (WTW) | 2024 stake to GIC | Yes: SFF, LLP |
+| True Potential | 2021-09 | primary, Harrison family + FTV minority | Seventh | undisclosed (£1.6B to £2B low) | 09917444 (group) | FY2020 group: £184.9M, EBITDA £74.0M, op. profit £50.6M, 305 staff | David Harrison (founder) | current | No |
+| IFGL | 2022-02 | secondary, Vitruvian | SFF | ~450 (low) | none (Isle of Man) | n/a | n/a | current | Yes: IoM, insurer |
+| Policy Expert (QMetric) | 2024-09 | secondary 50%, ADIA | SFF | undisclosed | 06594543 (group) | FY Mar 2024 group: £157.4M, EBITDA £17.8M (underlying £27.0M), op. profit £7.6M, 814 staff | ADIA (founder Philip James until Nov 2023) | current | Yes: SFF, MGA, 50% |
+| Grant Thornton UK | 2024-11 | primary, LLP partners (via GT Advisors US, New Mountain) | Eighth | undisclosed | OC307742 LLP (group) | FY2023 group: £690.2M, op. profit £146.2M before partner pay, 5,336 staff + 225 members | individual CEO as PSC | current | Yes: partnership, US platform |
+| Smart Communications | 2025-08 | secondary, Accel-KKR (minority rollover) | Eighth | ~1,400 (medium) | 04303041 SmartComms SC (UK sub) | FY2024 full: £29.7M UK turnover, op. profit £29.1M incl. group recharges; group head not on CH | Platinum Newco I (Accel-KKR) | current | Yes: size, partial UK filing |
+| Objectway | 2025 | primary, founder | Eighth | undisclosed | 02760212 (UK sub) | n/a (Italian group) | n/a | current | Yes: Milan HQ |
+| Flint Global | 2025-12 | primary, founders + GCP minority | Eighth | undisclosed | 09766786 Flint Global Ltd (opco; head Project Spark Topco 13746076) | FY2024 full: £30.6M, op. profit £9.2M, 93 staff | Project Spark Bidco (GCP 25 to 50%); founders before 2021 | current | No |
+
+Pre-2010 entries exited in the window (all outliers, entry before 2010): Spire Healthcare (09084066; BUPA carve-out 2007, £1.44B; IPO Jul 2014, fully sold Jul 2015), Gondola Group (05953163; P2P 2006; break-up sales 2013 to 2015, ~£1.3B proceeds, 2.4x), Partnership Assurance (08419490; 2008; IPO Jun 2013, Just Group sell-down to Jan 2018), Partnerships in Care (02622784; 2005; sold to Acadia Jun 2014).
+
+Rejected: Hobbycraft (Bridgepoint, never Cinven), Domia Group (France), Taxwell (US), think-cell (Germany), Pivot (not on Cinven's list).
+
+## Vehicle chains recovered (Companies House)
+
+- **Enserve:** CILANTRO ACQUISITIONS LIMITED 07383194 (Bidco, inc 2010-09-21, now MORFIND 2024 LIMITED) over SPICE PLC 03250709 (now MORFIND 2025 LIMITED).
+- **AMCo:** AMDIPHARM MERCURY INTERNATIONAL LIMITED (Jersey, FC036896) over AMDIPHARM MERCURY HOLDCO UK 08189816 (2012-08-23), MIDCO UK 08177295 (2012-08-13), AMDIPHARM MERCURY UK 08169596 (Bidco, 2012-08-06) over MERCURY PHARMA GROUP 02330913 and AMDIPHARM UK 04606340.
+- **HEG:** DEVON MIDCO 08615808 (2013-07-18, now HOST EUROPE INVESTMENTS) over DEVON BIDCO 08509568 (2013-04-30, now HOST EUROPE GROUP LIMITED).
+- **NPS:** ARGON MIDCO 09338960 (2014-12-03, renamed NORTHGATE PUBLIC SERVICES LIMITED); PSC Cinven Limited to 2018-01-31 then Garden Private Holdings (NEC).
+- **Premium Credit:** POMEGRANATE MIDCO 09426317 (2015-02-06) over VENDCROWN 03208019 over PREMIUM CREDIT LIMITED 02015200; GTCR's MIZZEN BIDCO 08156446 and MEZZCO 08179245 before; TowerBrook's PLATINUM CREDIT BIDCO (Jersey) after.
+- **Kurt Geiger:** MERCURY AQUISITIONS LIMITED 09878664 (sic, Nov 2015) over JASPER FOOTWEAR 08794815 (Sycamore 2013) over KG GROUP HOLDINGS 06500942 over KURT GEIGER LIMITED 00968046.
+- **NewDay:** NEMEAN HOLDCO 10438970 (2016-10-20, now NEWDAY GROUP UK LIMITED; PSC Cinven Limited to 2026-02-18, then KKR & Co. Inc), NEWDAY BONDCO 10466251, NEWDAY GROUP LIMITED 13665450 (2021).
+- **JLA:** WHARFEDALE HOLDCO 11360209 (2018-05-14, now JLA HOLDCO LIMITED; PSC Cinven Limited) over the Hg-era chain JLA EQUITYCO 07195122, VANILLA GROUP 02566320, JLA LIMITED 01094178.
+- **LGC:** LOIRE UK MIDCO 1 12315384, MIDCO 2 12315457, MIDCO 3 12315541 (now LGC SCIENCE GROUP HOLDINGS, files group accounts), LOIRE UK BIDCO 12315743 (all 2019-11-14), LGC SCIENCE CORPORATION 12319244, over the KKR-era TEDDINGTON 3 / FIGARO BIDCO 09903564 and LGC SCIENCE GROUP LIMITED 07110945.
+- **Compre:** COMPRE (1) LIMITED 07255861 (PSC Cinven Partnership LLP from 2021-04-28; CBPE before) over COMPRE HOLDINGS 02579785; group head in Malta.
+- **Miller:** BEN NEVIS BIDCO 12956028 (2020-10-16) over MILLER INSURANCE SERVICES LLP OC301468 and MILLER INSURANCE HOLDINGS 00830141.
+- **True Potential:** KANE TOPCO FC040925, KANE MIDCO FC040926, KANE BIDCO FC040927 (Jersey, 2022-01-21) over TRUE POTENTIAL GROUP LIMITED 09917444 (ex FTV GALLEON 3) and TRUE POTENTIAL LLP OC380771.
+- **Policy Expert:** POLICY EXPERT HOLDINGS 15941358 over FIREBIRD MIDCO 15941270 over QMETRIC GROUP HOLDINGS 06594543 over QMETRIC GROUP LIMITED 07151701.
+- **Grant Thornton UK:** PACIOLI UK HOLDCO 16080698 and PACIOLI UK MIDCO 16080981 (2024-11-14) as PSC of GRANT THORNTON UK LLP OC307742 and GRANT THORNTON UK ADVISORY & TAX LLP OC454533 from 2025-04-15; PACIOLI UK GP 17366627 and PACIOLI BIDCO UK LP (2026).
+- **Smart Communications:** PLATINUM NEWCO II 10306186 over PLATINUM NEWCO I 09494909 over SMARTCOMMS SC LIMITED 04303041 (ex THUNDERHEAD LIMITED); Accel-KKR era chain, ultimate parent Platinum Topco Limited (not on CH); Cinven vehicle not yet on the register.
+- **Flint Global:** FOX UK BIDCO 16877557 (2025-11-27; PSC of Project Spark Topco from 2025-12-23) over PROJECT SPARK TOPCO 13746076, MIDCO 13746222, BIDCO 13746867 (2021-11-16, GCP era) over FLINT GLOBAL LTD 09766786.
 
 ## Back-test candidates
-(pending)
+
+Companies with a full pre-deal accounts filing on Companies House that the screener should have surfaced, with the number it should rank (the entity that filed the accounts the figures come from):
+
+1. **Kurt Geiger, 00968046 (KURT GEIGER LIMITED):** FY2014 full accounts filed 2015-10-04, ten weeks before the 14 Dec 2015 announcement. Turnover £251.8M, EBITDA £21.3M, operating profit £11.2M, 1,805 staff, SIC 47721. The cleanest consumer test.
+2. **JLA, 07195122 (JLA EQUITYCO LIMITED):** FY Oct 2017 consolidated accounts filed 2018-07-04, seven weeks after the 14 May 2018 announcement (the FY Oct 2016 group accounts, filed 2017-08-07, were on the register at announcement). Revenue £117.8M, EBITDA £35.5M, operating profit £20.5M, 763 staff. The group head is now dormant, so a screener run today would need to rank JLA HOLDCO LIMITED 11360209 (Cinven's holdco) or JLA LIMITED 01094178 (SIC 46690) instead.
+3. **True Potential, 09917444 (TRUE POTENTIAL GROUP LIMITED):** FY2020 consolidated accounts filed 2021-03-26, six months before the 9 Sep 2021 announcement. Turnover £184.9M, EBITDA £74.0M, operating profit £50.6M, 305 staff. SIC 70221 (head office), founder as PSC: the best test of a primary deal and of not excluding holding-company SIC codes.
+4. **LGC, 09903564 (TEDDINGTON 3 LIMITED, then LGC SCIENCE GROUP HOLDINGS LIMITED):** FY Mar 2019 consolidated accounts filed 2019-12-13, three weeks after the 21 Nov 2019 announcement (the FY Mar 2018 accounts, filed 2018-12-20, were the ones on the register at announcement). Revenue £387.5M, adjusted EBITDA £106.1M, operating profit £35.4M, 2,805 staff. Upper-bound test; flagged as a mega-deal.
+5. **Flint Global, 09766786 (FLINT GLOBAL LTD):** FY2024 full accounts filed 2025-10-04, two months before the 8 Dec 2025 announcement. Turnover £30.6M, operating profit £9.2M, 93 staff, SIC 70229. Lower-bound test for the Eighth Fund; the group head PROJECT SPARK TOPCO 13746076 filed its own accounts too.
+6. **Policy Expert, 06594543 (QMETRIC GROUP HOLDINGS LIMITED):** FY Mar 2024 consolidated accounts filed 2024-10-22 (the FY Mar 2023 accounts were on the register at the 11 Sep 2024 announcement). Turnover £157.4M, EBITDA £17.8M, operating profit £7.6M, 814 staff. SFF and MGA, so an outlier, but it tests whether a 64209 holding company filing group accounts survives the exclusion of its 65120 operating subsidiary.
+7. **Premium Credit, 02015200 (PREMIUM CREDIT LIMITED):** FY2013 full accounts filed 2014-08-05. Turnover £110.7M, operating profit £67.2M, 337 staff, SIC 64921. Use to check deliberate handling of lenders, not for size calibration.
+8. **Miller, OC301468 (MILLER INSURANCE SERVICES LLP):** FY2019 full LLP accounts filed 2020-09-23. Turnover £150.3M, operating profit £67.3M before members' pay, 640 staff. Tests LLP coverage (no SIC codes on LLP records).
+9. **Grant Thornton UK, OC307742 (GRANT THORNTON UK LLP):** FY2023 group accounts filed 2024-04-19. Revenue £690.2M, operating profit £146.2M before members' pay, 5,336 staff. Structural outlier; upper-bound LLP test.
+10. **Northgate Public Services, 06442582 (NORTHGATE INFORMATION SOLUTIONS LIMITED):** negative control. NPS had no standalone filing before the carve-out (FY Apr 2014 division revenue £181.0M, EBITDA £42.0M per Cinven); the screener could only have found the KKR-owned parent.
+
+Not back-testable from Companies House: CPA Global (Jersey), IFGL (Isle of Man), Objectway (Italy), Guardian (insurer), NewDay (UK filings are a service company and a holding company), AMCo (Mercury Pharma Group Ltd is a holding company; Amdipharm UK Ltd is a £22.9M distribution arm), HEG (Montagu-era UK group head not located), Compre (group head in Malta), Smart Communications (UK subsidiary only; group head Platinum Topco not on CH), Enserve (Spice plc FY Apr 2010 report saved but not read).
 
 ## Sources
-- Cinven portfolio, UK filter: https://www.cinven.com/portfolio/?regions=43&statuses=39 and ?regions=43&statuses=40 (raw/03/)
-- Cinven portfolio pages: raw/03/cinven_pages/*.html, text in raw/03/cinven_pages_extract.txt
-- Companies House API searches: raw/03/ch_search_*.json
+
+- Cinven portfolio, UK region filter: https://www.cinven.com/portfolio/?regions=43&statuses=39 (realised) and https://www.cinven.com/portfolio/?regions=43&statuses=40 (current); saved as raw/03/cinven_portfolio_uk_realised.html and cinven_portfolio_uk.html; individual pages in raw/03/cinven_pages/ with text in raw/03/cinven_pages_extract.txt.
+- Cinven press releases (raw/03/cinven_news/, text in cinven_news_extract.txt): cinven-to-acquire-premium-credit (EV £462M), cinven-to-acquire-kurt-geiger, cinven-and-cvc-to-acquire-newday, cinven-to-acquire-jla, cinven-and-astorg-to-acquire-lgc, cinven-and-bci-to-acquire-compre, cinven-and-gic-to-acquire-specialist-insurance-broker-miller, cinven-to-make-majority-investment-in-true-potential, cinven-to-invest-in-flint-global, cinven-to-acquire-life-insurer-international-financial-group-limited, policy-expert-positioned-for-growth-as-cinven-acquires-50-shareholding, cinven-acquires-enserve-group (70p per share), cinven-completes-acquisition-of-northgate-public-services (FY Apr 2014 £181.0M revenue, £42.0M EBITDA), cinven-to-sell-northgate-public-services-limited-to-nec-corporation (£475M), cinven-to-sell-guardian-financial-services-to-admin-re (£1.6B), cinven-to-sell-amco-to-concordia-healthcare-corp (£2.3B), cinven-to-sell-heg-to-godaddy-inc (entry £438M), cinven-to-sell-cpa-global, cinven-to-sell-premium-credit, cinven-to-sell-its-stake-in-miller, kkr-agrees-to-acquire-newdays-consumer-credit-portfolio-from-cinven-and-cvc, cinven-completes-full-realisation-of-gondola, cinven-fully-realises-shareholding-in-spire-healthcare-group-plc.
+- Press for undisclosed values: unquote (Premium Credit £462M; Kurt Geiger ~£245M; NewDay ~£1B; JLA £600M+ and ~£47M marketed EBITDA; Mercury Pharma £465M; IFGL £400M to £500M Sky News range), Scrip/Citeline (Amdipharm £367M, combined £832M, revenue ~£250M, EBITA ~£100M), pe-insights (LGC £3B, first Seventh Fund deal), M&A Insights and Bloomberg (Smart Communications £1.4B / $1.8B), Accel-KKR release 1 Aug 2025, FashionUnited (Kurt Geiger sale £289M), lse.co.uk (Spice £251M).
+- Companies House API: searches raw/03/ch_search_*.json; profiles raw/03/profiles/*.json; PSC registers raw/03/psc/*.json; filing histories raw/03/filings/*.json; accounts PDFs and OCR text raw/03/docs/ (00968046 FY2014, 02015200 FY2013, 07297722 FY2015, 07795882 FY2015, 01094178 FY2017, 02566320 FY2017, 07195122 FY2017, 09903564 FY2019, 02579785 FY2019, OC301468 FY2019, 09917444 FY2020, 06594543 FY2024, OC307742 FY2023, 09766786 FY2024, 04303041 FY2024, 02330913 FY2012, 04606340 FY2011, 03250709 FY2010).
+- Local pipeline: data/parquet/accounts_wide.parquet (covers period ends from 2019-12-31 only; held post-deal rows for Flint Global Ltd and Project Spark Bidco, nothing else in this set).
+
+## Open items
+
+- Spice plc FY Apr 2010 group accounts (saved, 90 pages) not read; Mercury Pharmaceuticals Ltd 02619880 trading accounts not pulled; HEG Montagu-era UK group head not located.
+- GoDaddy's €1.69B HEG value and Guardian's ~£275M entry price need primary citations.
+- Cinven-era UK add-ons for JLA, LGC, Compre, Miller and True Potential not researched; uk_add_ons holds only what the portfolio pages and the FY2017 JLA accounts disclose.
+- OCR texts are raw (tesseract, 150 to 200 dpi); every figure used above was checked against the P&L page, but other lines in the .ocr.txt files may contain misreads.

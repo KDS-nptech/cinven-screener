@@ -128,6 +128,8 @@ def main(argv=None):
     why = read_parquet("why_now_summary") if parquet_exists("why_now_summary") else None
     excl, excl_notes = load_overrides()
 
+    cls = cls.drop([c for c in ("computed_at", "flags", "model", "prompt_version", "raw_json", "keyword_hits_json") if c in cls.columns])
+    uni = uni.drop([c for c in ("computed_at", "flags") if c in uni.columns])
     df = cls.filter(pl.col("vertical").is_in(SECTORS)).join(uni, on="company_number", how="inner")
     df = df.rename({"confidence": "vertical_confidence"}) if "confidence" in df.columns else df
     if dur.height:
@@ -141,7 +143,7 @@ def main(argv=None):
     if jobs is not None:
         df = df.join(jobs.select([c for c in ("company_number", "open_roles", "international_roles", "senior_commercial_roles") if c in jobs.columns]), on="company_number", how="left")
     if why is not None:
-        df = df.join(why, on="company_number", how="left")
+        df = df.join(why.drop([c for c in ("computed_at",) if c in why.columns]), on="company_number", how="left")
 
     out = []
     for r in df.to_dicts():
@@ -188,7 +190,8 @@ def main(argv=None):
         manual = n in excl
         if manual:
             flags.append("manual_exclusion")
-        at_scale = bool(r.get("at_scale"))
+        # at scale: EBITDA at or above the Strategic Fund floor when a profit line is on file, else turnover at the ranking floor
+        at_scale = (ebitda >= TGT["ebitda_early_floor_gbp"]) if (ebitda is not None and ebitda > 0) else bool(r.get("at_scale")) if ebitda is None else False
         gate = (r.get("vertical") in SECTORS and r.get("is_software_product") is not False and bool(r.get("is_group_head", True))
                 and (r.get("route") in ROUTES) and not r.get("provisional") and at_scale and bool(r.get("domain"))
                 and "website_unverified" not in flags and fit >= FIT["rank_min_fit"] and not manual and r.get("durability_score") is not None)

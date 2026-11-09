@@ -55,6 +55,7 @@ OFFSHORE = {"JERSEY", "GUERNSEY", "CAYMAN ISLANDS", "CAYMAN", "LUXEMBOURG", "ISL
             "BVI", "BERMUDA", "MAURITIUS", "GIBRALTAR", "DELAWARE", "NETHERLANDS", "MALTA", "CYPRUS", "IRELAND"}
 PE_VEHICLE_RE = re.compile(r"\b(TOPCO|MIDCO|BIDCO|HOLDCO|FINCO|ACQUISITIONS?|ACQUISITION CO|HOLDINGS?|INVESTMENTS?|S\.?A\.?R\.?L|S\.?C\.?A|S\.?C\.?S|GP|L\.?P\.?|LP|LIMITED PARTNERSHIP|NOMINEES?|FEEDER|CO-INVEST|COINVEST)\b", re.I)
 EMPLOYEE_RE = re.compile(r"\bEOT\b|EMPLOYEE[- ]OWN|EMPLOYEE BENEFIT TRUST|\bEBT\b|\(EOT\)|EMPLOYEE SHARE|EMPLOYEE TRUST", re.I)
+SOVEREIGN_RE = re.compile(r"\b(MINISTER FOR FINANCE|GIC\b|GIC PRIVATE|TEMASEK|ABU DHABI INVESTMENT|MUBADALA|QATAR INVESTMENT|QATAR HOLDING|PUBLIC INVESTMENT FUND|NORGES BANK|CHINA INVESTMENT CORP|KUWAIT INVESTMENT|CDPQ|CAISSE DE D|CPP INVESTMENT|CANADA PENSION|ONTARIO TEACHERS|OMERS|PSP INVESTMENTS|BRITISH COLUMBIA INVESTMENT|BCI\b|AIMCO|ALBERTA INVESTMENT|AUSTRALIANSUPER|FUTURE FUND|KHAZANAH|SAUDI ARABIAN|ADQ\b|ADIA\b|LA CAISSE|UNIVERSITIES SUPERANNUATION|USS\b|RAILPEN|BORDER TO COAST|LGPS|PENSION)\b", re.I)
 PUBLIC_RE = re.compile(r"\b(NHS|COUNCIL|SECRETARY OF STATE|HM TREASURY|TREASURY|GOVERNMENT|MINISTRY|DEPARTMENT FOR|UNIVERSITY|HOUSING ASSOCIATION|CROWN|LOCAL AUTHORITY|BOROUGH|COUNTY|CITY OF|TRANSPORT FOR|BBC|PUBLIC HEALTH|NATIONAL HEALTH|ROYAL MAIL|NETWORK RAIL|UK INFRASTRUCTURE BANK|BRITISH BUSINESS BANK|STATE OF|REPUBLIC OF|KINGDOM OF|EMIRATE)\b", re.I)
 MUTUAL_RE = re.compile(r"\b(CO-?OPERATIVE|COOPERATIVE|MUTUAL|FRIENDLY SOCIETY|BUILDING SOCIETY|MEMBERS?|SOCIETY LIMITED|CHARITY|CHARITABLE|FOUNDATION|TRUSTEES OF THE .*(CHARIT|FOUNDATION))\b", re.I)
 UK_RES = {"ENGLAND", "WALES", "SCOTLAND", "NORTHERN IRELAND", "UNITED KINGDOM", "UK", "GREAT BRITAIN", "ISLE OF MAN",
@@ -131,6 +132,10 @@ def _classify_corporate_row(c, rules: RouteRules, level_cn: str, scale: float, w
     """Decide what one corporate PSC row is: sponsor, employee trust, public body, mutual, foreign, uk, unresolved."""
     nm = str(c.get("name") or "")
     hits = investor_match(nm, rules.base)
+    if SOVEREIGN_RE.search(nm) and not EMPLOYEE_RE.search(nm):
+        w.sponsors.append({"labels": hits or ["sovereign or pension fund"], "name": nm, "cn_level": level_cn, "notified_on": _notified(c), "scale": scale,
+                           "country": _country(c) or None})
+        return "sponsor"
     if EMPLOYEE_RE.search(nm):
         w.employee.append({"name": nm, "cn_level": level_cn})
         return "employee"
@@ -275,7 +280,7 @@ def evaluate(company: dict, psc_index: dict, rules: RouteRules, name_lookup: dic
             return done("plc_dispersed", "medium", "plc_no_psc")
         return done("uncertain", "low", "no_psc")
 
-    if w.public:
+    if w.public and not w.sponsors:
         out["owner_names"] = [x["name"] for x in w.public]
         return done("public_sector", "high", "public_body_psc")
     if w.mutual and not w.sponsors and ind_pct < rules.founder_min_pct:
@@ -346,6 +351,13 @@ def evaluate(company: dict, psc_index: dict, rules: RouteRules, name_lookup: dic
 
     if w.supers:
         return done("uncertain", "low", "super_secure_psc")
+    if persons and ind_pct >= rules.rollover_min_pct and not (w.foreign or w.unresolved or w.dispersed_at):
+        # one or two individuals in the 25% to 50% band and nothing else on the register: the rest is below the
+        # 25% reporting line (minority investors, staff, family). Founder-led, with the stake uncertain.
+        out["owner_names"] = [p.get("name") for p in persons][:6]
+        if abroad:
+            return done("foreign_parent", "low", "individual_owners_resident_abroad")
+        return done("founder_family", "low", "individuals_lead_25_50")
     if w.unresolved:
         u = w.unresolved[0]
         out["parent_name"] = u.get("name")

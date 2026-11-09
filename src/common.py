@@ -129,6 +129,19 @@ def read_parquet(table: str):
     return pl.read_parquet(str(p))
 
 
+def read_parquet_where(table: str, column: str, values, columns: list[str] | None = None):
+    """Lazy read of a big table (the PSC register) filtered to `values` in `column`, without loading it whole."""
+    import polars as pl
+
+    p = parquet_path(table)
+    d = path("parquet") / table
+    src = str(d / "*.parquet") if d.is_dir() else (str(p / "*.parquet") if p.is_dir() else str(p))
+    lf = pl.scan_parquet(src).filter(pl.col(column).is_in(list(values)))
+    if columns:
+        lf = lf.select(columns)
+    return lf.collect()
+
+
 def parquet_exists(table: str) -> bool:
     p = parquet_path(table)
     d = path("parquet") / table

@@ -22,7 +22,7 @@ import sys
 
 import polars as pl
 
-from src.common import cfg, get_logger, now_iso, parquet_exists, read_parquet, write_parquet
+from src.common import cfg, get_logger, now_iso, parquet_exists, read_parquet, read_parquet_where, write_parquet
 
 log = get_logger("why_now")
 
@@ -151,7 +151,7 @@ def main(argv=None):
         targets = set(uni["company_number"].to_list())
     uni = uni.filter(pl.col("company_number").is_in(list(targets)))
     log.info("companies: %d", uni.height)
-    psc = read_parquet("psc").filter(pl.col("company_number").is_in(list(targets))).select(["company_number", "kind", "name", "notified_on", "ceased_on", "is_active"])
+    psc = read_parquet_where("psc", "company_number", targets, ["company_number", "kind", "name", "notified_on", "ceased_on", "is_active"])
     psc_by: dict[str, list[dict]] = {}
     for r in psc.to_dicts():
         psc_by.setdefault(r["company_number"], []).append(r)
@@ -162,7 +162,7 @@ def main(argv=None):
                 tops.add(hop.split(" -> ")[1])
     holdco_inc = {}
     if tops and parquet_exists("companies"):
-        for r in read_parquet("companies").filter(pl.col("company_number").is_in(list(tops))).select(["company_number", "inc_date"]).to_dicts():
+        for r in read_parquet_where("companies", "company_number", tops, ["company_number", "inc_date"]).to_dicts():
             holdco_inc[r["company_number"]] = _d(r["inc_date"])
     jobs_by: dict[str, list[dict]] = {}
     if parquet_exists("jobs"):

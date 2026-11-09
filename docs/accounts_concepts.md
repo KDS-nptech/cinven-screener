@@ -48,3 +48,28 @@
     - usecure config (10113345): not present in the parsed data
     - Person Centred Software config (08539732): not present in the parsed data
     - Camascope config (09544682): not present in the parsed data
+
+### Build at 2026-11-09T19:49:23+00:00 (accounts_wide.parquet)
+
+- rows: 87454
+- rows_current: 31850
+- rows_comparative: 55604
+- companies: 29993
+- meta_files: 32046
+- facts_rows: 3332250
+- share_employees: 0.984
+- share_turnover: 0.381
+- employees_p10_p50_p90: [0.0, 50.0, 223.0]
+- turnover_p10_p50_p90: [600518.1, 14583136.5, 49798252.90000011]
+- rows_employees_in_band: 5142
+- rows_employees_in_band_with_turnover: 2081
+- companies_employees_in_band_latest: 4859
+- share_net_assets: 0.967
+- share_creditors_within: 0.917
+- share_share_capital: 0.96
+- fractional_employees_rows: 7
+- Backtest rows [period_end, period_start, days, comparative, consolidated, employees, turnover, gross_profit, profit, net_assets, cash, creditors_within, share_capital, share_premium, retained_earnings, type, standard, latest]:
+    - PortSwigger config (06719143): not present in the parsed data
+    - usecure config (10113345): not present in the parsed data
+    - Person Centred Software config (08539732): not present in the parsed data
+    - Camascope config (09544682): not present in the parsed data

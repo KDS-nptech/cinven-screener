@@ -44,7 +44,7 @@ target:
   # under a Topco with exactly those codes.
   exclude_sic: ["64110", "64191", "64192", "64205", "64301", "64302", "64303", "64304", "64305", "64306", "65110", "65120", "65201", "65202", "65300", "84110", "84120", "84130", "84210", "84220", "84230", "84240", "84250", "84300", "94110", "94120", "94200", "94910", "94920", "94990", "97000", "98000", "98100", "98200", "99000", "99999"]
   sectors: ["business_services", "consumer", "financial_services", "healthcare", "industrials", "tmt"]
-  force_include: []    # back-test companies carried as comparables; filled from docs/research/03 once it lands
+  force_include: ["00968046", "02015200", "06442582", "06594543", "07195122", "09766786", "09903564", "09917444", "OC301468", "OC307742"]    # back-test companies from docs/research/03, carried through the pipeline as comparables
   # Size bands, calibrated to the measured entry profile (docs/research/02a, 02b, 01 section 6). Cinven deploys two
   # vehicles side by side: the EUR 13.2B Eighth Cinven Fund (core entries 2015 to 2020 at EV EUR ~540M to 1.2B, median
   # ~800M, EBITDA ~EUR 50M to 170M; 2024 to 2026 flagship deals at EUR 1B to 3B) and the EUR 2.3B Strategic Fund 2
@@ -56,7 +56,7 @@ target:
   universe_employees_max: 500000
   rank_turnover_min_gbp: 60000000          # at-scale gate when no profit line is on file
   ebitda_early_floor_gbp: 8000000          # at-scale gate: Strategic Fund band starts here
-  ebitda_target_min_gbp: 40000000          # flagship band starts here
+  ebitda_target_min_gbp: 30000000          # flagship band starts here (UK flagship entries: Kurt Geiger ~GBP 21M, JLA GBP 36M, True Potential GBP 42M, NPS GBP 74M EBITDA)
   ebitda_target_max_gbp: 300000000         # above this the deal is a mega-cap club deal (TK Elevator, STADA): outliers
   strategic_fund_sectors: ["financial_services", "business_services", "tmt"]
 
@@ -274,7 +274,7 @@ ownership:
 # carves out a division, or a listed company is taken private. Sponsor names below extend
 # ownership.investor_names with the large-cap and mid-cap owners whose exits feed Cinven's pipeline.
 ownership_routes:
-  walkup_levels: 4
+  walkup_levels: 7
   founder_high_pct: 75
   founder_min_pct: 50
   rollover_min_pct: 25

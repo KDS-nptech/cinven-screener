@@ -1,0 +1,1005 @@
+{
+ "summary": {
+  "computed_at": "2026-11-09T19:48:33+00:00",
+  "entries": 20,
+  "with_company_number": 18,
+  "point_in_time_tested": 11,
+  "point_in_time_actionable": 8,
+  "point_in_time_routes": {
+   "uncertain": 3,
+   "sponsor": 3,
+   "foreign_parent": 3,
+   "founder_family": 1,
+   "uk_group": 1
+  },
+  "size_bands_pre_deal": {
+   "unknown": 7,
+   "flagship band": 5,
+   "strategic fund band (turnover only)": 2,
+   "strategic fund band": 2,
+   "too small (turnover only)": 3,
+   "flagship band (turnover only)": 1
+  },
+  "today_reads_cinven": 4,
+  "current_portfolio_in_research": 10
+ },
+ "results": [
+  {
+   "name": "Enserve (formerly Spice plc)",
+   "company_number": "03250709",
+   "announced": "2010-09",
+   "deal_type": "public-to-private",
+   "sector": "Business Services",
+   "outlier": true,
+   "outlier_reason": "Public-to-private of a listed plc; equity value \u00a3251M at 70p per share; ended as a break-up",
+   "seller": "Spice plc shareholders (LSE main market)",
+   "psc_before_deal_research": "n/a (PSC register starts 2016); listed company",
+   "pre_deal": {
+    "period_end": "2010-04-30",
+    "turnover_gbp_m": null,
+    "operating_profit_gbp_m": null,
+    "ebitda_gbp_m": null,
+    "employees": null,
+    "accounts_type": "group (plc annual report, 90 pages; OCR not completed in time)"
+   },
+   "size_band_pre_deal": "unknown",
+   "register": {
+    "name": "MORFIND 2025 LIMITED",
+    "status": "Active",
+    "category": "Private Limited Company",
+    "account_category": "DORMANT",
+    "sic1": "99999"
+   },
+   "point_in_time": {
+    "as_of": "2010-08-31",
+    "route": null,
+    "note": "before the PSC register (April 2016)"
+   },
+   "today": {
+    "in_universe": false,
+    "note": "not a FULL, GROUP or MEDIUM filer on the snapshot",
+    "reads_cinven_as_owner": false,
+    "exited_per_research": true
+   },
+   "verdict": "size unknown; exited 2016, today route None"
+  },
+  {
+   "name": "Guardian Financial Services",
+   "company_number": "00038921",
+   "announced": "2011-08",
+   "deal_type": "carve-out",
+   "sector": "Financial Services",
+   "outlier": true,
+   "outlier_reason": "Regulated life insurer (SIC 65xxx excluded by the screener); not a turnover business",
+   "seller": "Aegon NV",
+   "psc_before_deal_research": "n/a (pre-2016); Aegon NV",
+   "pre_deal": {
+    "period_end": "2010-12-31",
+    "turnover_gbp_m": null,
+    "operating_profit_gbp_m": null,
+    "ebitda_gbp_m": null,
+    "employees": null,
+    "accounts_type": "insurance company accounts (not pulled; balance-sheet business, no turnover line)"
+   },
+   "size_band_pre_deal": "unknown",
+   "register": {
+    "name": "GUARDIAN ASSURANCE LIMITED",
+    "status": "Active",
+    "category": "Private Limited Company",
+    "account_category": "DORMANT",
+    "sic1": "65110"
+   },
+   "point_in_time": {
+    "as_of": "2011-07-31",
+    "route": null,
+    "note": "before the PSC register (April 2016)"
+   },
+   "today": {
+    "in_universe": false,
+    "note": "not a FULL, GROUP or MEDIUM filer on the snapshot",
+    "reads_cinven_as_owner": false,
+    "exited_per_research": true
+   },
+   "verdict": "size unknown; exited 2016, today route None"
+  },
+  {
+   "name": "CPA Global",
+   "company_number": null,
+   "announced": "2012-02",
+   "deal_type": "primary (founding IP law firms, with ICG minority)",
+   "sector": "Business Services",
+   "outlier": true,
+   "outlier_reason": "Jersey headquartered, no UK group accounts; values are press estimates (~\u00a3950M entry, ~\u00a32.4B exit, medium confidence)",
+   "seller": "Group of IP law firms (founders) and Intermediate Capital Group",
+   "psc_before_deal_research": "n/a (Jersey, pre-2016)",
+   "pre_deal": {
+    "period_end": "",
+    "turnover_gbp_m": null,
+    "operating_profit_gbp_m": null,
+    "ebitda_gbp_m": null,
+    "employees": 2000,
+    "accounts_type": "n/a (Jersey)"
+   },
+   "size_band_pre_deal": "unknown",
+   "status": "no Companies House number (registered outside England and Wales)"
+  },
+  {
+   "name": "AMCo (Mercury Pharma + Amdipharm)",
+   "company_number": "02330913",
+   "announced": "2012-08",
+   "deal_type": "secondary buyout (Mercury Pharma from HgCapital, \u00a3465M) plus primary from founding family (Amdipharm, Patel brothers, \u00a3367M)",
+   "sector": "Healthcare",
+   "outlier": false,
+   "outlier_reason": null,
+   "seller": "HgCapital 6 (Mercury Pharma); Vijay and Bhikhu Patel (Amdipharm)",
+   "psc_before_deal_research": "n/a (pre-2016); HgCapital 6 (Mercury), Patel family (Amdipharm)",
+   "pre_deal": {
+    "period_end": "2012-03-31 (Mercury Pharma Group Ltd, full accounts filed 2012-08-07) and 2011-12-31 (Amdipharm UK Ltd)",
+    "turnover_gbp_m": null,
+    "operating_profit_gbp_m": null,
+    "ebitda_gbp_m": null,
+    "employees": null,
+    "accounts_type": "full (company-only). Mercury Pharma Group Ltd FY Mar 2012 is a holding company (other operating income \u00a310.2M, operating profit \u00a35.5M); the trading entity is MERCURY PHARMACEUTICALS LIMITED 02619880. Amdipharm UK Ltd FY2011: turnover \u00a322.9M, operating loss \u00a32.5M, 93 staff (UK distribution arm only; the Amdipharm group was Irish and Jersey based). Press at the time: combined revenue ~\u00a3250M, EBITA ~\u00a3100M; Mercury sales >\u00a3100M"
+   },
+   "size_band_pre_deal": "unknown",
+   "register": {
+    "name": "MERCURY PHARMA GROUP LIMITED",
+    "status": "Active",
+    "category": "Private Limited Company",
+    "account_category": "FULL",
+    "sic1": "21100"
+   },
+   "point_in_time": {
+    "as_of": "2012-07-31",
+    "route": null,
+    "note": "before the PSC register (April 2016)"
+   },
+   "today": {
+    "in_universe": true,
+    "route": "uk_group",
+    "sponsors": [],
+    "owners": [],
+    "hold_years": null,
+    "group_head": "02330913",
+    "is_group_head": true,
+    "provisional": true,
+    "latest_turnover": null,
+    "ebitda_proxy": null,
+    "exclusion_reason": null,
+    "reads_cinven_as_owner": false,
+    "exited_per_research": true
+   },
+   "verdict": "size unknown; exited 2015, today route uk_group"
+  },
+  {
+   "name": "HEG (Host Europe Group)",
+   "company_number": "08509568",
+   "announced": "2013-07",
+   "deal_type": "secondary buyout",
+   "sector": "TMT",
+   "outlier": false,
+   "outlier_reason": null,
+   "seller": "Montagu Private Equity",
+   "psc_before_deal_research": "n/a (pre-2016); Montagu",
+   "pre_deal": {
+    "period_end": "2012-12-31",
+    "turnover_gbp_m": null,
+    "operating_profit_gbp_m": null,
+    "ebitda_gbp_m": null,
+    "employees": null,
+    "accounts_type": "Montagu-era UK group head not located (HOST EUROPE GROUP LTD 06448186, ex MANCHESTER MIDCO, last filed FY2009); not pulled"
+   },
+   "size_band_pre_deal": "unknown",
+   "register": {
+    "name": "HOST EUROPE GROUP LIMITED",
+    "status": "Active",
+    "category": "Private Limited Company",
+    "account_category": "FULL",
+    "sic1": "70100"
+   },
+   "point_in_time": {
+    "as_of": "2013-06-30",
+    "route": null,
+    "note": "before the PSC register (April 2016)"
+   },
+   "today": {
+    "in_universe": true,
+    "route": "foreign_parent",
+    "sponsors": [],
+    "owners": [
+     "Godaddy Inc."
+    ],
+    "hold_years": null,
+    "group_head": "08509568",
+    "is_group_head": true,
+    "provisional": true,
+    "latest_turnover": null,
+    "ebitda_proxy": null,
+    "exclusion_reason": null,
+    "reads_cinven_as_owner": false,
+    "exited_per_research": true
+   },
+   "verdict": "size unknown; exited 2017, today route foreign_parent"
+  },
+  {
+   "name": "Northgate Public Services",
+   "company_number": "09338960",
+   "announced": "2014-12",
+   "deal_type": "carve-out",
+   "sector": "TMT",
+   "outlier": false,
+   "outlier_reason": null,
+   "seller": "Northgate Information Solutions Limited (06442582, KKR owned)",
+   "psc_before_deal_research": "n/a (pre-2016); KKR via Northgate Information Solutions",
+   "pre_deal": {
+    "period_end": "2014-04-30",
+    "turnover_gbp_m": 181.0,
+    "operating_profit_gbp_m": null,
+    "ebitda_gbp_m": 42.0,
+    "employees": 2050,
+    "accounts_type": "divisional figures from the Cinven release (NPS was a division inside the group accounts of Northgate Information Solutions Ltd 06442582)"
+   },
+   "size_band_pre_deal": "flagship band",
+   "register": {
+    "name": "NORTHGATE PUBLIC SERVICES LIMITED",
+    "status": "Active",
+    "category": "Private Limited Company",
+    "account_category": "FULL",
+    "sic1": "62090"
+   },
+   "point_in_time": {
+    "as_of": "2014-11-30",
+    "route": null,
+    "note": "before the PSC register (April 2016)"
+   },
+   "today": {
+    "in_universe": true,
+    "route": "foreign_parent",
+    "sponsors": [],
+    "owners": [
+     "Nec Corporation"
+    ],
+    "hold_years": null,
+    "group_head": "09338960",
+    "is_group_head": true,
+    "provisional": true,
+    "latest_turnover": null,
+    "ebitda_proxy": null,
+    "exclusion_reason": null,
+    "reads_cinven_as_owner": false,
+    "exited_per_research": true
+   },
+   "verdict": "size flagship band; exited 2018, today route foreign_parent"
+  },
+  {
+   "name": "Premium Credit",
+   "company_number": "02015200",
+   "announced": "2015-01",
+   "deal_type": "secondary buyout",
+   "sector": "Financial Services",
+   "outlier": true,
+   "outlier_reason": "Lender: turnover is interest and fee income on a funded book (61% operating margin), not comparable with operating businesses",
+   "seller": "GTCR",
+   "psc_before_deal_research": "n/a (pre-2016); GTCR via Mizzen vehicles",
+   "pre_deal": {
+    "period_end": "2013-12-31",
+    "turnover_gbp_m": 110.7,
+    "operating_profit_gbp_m": 67.2,
+    "ebitda_gbp_m": null,
+    "employees": 337,
+    "accounts_type": "full (company; Premium Credit Limited)"
+   },
+   "size_band_pre_deal": "strategic fund band (turnover only)",
+   "register": {
+    "name": "PREMIUM CREDIT LIMITED",
+    "status": "Active",
+    "category": "Private Limited Company",
+    "account_category": "FULL",
+    "sic1": "64921"
+   },
+   "point_in_time": {
+    "as_of": "2014-12-31",
+    "route": null,
+    "note": "before the PSC register (April 2016)"
+   },
+   "today": {
+    "in_universe": true,
+    "route": "uncertain",
+    "sponsors": [],
+    "owners": [],
+    "hold_years": null,
+    "group_head": "02015200",
+    "is_group_head": true,
+    "provisional": true,
+    "latest_turnover": null,
+    "ebitda_proxy": null,
+    "exclusion_reason": null,
+    "reads_cinven_as_owner": false,
+    "exited_per_research": true
+   },
+   "verdict": "size strategic fund band (turnover only); exited 2022, today route uncertain"
+  },
+  {
+   "name": "Kurt Geiger",
+   "company_number": "00968046",
+   "announced": "2015-12",
+   "deal_type": "secondary buyout",
+   "sector": "Consumer",
+   "outlier": false,
+   "outlier_reason": null,
+   "seller": "Sycamore Partners",
+   "psc_before_deal_research": "n/a (register starts Apr 2016, after completion); Sycamore Partners via Jasper Footwear Limited",
+   "pre_deal": {
+    "period_end": "2014-12-31",
+    "turnover_gbp_m": 251.8,
+    "operating_profit_gbp_m": 11.2,
+    "ebitda_gbp_m": 21.3,
+    "employees": 1805,
+    "accounts_type": "full (company; Kurt Geiger Limited)"
+   },
+   "size_band_pre_deal": "strategic fund band",
+   "register": {
+    "name": "KURT GEIGER LIMITED",
+    "status": "Active",
+    "category": "Private Limited Company",
+    "account_category": "AUDIT EXEMPTION SUBSIDIARY",
+    "sic1": "47721"
+   },
+   "point_in_time": {
+    "as_of": "2015-11-30",
+    "route": null,
+    "note": "before the PSC register (April 2016)"
+   },
+   "today": {
+    "in_universe": false,
+    "note": "not a FULL, GROUP or MEDIUM filer on the snapshot",
+    "reads_cinven_as_owner": false,
+    "exited_per_research": true
+   },
+   "verdict": "size strategic fund band; exited 2025, today route None"
+  },
+  {
+   "name": "NewDay",
+   "company_number": "07795882",
+   "announced": "2016-10",
+   "deal_type": "secondary buyout",
+   "sector": "Financial Services",
+   "outlier": true,
+   "outlier_reason": "Regulated consumer lender with ~\u00a31B EV; balance-sheet business; 50:50 club deal",
+   "seller": "V\u00e4rde Partners",
+   "psc_before_deal_research": "V\u00e4rde Partners (register starts Apr 2016; Nemean Holdco incorporated Oct 2016 with Cinven Limited as PSC)",
+   "pre_deal": {
+    "period_end": "2015-12-31",
+    "turnover_gbp_m": 5.2,
+    "operating_profit_gbp_m": 3.5,
+    "ebitda_gbp_m": null,
+    "employees": null,
+    "accounts_type": "full (NewDay Ltd service company only; receivables sit in NewDay Cards Ltd and securitisation SPVs; the V\u00e4rde-era head was NewDay Group (Jersey); UK holding NEWDAY HOLDINGS LTD 07795882 FY2015 accounts are a holding-company filing with no turnover line). No UK consolidated accounts before the deal"
+   },
+   "size_band_pre_deal": "too small (turnover only)",
+   "register": {
+    "name": "NEWDAY HOLDINGS LTD",
+    "status": "Active",
+    "category": "Private Limited Company",
+    "account_category": "FULL",
+    "sic1": "64205"
+   },
+   "point_in_time": {
+    "as_of": "2016-09-30",
+    "route": "uncertain",
+    "confidence": "low",
+    "reason": "no_psc",
+    "owners": [],
+    "sponsors": [],
+    "hold_years": null,
+    "walkup_path": null,
+    "psc_rows_seen": 0,
+    "actionable": false
+   },
+   "today": {
+    "in_universe": false,
+    "note": "candidate but failed a universe rule",
+    "reads_cinven_as_owner": false,
+    "exited_per_research": false
+   },
+   "verdict": "route not actionable (uncertain); size too small (turnover only)"
+  },
+  {
+   "name": "JLA",
+   "company_number": "07195122",
+   "announced": "2018-05",
+   "deal_type": "secondary buyout",
+   "sector": "Business Services",
+   "outlier": false,
+   "outlier_reason": null,
+   "seller": "Hg (HgCapital)",
+   "psc_before_deal_research": "Hg: JLA Equityco's parent JLA New Equityco Limited (Jersey) held by Hg Pooled Management limited partnerships via nominee (directors' report); Vanilla Group Ltd PSC Inhoco 3498 Limited; JLA Ltd PSC Vanilla Group Limited",
+   "pre_deal": {
+    "period_end": "2017-10-31",
+    "turnover_gbp_m": 117.8,
+    "operating_profit_gbp_m": 20.5,
+    "ebitda_gbp_m": 35.5,
+    "employees": 763,
+    "accounts_type": "group (JLA Equityco Limited consolidated accounts for FY Oct 2017, filed 2018-07-04, seven weeks after announcement; the FY Oct 2016 group accounts filed 2017-08-07 were on the register at announcement). Operating company JLA Ltd alone: revenue \u00a338.2M, operating profit \u00a35.2M"
+   },
+   "size_band_pre_deal": "flagship band",
+   "register": {
+    "name": "JLA EQUITYCO LIMITED",
+    "status": "Active",
+    "category": "Private Limited Company",
+    "account_category": "DORMANT",
+    "sic1": "70100"
+   },
+   "point_in_time": {
+    "as_of": "2018-04-30",
+    "route": "sponsor",
+    "confidence": "high",
+    "reason": "investor_psc",
+    "owners": [
+     "Hg Pooled Management Limited"
+    ],
+    "sponsors": [
+     "Hg"
+    ],
+    "hold_years": 2.1,
+    "walkup_path": null,
+    "psc_rows_seen": 1,
+    "actionable": true
+   },
+   "today": {
+    "in_universe": false,
+    "note": "not a FULL, GROUP or MEDIUM filer on the snapshot",
+    "reads_cinven_as_owner": false,
+    "exited_per_research": false
+   },
+   "verdict": "route actionable (sponsor); size flagship band"
+  },
+  {
+   "name": "LGC",
+   "company_number": "09903564",
+   "announced": "2019-11",
+   "deal_type": "secondary buyout",
+   "sector": "Healthcare",
+   "outlier": true,
+   "outlier_reason": "Mega-deal (\u00a33B EV) co-led with Astorg",
+   "seller": "KKR",
+   "psc_before_deal_research": "KKR: Teddington 3 Limited (ex Figaro Bidco) PSC of LGC Science Group Ltd from 2016-04-06; Figaro Topco (Cayman) above it",
+   "pre_deal": {
+    "period_end": "2019-03-31",
+    "turnover_gbp_m": 387.5,
+    "operating_profit_gbp_m": 35.4,
+    "ebitda_gbp_m": 106.1,
+    "employees": 2805,
+    "accounts_type": "group (LGC Science Group Holdings Ltd, now Teddington 3 Ltd, IFRS consolidated; adjusted EBITDA as defined in the accounts; employees at 31 Mar 2019)"
+   },
+   "size_band_pre_deal": "flagship band",
+   "register": {
+    "name": "TEDDINGTON 3 LIMITED",
+    "status": "Active",
+    "category": "Private Limited Company",
+    "account_category": "AUDIT EXEMPTION SUBSIDIARY",
+    "sic1": "70100"
+   },
+   "point_in_time": {
+    "as_of": "2019-10-31",
+    "route": "foreign_parent",
+    "confidence": "low",
+    "reason": "offshore_parent_unknown_owner",
+    "owners": [
+     "Elwy 1 Limited"
+    ],
+    "sponsors": [],
+    "hold_years": null,
+    "walkup_path": "09903564 -> 09905519; 09905519 -> 09905091",
+    "psc_rows_seen": 3,
+    "actionable": true
+   },
+   "today": {
+    "in_universe": false,
+    "note": "not a FULL, GROUP or MEDIUM filer on the snapshot",
+    "reads_cinven_as_owner": false,
+    "exited_per_research": false
+   },
+   "verdict": "route actionable (foreign_parent); size flagship band"
+  },
+  {
+   "name": "Compre",
+   "company_number": "02579785",
+   "announced": "2020-11",
+   "deal_type": "secondary buyout",
+   "sector": "Financial Services",
+   "outlier": true,
+   "outlier_reason": "SFF deal; regulated insurance group headed outside the UK; ~80 staff",
+   "seller": "CBPE Capital LLP",
+   "psc_before_deal_research": "CBPE Capital VIII GP LP (SL007008) on Compre (1) Limited, 2016-04-06 to 2021-04-28",
+   "pre_deal": {
+    "period_end": "2019-12-31",
+    "turnover_gbp_m": 3.3,
+    "operating_profit_gbp_m": null,
+    "ebitda_gbp_m": null,
+    "employees": 80,
+    "accounts_type": "full (UK service company only; revenue is recharged expenses to the risk carriers; group accounts filed in Malta)"
+   },
+   "size_band_pre_deal": "too small (turnover only)",
+   "register": {
+    "name": "COMPRE HOLDINGS LIMITED",
+    "status": "Active",
+    "category": "Private Limited Company",
+    "account_category": "FULL",
+    "sic1": "64205"
+   },
+   "point_in_time": {
+    "as_of": "2020-10-31",
+    "route": "sponsor",
+    "confidence": "high",
+    "reason": "investor_psc_via_holdco",
+    "owners": [
+     "Cbpe Capital Viii Gp Lp"
+    ],
+    "sponsors": [
+     "CBPE",
+     "LP"
+    ],
+    "hold_years": 4.6,
+    "walkup_path": "02579785 -> 07255861",
+    "psc_rows_seen": 7,
+    "actionable": true
+   },
+   "today": {
+    "in_universe": false,
+    "note": "candidate but failed a universe rule",
+    "reads_cinven_as_owner": false,
+    "exited_per_research": false
+   },
+   "verdict": "route actionable (sponsor); size too small (turnover only)"
+  },
+  {
+   "name": "Miller",
+   "company_number": "OC301468",
+   "announced": "2020-11",
+   "deal_type": "carve-out (from Willis Towers Watson and the partners)",
+   "sector": "Financial Services",
+   "outlier": true,
+   "outlier_reason": "SFF deal; LLP (profit before partner pay); exit to co-investor",
+   "seller": "Willis Towers Watson and Miller partners",
+   "psc_before_deal_research": "Miller 2015 Limited (WTW vehicle), 2016-04-06 to 2021-03-01",
+   "pre_deal": {
+    "period_end": "2019-12-31",
+    "turnover_gbp_m": 150.3,
+    "operating_profit_gbp_m": 67.3,
+    "ebitda_gbp_m": null,
+    "employees": 640,
+    "accounts_type": "full LLP accounts (operating profit is before members' remuneration and profit share; headcount from the Cinven release)"
+   },
+   "size_band_pre_deal": "strategic fund band (turnover only)",
+   "register": {
+    "name": "MILLER INSURANCE SERVICES LLP",
+    "status": "Active",
+    "category": "Limited Liability Partnership",
+    "account_category": "FULL",
+    "sic1": null
+   },
+   "point_in_time": {
+    "as_of": "2020-10-31",
+    "route": "uncertain",
+    "confidence": "low",
+    "reason": "no_psc_at_holdco",
+    "owners": [],
+    "sponsors": [],
+    "hold_years": null,
+    "walkup_path": "OC301468 -> 09386804; 09386804 -> 00621757; 00621757 -> 03588435; 03588435 -> 10385658; 10385658 -> 03588080",
+    "psc_rows_seen": 5,
+    "actionable": false
+   },
+   "today": {
+    "in_universe": true,
+    "route": "sponsor",
+    "sponsors": [
+     "sovereign or pension fund"
+    ],
+    "owners": [
+     "Minister For Finance Of The Republic Of Singapore"
+    ],
+    "hold_years": 5.8,
+    "group_head": "OC301468",
+    "is_group_head": true,
+    "provisional": true,
+    "latest_turnover": null,
+    "ebitda_proxy": null,
+    "exclusion_reason": null,
+    "reads_cinven_as_owner": false,
+    "exited_per_research": true
+   },
+   "verdict": "route not actionable (uncertain); size strategic fund band (turnover only); exited 2024, today route sponsor"
+  },
+  {
+   "name": "True Potential",
+   "company_number": "09917444",
+   "announced": "2021-09",
+   "deal_type": "primary (founder family and FTV Capital minority sell a majority)",
+   "sector": "Financial Services",
+   "outlier": false,
+   "outlier_reason": null,
+   "seller": "Harrison family founders and FTV Capital",
+   "psc_before_deal_research": "Mr David George Harrison (founder; 25 to 50% shares and votes) 2016-08-02 to 2022-01-21; FTV Capital minority",
+   "pre_deal": {
+    "period_end": "2020-12-31",
+    "turnover_gbp_m": 184.9,
+    "operating_profit_gbp_m": 50.6,
+    "ebitda_gbp_m": 74.0,
+    "employees": 305,
+    "accounts_type": "group (True Potential Group Limited consolidated, FRS 102, filed 2021-03-26; operating profit before goodwill amortisation \u00a366.0M; EBITDA per strategic report)"
+   },
+   "size_band_pre_deal": "flagship band",
+   "register": {
+    "name": "TRUE POTENTIAL GROUP LIMITED",
+    "status": "Active",
+    "category": "Private Limited Company",
+    "account_category": "GROUP",
+    "sic1": "70221"
+   },
+   "point_in_time": {
+    "as_of": "2021-08-31",
+    "route": "founder_family",
+    "confidence": "low",
+    "reason": "individuals_lead_25_50",
+    "owners": [
+     "Mr David George Harrison"
+    ],
+    "sponsors": [],
+    "hold_years": null,
+    "walkup_path": null,
+    "psc_rows_seen": 1,
+    "actionable": true
+   },
+   "today": {
+    "in_universe": true,
+    "route": "sponsor",
+    "sponsors": [
+     "Cinven"
+    ],
+    "owners": [
+     "Cinven Partnership Llp"
+    ],
+    "hold_years": 4.8,
+    "group_head": "09917444",
+    "is_group_head": true,
+    "provisional": true,
+    "latest_turnover": null,
+    "ebitda_proxy": null,
+    "exclusion_reason": null,
+    "reads_cinven_as_owner": true,
+    "exited_per_research": false
+   },
+   "verdict": "route actionable (founder_family); size flagship band; today reads Cinven as owner"
+  },
+  {
+   "name": "IFGL",
+   "company_number": null,
+   "announced": "2022-02",
+   "deal_type": "secondary buyout",
+   "sector": "Financial Services",
+   "outlier": true,
+   "outlier_reason": "Isle of Man headquartered; SFF deal; regulated life insurer",
+   "seller": "Vitruvian Partners (full exit after 8.5 years) and management",
+   "psc_before_deal_research": "n/a (Isle of Man); Vitruvian",
+   "pre_deal": {
+    "period_end": "2020-12-31",
+    "turnover_gbp_m": null,
+    "operating_profit_gbp_m": null,
+    "ebitda_gbp_m": null,
+    "employees": 550,
+    "accounts_type": "n/a (Isle of Man filings)"
+   },
+   "size_band_pre_deal": "unknown",
+   "status": "no Companies House number (registered outside England and Wales)"
+  },
+  {
+   "name": "Policy Expert (QMetric Group)",
+   "company_number": "06594543",
+   "announced": "2024-09",
+   "deal_type": "secondary (50% stake from Abu Dhabi Investment Authority, which had bought the founder out in Nov 2023)",
+   "sector": "Financial Services",
+   "outlier": true,
+   "outlier_reason": "SFF deal; 50% stake; insurance MGA (operating company SIC 65120 excluded by the screener)",
+   "seller": "Abu Dhabi Investment Authority (via Platinum Ivy B 2018 RSC Ltd)",
+   "psc_before_deal_research": "Platinum Ivy B 2018 RSC Ltd (ADIA) 75 to 100%, 2023-11-02 to 2025-01-08; before that founder Mr Philip William Henry James 50 to 75%, 2016-04-06 to 2023-11-02",
+   "pre_deal": {
+    "period_end": "2024-03-31",
+    "turnover_gbp_m": 157.4,
+    "operating_profit_gbp_m": 7.6,
+    "ebitda_gbp_m": 17.8,
+    "employees": 814,
+    "accounts_type": "group (QMetric Group Holdings consolidated, filed 2024-10-22; FY23 turnover \u00a377.2M, operating loss \u00a352.1M; underlying EBITDA \u00a327.0M; turnover doubled on the move to an MGA model)"
+   },
+   "size_band_pre_deal": "strategic fund band",
+   "register": {
+    "name": "QMETRIC GROUP HOLDINGS LIMITED",
+    "status": "Active",
+    "category": "Private Limited Company",
+    "account_category": "FULL",
+    "sic1": "64209"
+   },
+   "point_in_time": {
+    "as_of": "2024-08-31",
+    "route": "foreign_parent",
+    "confidence": "medium",
+    "reason": "foreign_corporate_parent",
+    "owners": [
+     "Platinum Ivy B 2018 Rsc Ltd"
+    ],
+    "sponsors": [],
+    "hold_years": null,
+    "walkup_path": null,
+    "psc_rows_seen": 1,
+    "actionable": true
+   },
+   "today": {
+    "in_universe": true,
+    "route": "sponsor",
+    "sponsors": [
+     "Abu Dhabi Investment",
+     "Cinven"
+    ],
+    "owners": [
+     "Abu Dhabi Investment Authority",
+     "Cinven Partnership Llp"
+    ],
+    "hold_years": 2.2,
+    "group_head": "15941270",
+    "is_group_head": false,
+    "provisional": true,
+    "latest_turnover": null,
+    "ebitda_proxy": null,
+    "exclusion_reason": null,
+    "group_head_name": "POLICY EXPERT LIMITED",
+    "group_head_route": "sponsor",
+    "group_head_sponsors": [
+     "Abu Dhabi Investment",
+     "Cinven"
+    ],
+    "reads_cinven_as_owner": true,
+    "exited_per_research": false
+   },
+   "verdict": "route actionable (foreign_parent); size strategic fund band; today reads Cinven as owner"
+  },
+  {
+   "name": "Grant Thornton UK",
+   "company_number": "OC307742",
+   "announced": "2024-11",
+   "deal_type": "primary (partnership sells its advisory and tax practice to a PE-backed platform; audit stays in the LLP)",
+   "sector": "Financial Services",
+   "outlier": true,
+   "outlier_reason": "Partnership carve-out into a US platform; Cinven's equity sits in Grant Thornton Advisors (US), not a UK bidco",
+   "seller": "Grant Thornton UK LLP partners",
+   "psc_before_deal_research": "Individual partners; CEO registered as PSC with significant influence (Malcolm Gomersall 2024-01-19 to 2024-07-30; David Dunckley 2018-12-01 to 2024-01-19; Sacha Romanovitch 2016-11-25 to 2018-12-01)",
+   "pre_deal": {
+    "period_end": "2023-12-31",
+    "turnover_gbp_m": 690.2,
+    "operating_profit_gbp_m": 146.2,
+    "ebitda_gbp_m": null,
+    "employees": 5336,
+    "accounts_type": "group LLP accounts (filed 2024-04-19; revenue \u00a3690.2M, FY22 \u00a3647.8M; operating profit \u00a3146.2M before members' remuneration; 5,336 employees plus 225 members)"
+   },
+   "size_band_pre_deal": "flagship band (turnover only)",
+   "register": {
+    "name": "GRANT THORNTON UK LLP",
+    "status": "Active",
+    "category": "Limited Liability Partnership",
+    "account_category": "GROUP",
+    "sic1": null
+   },
+   "point_in_time": {
+    "as_of": "2024-10-31",
+    "route": "uk_group",
+    "confidence": "low",
+    "reason": "dispersed_statement_private",
+    "owners": [],
+    "sponsors": [],
+    "hold_years": null,
+    "walkup_path": null,
+    "psc_rows_seen": 1,
+    "actionable": true
+   },
+   "today": {
+    "in_universe": true,
+    "route": "founder_family",
+    "sponsors": [],
+    "owners": [
+     "Mr Timothy John Evans",
+     "Mr John Andrew Niblett"
+    ],
+    "hold_years": null,
+    "group_head": "OC307742",
+    "is_group_head": true,
+    "provisional": true,
+    "latest_turnover": null,
+    "ebitda_proxy": null,
+    "exclusion_reason": null,
+    "reads_cinven_as_owner": false,
+    "exited_per_research": false
+   },
+   "verdict": "route actionable (uk_group); size flagship band (turnover only); today route founder_family (Cinven not detected)"
+  },
+  {
+   "name": "Smart Communications",
+   "company_number": "04303041",
+   "announced": "2025-08",
+   "deal_type": "secondary buyout (majority; Accel-KKR retains a minority)",
+   "sector": "TMT",
+   "outlier": true,
+   "outlier_reason": "EV ~\u00a31.4B (20x 2025 EBITDA) at the top of the range; global SaaS with heavy US presence; UK filing covers only part of the group",
+   "seller": "Accel-KKR",
+   "psc_before_deal_research": "Platinum Newco I Limited (Accel-KKR chain) from 2016-09-08; Cinven 2025 vehicle not yet registered as PSC at time of pull",
+   "pre_deal": {
+    "period_end": "2024-12-31",
+    "turnover_gbp_m": 29.7,
+    "operating_profit_gbp_m": 29.1,
+    "ebitda_gbp_m": 32.2,
+    "employees": null,
+    "accounts_type": "full (SmartComms SC Limited, UK entity only; turnover \u00a329,661k is UK-contracted revenue, 'other operating income' \u00a341,189k is intra-group recharges; operating profit before reorganisation, depreciation and amortisation \u00a332.2M per KPIs). Group accounts are not filed in the UK (Platinum Topco Limited)"
+   },
+   "size_band_pre_deal": "flagship band",
+   "register": {
+    "name": "SMARTCOMMS SC LIMITED",
+    "status": "Active",
+    "category": "Private Limited Company",
+    "account_category": "FULL",
+    "sic1": "62012"
+   },
+   "point_in_time": {
+    "as_of": "2025-07-31",
+    "route": "uncertain",
+    "confidence": "low",
+    "reason": "no_psc_at_holdco",
+    "owners": [],
+    "sponsors": [],
+    "hold_years": null,
+    "walkup_path": "04303041 -> 09494909; 09494909 -> 10306186; 10306186 -> 09494793; 09494793 -> 10341099; 10341099 -> 10341009",
+    "psc_rows_seen": 5,
+    "actionable": false
+   },
+   "today": {
+    "in_universe": true,
+    "route": "sponsor",
+    "sponsors": [
+     "Cinven"
+    ],
+    "owners": [
+     "Cinven Limited"
+    ],
+    "hold_years": 1.3,
+    "group_head": "16607597",
+    "is_group_head": false,
+    "provisional": true,
+    "latest_turnover": null,
+    "ebitda_proxy": null,
+    "exclusion_reason": null,
+    "group_head_name": "SPARK UK MIDCO LIMITED",
+    "group_head_route": "sponsor",
+    "group_head_sponsors": [
+     "Cinven"
+    ],
+    "reads_cinven_as_owner": true,
+    "exited_per_research": false
+   },
+   "verdict": "route not actionable (uncertain); size flagship band; today reads Cinven as owner"
+  },
+  {
+   "name": "Objectway",
+   "company_number": "02760212",
+   "announced": "2025",
+   "deal_type": "primary (founder-led company)",
+   "sector": "Financial Services",
+   "outlier": true,
+   "outlier_reason": "Headquartered in Milan; Cinven tags the UK region because of UK operations; not a UK platform for back-testing",
+   "seller": "Founder and existing shareholders (to verify)",
+   "psc_before_deal_research": "",
+   "pre_deal": {
+    "period_end": "",
+    "turnover_gbp_m": null,
+    "operating_profit_gbp_m": null,
+    "ebitda_gbp_m": null,
+    "employees": null,
+    "accounts_type": "n/a (Italian group)"
+   },
+   "size_band_pre_deal": "unknown",
+   "register": {
+    "name": "OBJECTWAY LIMITED",
+    "status": "Active",
+    "category": "Private Limited Company",
+    "account_category": "FULL",
+    "sic1": "58290"
+   },
+   "point_in_time": {
+    "as_of": "2024-12-31",
+    "route": "foreign_parent",
+    "confidence": "medium",
+    "reason": "individual_owners_resident_abroad",
+    "owners": [
+     "Marciano Luigi"
+    ],
+    "sponsors": [],
+    "hold_years": null,
+    "walkup_path": null,
+    "psc_rows_seen": 1,
+    "actionable": true
+   },
+   "today": {
+    "in_universe": true,
+    "route": "sponsor",
+    "sponsors": [
+     "Cinven"
+    ],
+    "owners": [
+     "Cinven Capital Management (Sf2) General Partner Limited",
+     "Cinven Limited",
+     "Cinven Uk Sf2 General Partner"
+    ],
+    "hold_years": 1.0,
+    "group_head": "02760212",
+    "is_group_head": true,
+    "provisional": true,
+    "latest_turnover": null,
+    "ebitda_proxy": null,
+    "exclusion_reason": null,
+    "reads_cinven_as_owner": true,
+    "exited_per_research": false
+   },
+   "verdict": "route actionable (foreign_parent); size unknown; today reads Cinven as owner"
+  },
+  {
+   "name": "Flint Global",
+   "company_number": "09766786",
+   "announced": "2025-12",
+   "deal_type": "primary (majority investment from founders and partners; buys out Growth Capital Partners' 2021 minority)",
+   "sector": "Business Services",
+   "outlier": false,
+   "outlier_reason": null,
+   "seller": "Founders Ed Richards and Sir Simon Fraser, partners, and Growth Capital Partners (25 to 50% since Nov 2021)",
+   "psc_before_deal_research": "Project Spark Bidco Limited (from 2021-12-20); Project Spark Topco PSC Growth Capital Partners Nominees Limited (25 to 50%) 2021-11-16 to 2025-12-23; before 2021 founders Edward Richards and Simon Fraser (25 to 50% each) and Nigel Gardner",
+   "pre_deal": {
+    "period_end": "2024-12-31",
+    "turnover_gbp_m": 30.6,
+    "operating_profit_gbp_m": 9.2,
+    "ebitda_gbp_m": null,
+    "employees": 93,
+    "accounts_type": "full (Flint Global Ltd company accounts, filed 2025-10-04; FY23 turnover \u00a328.1M, operating profit \u00a38.3M; 93 employees excluding directors). Parquet (post-deal FY2025 filing): Flint Global Ltd profit \u00a312.4M, 111 employees; Project Spark Bidco FY2025 full accounts, profit \u00a36.1M"
+   },
+   "size_band_pre_deal": "too small (turnover only)",
+   "register": {
+    "name": "FLINT GLOBAL LTD",
+    "status": "Active",
+    "category": "Private Limited Company",
+    "account_category": "FULL",
+    "sic1": "70229"
+   },
+   "point_in_time": {
+    "as_of": "2025-11-30",
+    "route": "sponsor",
+    "confidence": "high",
+    "reason": "investor_psc_via_holdco",
+    "owners": [
+     "Growth Capital Partners Nominees Limited"
+    ],
+    "sponsors": [
+     "Capital Partners",
+     "Growth Capital Partners",
+     "Nominees"
+    ],
+    "hold_years": 4.0,
+    "walkup_path": "09766786 -> 13746867; 13746867 -> 13746222; 13746222 -> 13746076",
+    "psc_rows_seen": 5,
+    "actionable": true
+   },
+   "today": {
+    "in_universe": false,
+    "note": "candidate but failed a universe rule",
+    "reads_cinven_as_owner": false,
+    "exited_per_research": false
+   },
+   "verdict": "route actionable (sponsor); size too small (turnover only)"
+  }
+ ],
+ "source": "docs/research/03_uk_deals_companies_house.json"
+}

@@ -20,7 +20,7 @@ import re
 import polars as pl
 import yaml
 
-from src.common import REPO, get_logger, now_iso, parquet_exists, path, read_parquet
+from src.common import REPO, get_logger, now_iso, parquet_exists, path, read_parquet, read_parquet_where
 
 log = get_logger("site_export")
 DOCS = REPO / "docs"
@@ -114,7 +114,7 @@ def main():
     # accounts history: every period on file, consolidated preferred, newest first
     accounts = {}
     if parquet_exists("accounts_wide"):
-        aw = read_parquet("accounts_wide").filter(pl.col("company_number").is_in(numbers))
+        aw = read_parquet_where("accounts_wide", "company_number", numbers)
         acols = [c for c in ("company_number", "period_end", "comparative", "consolidated", "employees", "turnover", "gross_profit", "operating_profit", "pbt", "profit",
                              "depreciation", "amortisation", "net_assets", "cash", "bank_borrowings", "creditors_within_one_year", "creditors_after_one_year", "dividends",
                              "net_cash_from_ops", "accounts_type", "ebitda_stated") if c in aw.columns]
@@ -130,15 +130,15 @@ def main():
             if " -> " in hop:
                 chain_numbers.add(hop.split(" -> ")[1])
     if parquet_exists("psc"):
-        pdf = read_parquet("psc").filter(pl.col("company_number").is_in(numbers)).select(["company_number", "kind", "name", "natures_of_control", "notified_on", "ceased_on", "is_active",
-                                                                                                "corporate_reg_number", "country_registered", "legal_form", "nationality", "country_of_residence", "dob_year", "statement"])
+        pdf = read_parquet_where("psc", "company_number", numbers, ["company_number", "kind", "name", "natures_of_control", "notified_on", "ceased_on", "is_active",
+                                                                     "corporate_reg_number", "country_registered", "legal_form", "nationality", "country_of_residence", "dob_year", "statement"])
         for r in dicts(pdf.sort(["company_number", "is_active", "notified_on"], descending=[False, True, True])):
             n = r.pop("company_number")
             r["natures_of_control"] = [str(x).replace("ownership-of-shares-", "shares ").replace("voting-rights-", "votes ").replace("-percent", "%").replace("-", " ") for x in (r.get("natures_of_control") or [])]
             psc.setdefault(n, []).append(r)
     chain = {}
     if chain_numbers and parquet_exists("companies"):
-        cdf = read_parquet("companies").filter(pl.col("company_number").is_in(list(chain_numbers))).select(["company_number", "name", "inc_date", "account_category", "status", "category"])
+        cdf = read_parquet_where("companies", "company_number", chain_numbers, ["company_number", "name", "inc_date", "account_category", "status", "category"])
         chain = {r["company_number"]: r for r in dicts(cdf)}
     companies = {}
     for r in rankings:

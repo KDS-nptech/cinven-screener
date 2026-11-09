@@ -1,0 +1,59 @@
+{
+  "computed_at": "2026-11-09T19:41:32+00:00",
+  "rows": 45,
+  "ranked": 22,
+  "comparables": 23,
+  "by_sector_ranked": {
+    "business_services": 3,
+    "consumer": 2,
+    "financial_services": 2,
+    "healthcare": 3,
+    "industrials": 11,
+    "tmt": 1
+  },
+  "by_route_ranked": {
+    "employee_owned": 1,
+    "founder_family": 14,
+    "sponsor": 7
+  },
+  "size_fit_ranked": {
+    "flagship band": 1,
+    "mega-cap": 1,
+    "strategic fund band": 19,
+    "strategic fund band (turnover only)": 1
+  },
+  "by_sector_all": {
+    "business_services": 9,
+    "consumer": 8,
+    "financial_services": 3,
+    "healthcare": 4,
+    "industrials": 18,
+    "tmt": 3
+  },
+  "by_route_all": {
+    "employee_owned": 2,
+    "founder_family": 32,
+    "sponsor": 10,
+    "sponsor_offshore": 1
+  },
+  "size_fit_all": {
+    "flagship band": 1,
+    "mega-cap": 1,
+    "strategic fund band": 20,
+    "strategic fund band (turnover only)": 1,
+    "too small": 13,
+    "unknown": 9
+  },
+  "size_unverified_in_scope": 0,
+  "fit_quartiles_ranked": [
+    76.5,
+    88.1,
+    92.3
+  ],
+  "rubric_quartiles_ranked": [
+    50.0,
+    60.9,
+    71.2
+  ],
+  "rank_min_fit": 40
+}
