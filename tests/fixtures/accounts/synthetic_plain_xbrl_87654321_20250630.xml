@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xbrli:xbrl xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns:link="http://www.xbrl.org/2003/linkbase" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:iso4217="http://www.xbrl.org/2003/iso4217" xmlns:uk-gaap="http://www.xbrl.org/uk/gaap/core/2009-09-01" xmlns:uk-bus="http://www.xbrl.org/uk/cd/business/2009-09-01">
+  <link:schemaRef xlink:type="simple" xlink:href="http://www.xbrl.org/uk/gaap/core/2009-09-01/uk-gaap-full-2009-09-01.xsd"/>
+  <xbrli:context id="cy"><xbrli:entity><xbrli:identifier scheme="http://www.companieshouse.gov.uk/">87654321</xbrli:identifier></xbrli:entity><xbrli:period><xbrli:startDate>2024-07-01</xbrli:startDate><xbrli:endDate>2025-06-30</xbrli:endDate></xbrli:period></xbrli:context>
+  <xbrli:context id="cye"><xbrli:entity><xbrli:identifier scheme="http://www.companieshouse.gov.uk/">87654321</xbrli:identifier></xbrli:entity><xbrli:period><xbrli:instant>2025-06-30</xbrli:instant></xbrli:period></xbrli:context>
+  <xbrli:unit id="GBP"><xbrli:measure>iso4217:GBP</xbrli:measure></xbrli:unit>
+  <xbrli:unit id="pure"><xbrli:measure>xbrli:pure</xbrli:measure></xbrli:unit>
+  <uk-bus:UKCompaniesHouseRegisteredNumber contextRef="cy">87654321</uk-bus:UKCompaniesHouseRegisteredNumber>
+  <uk-bus:EntityCurrentLegalName contextRef="cy">Legacy Plain XBRL Ltd</uk-bus:EntityCurrentLegalName>
+  <uk-bus:BalanceSheetDate contextRef="cye">2025-06-30</uk-bus:BalanceSheetDate>
+  <uk-gaap:TurnoverGrossOperatingRevenue contextRef="cy" unitRef="GBP" decimals="0">3500000</uk-gaap:TurnoverGrossOperatingRevenue>
+  <uk-gaap:AverageNumberEmployeesDuringPeriod contextRef="cy" unitRef="pure" decimals="0">31</uk-gaap:AverageNumberEmployeesDuringPeriod>
+  <uk-gaap:CashBankInHand contextRef="cye" unitRef="GBP" decimals="0">-1200</uk-gaap:CashBankInHand>
+  <uk-gaap:NetAssetsLiabilitiesIncludingPensionAssetLiability contextRef="cye" unitRef="GBP" decimals="0">250000</uk-gaap:NetAssetsLiabilitiesIncludingPensionAssetLiability>
+</xbrli:xbrl>

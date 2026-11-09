@@ -1,0 +1,419 @@
+# Cinven Screener configuration. Every target criterion lives here so the bar moves without
+# code changes. Dates are ISO; money is GBP unless the key says otherwise. Calibration figures
+# come from docs/research (the measured entry profile) and are revised there first.
+
+build:
+  as_of_date: "2026-11-09"
+  country: "GB"
+  snapshot_basic: "BasicCompanyDataAsOneFile-2026-11-01.zip"
+  snapshot_psc_file: "persons-with-significant-control-snapshot-2026-11-09.zip"
+  snapshot_psc_date: "2026-11-09"
+  snapshot_psc_parts: 33
+  accounts_monthly:
+    - November2025
+    - December2025
+    - January2026
+    - February2026
+    - March2026
+    - April2026
+    - May2026
+    - June2026
+    - July2026
+    - August2026
+    - September2026
+    - October2026
+  accounts_daily_from: "2026-11-01"   # day after the last monthly archive; dailies only fill the gap
+
+paths:
+  raw: data/raw
+  cache: data/cache
+  parquet: data/parquet
+  duckdb: data/screener.duckdb
+  docs: docs
+
+target:
+  status: "Active"
+  # Candidates for the accounts filter: Active companies whose last accounts were filed in a
+  # large-company category. Small, micro, dormant and abridged filers cannot be at Cinven's scale.
+  candidate_account_categories: ["FULL", "GROUP", "MEDIUM"]
+  incorporated_on_or_before: "2021-11-01"     # five years of filings
+  exclude_account_categories: ["MICRO ENTITY", "DORMANT", "NO ACCOUNTS FILED", "SMALL", "TOTAL EXEMPTION SMALL", "UNAUDITED ABRIDGED", "FILLETED"]
+  # SIC codes that never describe an operating business a buyout fund would buy on its own:
+  # banks, insurers' regulated carriers, pension funds, trusts, public administration, SPVs.
+  # Holding-company codes (64209, 70100) are kept because PE-owned groups file group accounts
+  # under a Topco with exactly those codes.
+  exclude_sic: ["64110", "64191", "64192", "64205", "64301", "64302", "64303", "64304", "64305", "64306", "65110", "65120", "65201", "65202", "65300", "84110", "84120", "84130", "84210", "84220", "84230", "84240", "84250", "84300", "94110", "94120", "94200", "94910", "94920", "94990", "97000", "98000", "98100", "98200", "99000", "99999"]
+  sectors: ["business_services", "consumer", "financial_services", "healthcare", "industrials", "tmt"]
+  force_include: []    # back-test companies carried as comparables; filled from docs/research/03 once it lands
+  # Size band, provisional until the measured entry profile (docs/research/02) lands. Cinven's
+  # flagship fund writes equity cheques of roughly EUR 200M to 1B into companies with EV of
+  # roughly EUR 500M to 5B; at 8x to 14x EBITDA that is EBITDA of ~GBP 30M to 350M and turnover
+  # of ~GBP 150M upwards. Universe floor is set lower so smaller platforms stay as comparables.
+  universe_turnover_min_gbp: 50000000
+  universe_employees_min: 150
+  universe_employees_max: 500000
+  rank_turnover_min_gbp: 150000000
+  ebitda_target_min_gbp: 30000000
+  ebitda_target_max_gbp: 400000000
+  ebitda_early_floor_gbp: 15000000
+
+# Theme maps: every company in the universe whose site uses a theme's vocabulary, founder-owned or
+# not, so a sourcing team that works by end market can see all the players at once. Keyword scan on
+# the fetched site text, no model call; the matching sentence is shown as the evidence. Themes chosen
+# to match Brighton Park's published portfolio (Canary: hospitality; HITRUST: GRC) and the London
+# team's stated sourcing interests.
+themes:
+  min_distinct: 3
+  min_total: 5
+  list:
+    property_management:
+      label: "Property management"
+      keywords: [property management, lettings, letting agent, landlord, tenant, tenancy, block management, estate agent, residential property, commercial property, housing association, social housing, facilities management, rent collection, property portfolio, leasehold, service charge, building safety, real estate software, proptech, deposit protection, right to rent, inventory inspection, maintenance requests]
+    contractor_compliance:
+      label: "Contractor compliance and payroll"
+      keywords: [contractor, ir35, umbrella company, umbrella payroll, construction industry scheme, right to work, worker compliance, agency worker, temporary workers, timesheet, timesheets, payroll, payroll software, workforce compliance, pay and bill, recruitment agency software, back office for recruitment, supplier compliance, subcontractor, off-payroll, employment status, auto-enrolment, hmrc recognised]
+    tax_accounting:
+      label: "Tax and accounting software"
+      keywords: [tax software, making tax digital, corporation tax, vat return, vat returns, self assessment, tax return, tax returns, accounting software, accountancy practice, practice management for accountants, bookkeeping, bookkeeping software, year-end accounts, ixbrl, hmrc, tax compliance, r&d tax, capital allowances, tax relief, payroll year end, cloud accounting, audit software, trust accounting]
+    hospitality:
+      label: "Hospitality software"
+      keywords: [hotel, hotels, hospitality, guest experience, property management system, channel manager, booking engine, restaurant, epos, table management, hotel management, guest messaging, contactless check-in, front desk, housekeeping, revenue management for hotels, holiday park, pub, bar management]
+
+ownership:
+  # Stage 3 rules, applied in order. See docs/methodology.md.
+  statement_kinds:
+    - "no-individual-or-entity-with-signficant-control"   # register typo is real
+    - "no-individual-or-entity-with-significant-control"
+    - "psc-exists-but-not-identified"
+    - "steps-to-find-psc-not-yet-completed"
+  high_confidence_band: "ownership-of-shares-75-to-100-percent"
+  band_midpoints:
+    "ownership-of-shares-25-to-50-percent": 37.5
+    "ownership-of-shares-50-to-75-percent": 62.5
+    "ownership-of-shares-75-to-100-percent": 87.5
+    "ownership-of-shares-more-than-25-percent-registered-overseas-entity": 37.5
+  combined_high_pct: 75
+  combined_medium_pct: 50
+  max_individual_pscs: 3
+  director_within_months_of_incorporation: 12
+  holdco_walkup_levels: 3
+  sh01_investor_threshold: 3
+  share_premium_investor_threshold_gbp: 500000
+  investor_name_tokens:
+    - "Nominees"
+    - "Trustees"
+    - " LP"
+    - "L.P."
+    - "Fund"
+    - "Capital Partners"
+    - "Ventures"
+    - "Growth Partners"
+    - "Equity Partners"
+    - "Private Equity"
+    - "Investments LLP"
+  investor_names:
+    - "Hg"
+    - "HgCapital"
+    - "Livingbridge"
+    - "Kennet"
+    - "Inflexion"
+    - "LDC"
+    - "Lloyds Development Capital"
+    - "BGF"
+    - "Business Growth Fund"
+    - "Mercia"
+    - "Synova"
+    - "Tenzing"
+    - "ECI Partners"
+    - "Growth Capital Partners"
+    - "Bowmark"
+    - "Horizon Capital"
+    - "YFM"
+    - "Maven Capital"
+    - "Octopus"
+    - "Frog Capital"
+    - "Notion Capital"
+    - "Index Ventures"
+    - "Accel"
+    - "Balderton"
+    - "Dawn Capital"
+    - "Eight Roads"
+    - "Highland Europe"
+    - "Insight Partners"
+    - "Vitruvian"
+    - "Bridgepoint"
+    - "Apax"
+    - "Cinven"
+    - "Permira"
+    - "CVC"
+    - "Advent"
+    - "Montagu"
+    - "Equistone"
+    - "Phoenix Equity"
+    - "Palatine"
+    - "NorthEdge"
+    - "Endless"
+    - "Rutland Partners"
+    - "Sovereign Capital"
+    - "August Equity"
+    - "Graphite Capital"
+    - "Beech Tree"
+    - "FPE Capital"
+    - "Foresight"
+    - "Puma"
+    - "Gresham House"
+    - "Praetura"
+    - "Par Equity"
+    - "Scottish Equity Partners"
+    - "Mobeus"
+    - "Connection Capital"
+    - "Literacy Capital"
+    - "ScaleUp Capital"
+    - "Blackstone"
+    - "KKR"
+    - "Carlyle"
+    - "TA Associates"
+    - "Vista"
+    - "Thoma Bravo"
+    - "Francisco Partners"
+    - "Warburg Pincus"
+    - "General Atlantic"
+    - "Summit Partners"
+    - "Brighton Park"
+    - "Cow Corner"
+    - "Marlin Equity"
+    - "Battery Ventures"
+    - "Bain Capital"
+    - "Silversmith"
+    - "Spectrum Equity"
+    - "Partners Group"
+    - "EQT"
+    - "Nordic Capital"
+    - "Verdane"
+    - "Volpi"
+    - "Hambro Perks"
+    - "MMC Ventures"
+    - "Molten"
+    - "Draper Esprit"
+    - "Northzone"
+    - "Felix Capital"
+    - "Atomico"
+    - "Passion Capital"
+    - "LocalGlobe"
+    - "Seedcamp"
+    - "Episode 1"
+    - "Amadeus Capital"
+    - "IQ Capital"
+    - "Nauta"
+    - "Oxford Capital"
+    - "Parkwalk"
+    - "Albion"
+    - "Calculus"
+    - "Downing"
+    - "Guinness"
+    - "Triple Point"
+    - "Pembroke"
+    - "Fuel Ventures"
+    - "Ascension"
+    - "SFC Capital"
+    - "Haatch"
+    - "Jenson"
+    - "Blackfinch"
+    - "Deepbridge"
+    - "Committed Capital"
+    - "Wealth Club"
+    - "Access VC"
+    - "Nesta"
+    - "Innovate UK"
+    - "British Business Bank"
+    - "Future Fund"
+
+api:
+  companies_house_base: "https://api.company-information.service.gov.uk"
+  companies_house_per_window: 580
+  companies_house_window_seconds: 300
+  companies_house_key_env: "CH_API_KEY"
+  fca_base: "https://register.fca.org.uk/services/V0.1"
+  fca_key_env: "FCA_API_KEY"
+  fca_email_env: "FCA_API_EMAIL"
+  adzuna_app_id_env: "ADZUNA_APP_ID"
+  adzuna_key_env: "ADZUNA_APP_KEY"
+  # LLM: a pool of OpenAI-compatible chat endpoints used round-robin; a provider that returns
+  # 429 is cooled down and the next one takes the call. Keys live in .env under key_env.
+  llm_providers:
+    - name: gemini
+      base_url: "https://generativelanguage.googleapis.com/v1beta/openai"
+      model: "gemini-3.5-flash-lite"
+      key_env: "GEMINI_API_KEY"
+      requests_per_second: 0.25
+    - name: gemini31lite
+      base_url: "https://generativelanguage.googleapis.com/v1beta/openai"
+      model: "gemini-3.1-flash-lite"
+      key_env: "GEMINI_API_KEY"
+      requests_per_second: 0.2
+    - name: gemini35flash
+      base_url: "https://generativelanguage.googleapis.com/v1beta/openai"
+      model: "gemini-3.5-flash"
+      key_env: "GEMINI_API_KEY"
+      requests_per_second: 0.15
+    - name: gemini_k2
+      base_url: "https://generativelanguage.googleapis.com/v1beta/openai"
+      model: "gemini-3.5-flash-lite"
+      key_env: "GEMINI_API_KEY_2"
+      requests_per_second: 0.25
+    - name: gemini31lite_k2
+      base_url: "https://generativelanguage.googleapis.com/v1beta/openai"
+      model: "gemini-3.1-flash-lite"
+      key_env: "GEMINI_API_KEY_2"
+      requests_per_second: 0.2
+    - name: gemini_k3
+      base_url: "https://generativelanguage.googleapis.com/v1beta/openai"
+      model: "gemini-3.5-flash-lite"
+      key_env: "GEMINI_API_KEY_3"
+      requests_per_second: 0.25
+    - name: gemini31lite_k3
+      base_url: "https://generativelanguage.googleapis.com/v1beta/openai"
+      model: "gemini-3.1-flash-lite"
+      key_env: "GEMINI_API_KEY_3"
+      requests_per_second: 0.2
+    - name: mistral
+      base_url: "https://api.mistral.ai/v1"
+      model: "mistral-small-latest"
+      key_env: "MISTRAL_API_KEY"
+      requests_per_second: 0.9
+    - name: groq
+      base_url: "https://api.groq.com/openai/v1"
+      model: "llama-3.3-70b-versatile"
+      key_env: "GROQ_API_KEY"
+      requests_per_second: 0.4
+  llm_key_env: "LLM_API_KEY"              # legacy single-provider fallback
+  llm_temperature: 0
+  llm_max_tokens: 1500
+
+websites:
+  user_agent: "UKSoftwareScreener/0.1 (research; contact via Companies House filings)"
+  max_pages: 5
+  max_chars: 12000
+  page_tokens: [product, platform, solutions, features, integrations, customers, pricing, about, careers, api, developers]
+  concurrency: 2
+  directory_domains: [companieshouse.gov.uk, find-and-update.company-information.service.gov.uk, endole.co.uk, companycheck.co.uk, opencorporates.com, duedil.com, linkedin.com, facebook.com, twitter.com, x.com, instagram.com, youtube.com, glassdoor.co.uk, glassdoor.com, indeed.co.uk, indeed.com, crunchbase.com, bloomberg.com, zoominfo.com, dnb.com, creditsafe.com, checkcompany.co.uk, bizdb.co.uk, companieslist.co.uk, company-information.service.gov.uk, thegazette.co.uk, 192.com, yell.com, cylex-uk.co.uk, wikipedia.org, beauhurst.com, pitchbook.com, globaldatabase.com, companies-house-data.co.uk, reportingaccounts.com, companydirectorcheck.com, ukcompanydata.co.uk]
+
+accounts:
+  # FRC taxonomy concept names (local names, any prefix). Confirmed on first parsed batch.
+  concepts:
+    employees: [AverageNumberEmployeesDuringPeriod]
+    turnover: [TurnoverRevenue, Revenue]
+    trade_debtors: [TradeDebtorsTradeReceivables]
+    accrued_deferred_income: [AccruedLiabilitiesDeferredIncome, AccruedLiabilitiesNotExpressedWithinCreditorsSubtotal, DeferredIncome]
+    tax_social_security: [TaxationSocialSecurityPayable, OtherTaxationSocialSecurityPayable]
+    corp_tax: [CorporationTaxPayable, TaxationIncludingDeferredTaxationBalanceSheetSubtotal]
+    cash: [CashBankOnHand, CashBankInHand]
+    net_assets: [NetAssetsLiabilities]
+    equity: [Equity]
+    profit: [ProfitLoss, ProfitLossForPeriod]
+    gross_profit: [GrossProfitLoss]
+    creditors_within_one_year: [Creditors]
+    share_capital: [EquityShareCapital, CalledUpShareCapital]
+    share_premium: [SharePremium]
+    retained_earnings: [RetainedEarningsAccumulatedLosses]
+
+estimator:
+  training_employees_min: 15
+  training_employees_max: 800
+  training_turnover_min: 250000
+  training_period_from: "2022-01-01"
+  headcount_bands: [[15, 50], [50, 150], [150, 400]]
+  lgbm:
+    n_estimators: 500
+    learning_rate: 0.03
+    num_leaves: 31
+    min_child_samples: 40
+    monotone_employees: 1
+  folds: 5
+  fallback_band_pct: 40
+  derived_gross_margin: [0.70, 0.85]
+  tier_a_lookback_years: 3
+  revenue_per_head_anchor_usd:
+    saas_capital_2026_median: 141000
+    bootstrapped_5_10m: 177000
+    equity_backed_5_10m: 152000
+
+jobs:
+  function_keywords:
+    engineering: [engineer, developer, devops, sre, architect, qa, test, software, backend, frontend, full stack, fullstack, platform, infrastructure, security engineer]
+    product: [product manager, product owner, product designer, ux, ui designer, head of product]
+    data_ai: [data scientist, machine learning, ml engineer, ai engineer, data engineer, analytics engineer, llm, nlp, research scientist]
+    sales: [sales, account executive, business development, bdr, sdr, account manager, partnerships, revenue]
+    marketing: [marketing, content, seo, demand generation, growth, brand, communications]
+    customer_success: [customer success, support, implementation, onboarding, solutions consultant, customer experience, service desk]
+    finance: [finance, accountant, financial controller, cfo, fp&a, payroll]
+    operations: [operations, people, hr, talent, recruiter, office, legal, compliance officer, admin]
+  ai_title_regex: "\\b(AI|ML|machine learning|LLM|data scientist|generative)\\b"
+  senior_commercial_regex: "\\b(VP Sales|Vice President Sales|Chief Revenue|CRO|CFO|Chief Financial|Head of Partnerships|Chief Commercial)\\b"
+
+rubric:
+  # Adapted from Mark Dzialga, "Software Moats are Eroding: A Framework for Stress
+  # Testing Your Software Portfolio", bpc.com, 19 Feb 2026. Weights are ours.
+  source_url: "https://www.bpc.com/insights/a-framework-for-evaluating-software-exposure-to-ai"
+  source_label: "Adapted from Mark Dzialga, Brighton Park Capital, Feb 2026. Weights are ours."
+  prompt_version: "rubric-v1"
+  min_unscored_for_grey: 2
+  weights:
+    1: 0.10   # Control plane
+    2: 0.10   # AI-ready architecture
+    3: 0.10   # Metrics that matter
+    4: 0.05   # Leading indicators
+    5: 0.05   # Category creating vs feature defending
+    6: 0.20   # Stickiness from value
+    7: 0.05   # Roll-up exposure
+    8: 0.15   # Cost of workflow failure
+    9: 0.05   # Cyber, trust and governance
+    10: 0.15  # Vertical and regulatory depth
+  dimension_names:
+    1: "Control plane"
+    2: "AI-ready architecture"
+    3: "Metrics that matter"
+    4: "Leading indicators"
+    5: "Category creating vs feature defending"
+    6: "Stickiness from value"
+    7: "Roll-up exposure"
+    8: "Cost of workflow failure"
+    9: "Cyber, trust and governance"
+    10: "Vertical and regulatory depth"
+
+investability:
+  size_points: 30
+  growth_points: 25
+  hiring_points: 15
+  leverage_points: 15
+  data_quality_points: 15
+  growth_full_cagr: 0.20
+  hiring_full_share: 0.10
+  leverage_recent_charge_months: 18
+  size_falloff_factor: 3    # score hits zero at band edge / factor below or edge * factor above
+
+classifier:
+  prompt_version: "classify-v1"
+  prefilter_min_hits: 1
+  keywords:
+    compliance_grc: [compliance, regulatory, regtech, "anti-money laundering", aml, kyc, "know your customer", "financial crime", sanctions, "risk register", grc, governance, audit, "policy management", esg, whistleblow, "due diligence", "regulatory reporting", "fraud prevention", "identity verification", "transaction monitoring", gdpr, "data protection", "information security", iso 27001, cyber, "security awareness", "penetration testing", "vulnerability"]
+    fintech_financial: [payments, payment, lending, loan, credit, mortgage, wealth, "financial adviser", "financial advice", "fund administration", insurance, insurtech, broker, accounting, bookkeeping, tax, treasury, "open banking", banking, fintech, invoice, "expense management", pension, investment platform, trading, "asset management", "capital markets", reconciliation, ledger]
+    healthcare: [nhs, clinical, patient, "care home", "domiciliary care", "social care", pharmacy, medication, gp, "general practice", hospital, "electronic patient record", epr, "practice management", dental, veterinary, "life sciences", "clinical trial", pharmaceutical, "medical device", health, healthcare, "mental health", carers, "care management"]
+
+backtests:
+  - name: PortSwigger
+    company_number: "06719143"
+    town: Knutsford
+    expect: "Tier A filed turnover; strong on 6 and 9; founder-owned pre-2024 with 2024 investor shown"
+  - name: usecure
+    company_number: "10113345"
+    town: Manchester
+    expect: "Tier C band contains ~GBP 3M for the period before Kennet's July 2025 round"
+  - name: Person Centred Software
+    company_number: "08539732"
+    town: Guildford
+    expect: "Excluded by investor rule (Cow Corner), shown as comparable; high on 6, 8, 10"
+  - name: Camascope
+    company_number: "09544682"
+    town: null
+    expect: "High on 6, 8, 10"

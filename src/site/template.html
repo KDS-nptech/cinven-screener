@@ -1,0 +1,670 @@
+<title>BPC AI Screener (Beta)</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a dark-blue left rail of views on desktop, a top strip on phones; content on white in a 1320px column.
+   Brand: Brighton Park's own system (Merriweather serif headings at regular weight, DM Sans body, dark blue #012130,
+   blue #105063, green #44d2b8, orange #fd623b, grey #c5d3dd, light #f4f9ff), applied through tokens so both themes hold.
+   Register conventions kept: company numbers, SIC codes, filing types and financial years as filed. */
+:root{
+  --bg:#ffffff; --panel:#ffffff; --fg:#012130; --muted:#5d6c7b; --line:#dce6ee; --soft:#f4f9ff;
+  --accent:#105063; --accent-ink:#ffffff; --warn:#fd623b; --good:#2bb89a; --grey:#9fb0bd; --bar:#e4ecf3;
+  --rail:#012130; --rail-fg:#ffffff; --rail-muted:#9fb6c3; --rail-active:#44d2b8; --green:#44d2b8;
+  --display:"Merriweather",Georgia,"Times New Roman",serif; --body:"DM Sans","Helvetica Neue",Arial,sans-serif; --mono:"DM Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --bg:#0a1a24; --panel:#0f2330; --fg:#eef4f7; --muted:#9fb6c3; --line:#1f3642; --soft:#132b38; --accent:#44d2b8; --accent-ink:#012130; --warn:#ff8a66; --good:#44d2b8; --grey:#6f8694; --bar:#1f3642; --rail:#061520; --rail-fg:#ffffff; --rail-muted:#9fb6c3; --rail-active:#44d2b8; color-scheme:dark } }
+:root[data-theme="dark"]{ --bg:#0a1a24; --panel:#0f2330; --fg:#eef4f7; --muted:#9fb6c3; --line:#1f3642; --soft:#132b38; --accent:#44d2b8; --accent-ink:#012130; --warn:#ff8a66; --good:#44d2b8; --grey:#6f8694; --bar:#1f3642; --rail:#061520; --rail-fg:#ffffff; --rail-muted:#9fb6c3; --rail-active:#44d2b8; color-scheme:dark }
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.5;margin:0}
+a{color:var(--accent)}
+h1,h2,h3{font-family:var(--display);font-weight:400;letter-spacing:-0.005em;text-wrap:balance;margin:0;line-height:1.25}
+h1{font-size:2rem} h2{font-size:1.4rem;margin-block:1.8rem .6rem} h3{font-size:1.05rem;margin-block:1rem .4rem;font-weight:700}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.app{display:grid;grid-template-columns:228px minmax(0,1fr);min-height:100%}
+nav.rail{background:var(--rail);color:var(--rail-fg);padding:1.3rem 1rem;position:sticky;top:env(safe-area-inset-top,0px);height:100vh;display:flex;flex-direction:column;gap:.25rem}
+nav.rail .brand{font-family:var(--display);font-size:1.1rem;font-weight:400;margin-bottom:1.2rem;line-height:1.3;color:var(--rail-fg)}
+nav.rail .brand .beta{display:inline-block;margin-left:.35rem;font-family:var(--body);font-size:.68rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--rail-active);border:1px solid var(--rail-active);border-radius:999px;padding:.05rem .45rem;vertical-align:middle}
+nav.rail a{display:block;padding:.5rem .7rem;border-radius:999px;color:var(--rail-fg);text-decoration:none;font-weight:500}
+nav.rail a:hover{background:rgba(255,255,255,.08)}
+nav.rail a.active{background:var(--rail-active);color:var(--rail)}
+nav.rail .foot{margin-top:auto;font-size:.78rem;color:var(--rail-muted);line-height:1.45}
+main{padding-block:1.6rem 3rem;padding-inline:clamp(16px,3vw,40px);max-width:1360px;min-width:0}
+main.wide{max-width:none}
+table.fit{table-layout:fixed;width:100%} table.fit td{overflow-wrap:anywhere;white-space:normal} table.fit th{white-space:normal}
+.sub{display:block;font-size:.78rem;color:var(--muted);font-weight:400}
+@media (max-width:1100px){ table.fit{table-layout:auto;min-width:1100px} }
+.eyebrow{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--green);font-weight:700}
+.lead{color:var(--muted);max-width:70ch;font-size:1rem}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:.8rem;margin-block:1rem}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:.9rem 1rem;min-width:0}
+.tile .k{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;font-weight:600}
+.tile .v{font-family:var(--display);font-size:1.75rem;font-weight:400;line-height:1.15;margin-top:.25rem}
+.tile .s{font-size:.8rem;color:var(--muted);margin-top:.25rem}
+.filters{display:flex;flex-wrap:wrap;gap:.6rem 1rem;align-items:end;background:var(--soft);border:1px solid var(--line);border-radius:16px;padding:.9rem 1rem;margin-block:.8rem}
+.filters label{display:flex;flex-direction:column;gap:.2rem;font-size:.76rem;color:var(--muted);font-weight:600}
+.filters input,.filters select{font:inherit;font-size:.9rem;font-weight:400;padding:.4rem .55rem;border:1px solid var(--line);border-radius:10px;background:var(--panel);color:var(--fg);min-width:0}
+.filters input[type=checkbox],.filters input[type=range]{width:auto;accent-color:var(--accent)}
+.filters .chk{flex-direction:row;align-items:center;gap:.4rem;padding-bottom:.35rem;font-weight:500}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:16px;background:var(--panel)}
+table{border-collapse:collapse;width:100%;font-size:.88rem}
+th,td{padding:.5rem .65rem;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+th{position:sticky;top:0;background:var(--soft);font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);white-space:nowrap;cursor:pointer;font-weight:700}
+th.sorted::after{content:" \25BE";color:var(--accent)} th.sorted.asc::after{content:" \25B4"}
+tr.row{cursor:pointer} tr.row:hover td{background:var(--soft)}
+td.r,th.r{text-align:right}
+.bar{position:relative;height:9px;background:var(--bar);border-radius:999px;min-width:40px}
+.bar i{position:absolute;inset:0 auto 0 0;background:var(--accent);border-radius:999px}
+.bar.grey i{background:var(--grey)} .bar.green i{background:var(--green)}
+.pill{display:inline-block;font-size:.72rem;font-weight:600;padding:.12rem .55rem;border-radius:999px;border:1px solid var(--line);background:var(--soft);white-space:nowrap}
+.pill.core{border-color:var(--good);color:var(--good)} .pill.early{border-color:var(--warn);color:var(--warn)} .pill.below,.pill.toosmall{color:var(--muted)}
+.pill.upper{border-color:var(--accent);color:var(--accent)}
+.vert{display:inline-block;width:.6rem;height:.6rem;border-radius:50%;margin-right:.3rem;vertical-align:-1px}
+.v-compliance_grc{background:#105063} .v-fintech_financial{background:#fd623b} .v-healthcare{background:#44d2b8} .v-other{background:#9fb0bd}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:1.2rem;align-items:start}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:1.1rem 1.2rem;min-width:0}
+.card h3{margin-top:0}
+.card.dark{background:var(--rail);color:var(--rail-fg);border-color:var(--rail)} .card.dark h3,.card.dark .small,.card.dark .eyebrow{color:var(--rail-fg)} .card.dark .small{opacity:.85} .card.dark a{color:var(--green)}
+.quote{border-left:3px solid var(--green);padding:.3rem .9rem;margin:.6rem 0;color:var(--muted);font-style:italic;font-family:var(--display);font-size:.95rem}
+.quote a{font-style:normal;font-size:.85rem;font-family:var(--body)}
+.why{display:flex;flex-direction:column;gap:.55rem}
+.why .sig{display:grid;grid-template-columns:1.4rem minmax(0,1fr);gap:.4rem}
+.why .dot{width:.8rem;height:.8rem;border-radius:50%;margin-top:.35rem}
+.dot.approach{background:var(--good)} .dot.caution{background:var(--warn)} .dot.context{background:var(--grey)}
+.why .lbl{font-weight:600} .why .det{font-size:.88rem;color:var(--muted)}
+details{border:1px solid var(--line);border-radius:10px;padding:.45rem .8rem;margin:.3rem 0;background:var(--soft)}
+summary{cursor:pointer;font-weight:600;font-size:.9rem}
+.rub{display:grid;grid-template-columns:minmax(0,1fr) 120px 2rem;gap:.5rem;align-items:center;font-size:.88rem;margin:.25rem 0}
+.rub .bar{height:11px}
+.rub .bar.high i{background:var(--good)} .rub .bar.medium i{background:var(--warn)} .rub .bar.low i{background:var(--grey)}
+.kv{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:.2rem .8rem;font-size:.9rem}
+.kv .k{color:var(--muted)}
+.small{font-size:.84rem;color:var(--muted)}
+.note{background:var(--soft);border-radius:12px;padding:.7rem .9rem;font-size:.9rem;border:1px solid var(--line)}
+svg text{fill:var(--fg);font-family:var(--mono);font-size:11px}
+.back{display:inline-block;margin-bottom:.8rem;font-size:.9rem;font-weight:600}
+.stack{display:flex;flex-direction:column;gap:1.2rem}
+.cols3{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:1rem}
+.btn{font:inherit;font-size:.85rem;font-weight:600;padding:.45rem .95rem;border:1px solid var(--fg);border-radius:999px;background:var(--panel);color:var(--fg);cursor:pointer}
+.btn.primary{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.btn.on{background:var(--green);color:var(--rail);border-color:var(--green)}
+.btn:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:2px solid var(--green);outline-offset:2px}
+.hint{font-size:.8rem;color:var(--muted)}
+.toolbar{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin-block:.6rem}
+.weights{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:.4rem 1.2rem;font-size:.84rem}
+.weights label{display:grid;grid-template-columns:minmax(0,1fr) 90px 3rem;gap:.5rem;align-items:center;font-weight:500;color:var(--fg)}
+.weights input[type=range]{width:90px;margin:0}
+textarea.brief{width:100%;min-height:220px;font:inherit;font-size:.9rem;padding:.7rem .8rem;border:1px solid var(--line);border-radius:12px;background:var(--panel);color:var(--fg);resize:vertical}
+.memo{max-width:76ch}
+.memo p{margin:.5rem 0}
+.star{cursor:pointer;color:var(--grey);font-size:1.1rem;line-height:1;user-select:none} .star.on{color:var(--warn)}
+@media (max-width:860px){
+  .app{grid-template-columns:1fr}
+  nav.rail{position:static;height:auto;flex-direction:row;flex-wrap:wrap;border-right:0;padding:.8rem 16px;gap:.25rem}
+  nav.rail .brand{width:100%;margin-bottom:.4rem} nav.rail .foot{display:none}
+  nav.rail a{padding:.35rem .7rem;font-size:.9rem}
+}
+@media (prefers-reduced-motion: reduce){ *{transition:none !important;animation:none !important} }
+</style>
+
+<div class="app">
+  <nav class="rail" id="nav">
+    <div class="brand">BPC AI Screener<span class="beta">Beta</span></div>
+    <a href="#ranked" data-view="ranked">Ranked</a>
+    <a href="#funnel" data-view="funnel">Funnel</a>
+    <a href="#themes" data-view="themes">Themes</a>
+    <a href="#methods" data-view="methods">Methods</a>
+    <a href="#calibration" data-view="calibration">Calibration</a>
+    <a href="#shortlist" data-view="shortlist">Shortlist</a>
+    <a href="#lookup" data-view="lookup">Look up a company</a>
+    <div class="foot" id="foot"></div>
+  </nav>
+  <main id="main"></main>
+</div>
+
+<script id="screener-data" type="application/json">__DATA__</script>
+<script>
+(function(){
+const D = JSON.parse(document.getElementById('screener-data').textContent);
+const VERT = {compliance_grc:'Compliance & GRC', fintech_financial:'Fintech & financial', healthcare:'Healthcare', other:'Other'};
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const title = s => String(s||'').toLowerCase().replace(/(^|\s|\(|-|')([a-z])/g, (m,p,c)=>p+c.toUpperCase());
+const gbp = v => v==null ? 'n/a' : (Math.abs(v)>=1e6 ? '£'+(v/1e6).toFixed(1)+'M' : Math.abs(v)>=1e3 ? '£'+(v/1e3).toFixed(0)+'k' : '£'+Math.round(v));
+const num = (v,d=0) => v==null||isNaN(v) ? 'n/a' : Number(v).toLocaleString('en-GB',{maximumFractionDigits:d});
+const date = v => v ? String(v).slice(0,10) : '';
+const pct = v => v==null ? 'n/a' : Math.round(v*100)+'%';
+const bar = (v,max,cls='') => `<div class="bar ${cls}" title="${v==null?'n/a':num(v,1)}"><i style="width:${v==null?0:Math.max(0,Math.min(100,100*v/max))}%"></i></div>`;
+const pill = v => { const k=(v||'unknown').replace(' ',''); return `<span class="pill ${esc(k)}">${esc(v||'unknown')}</span>`; };
+const vdot = v => `<span class="vert v-${esc(v||'other')}"></span>${esc(VERT[v]||v||'')}`;
+const fitLabel = {fit_all:'Measured, US + UK portfolio', fit_uk:'Measured, UK portfolio only', size_fit:'Cheque-size inference (p50 revenue)'};
+const main = $('#main');
+$('#foot').textContent = 'Built ' + (D.built_at||'').slice(0,16).replace('T',' ') + ' UTC. Companies House data under the Open Government Licence.';
+
+// ------------------------------------------------------------ per-viewer state: custom weights, shortlist, notes
+const DEFAULT_W = Object.fromEntries(Object.entries(D.config.rubric.weights).map(([k,v])=>[Number(k), v]));
+const DIMS = Object.keys(D.config.rubric.dimension_names).map(Number);
+const store = { get(k, d){ try { const v = localStorage.getItem('bpc-'+k); return v==null ? d : JSON.parse(v); } catch(e){ return d; } }, set(k, v){ try { localStorage.setItem('bpc-'+k, JSON.stringify(v)); } catch(e){} } };
+let weights = Object.assign({}, DEFAULT_W, store.get('weights', {}));
+let shortlist = new Set(store.get('shortlist', []));
+let notes = store.get('notes', {});
+// Investability components and their maximum points (they sum to 100 at the default weights).
+const IMAX = {size: D.config.investability.size_points, growth: D.config.investability.growth_points, hiring: D.config.investability.hiring_points, leverage: D.config.investability.leverage_points, data_quality: D.config.investability.data_quality_points};
+const ILABEL = {size: 'Size', growth: 'Growth', hiring: 'Hiring', leverage: 'Financial leverage', data_quality: 'Data reliability'};
+const IKEYS = Object.keys(IMAX);
+let iweights = Object.assign({}, IMAX, store.get('iweights', {}));
+let rankBy = store.get('rankBy', 'durability');
+const durCustom = () => DIMS.some(k => Math.abs((weights[k]||0) - DEFAULT_W[k]) > 1e-9);
+const invCustom = () => IKEYS.some(k => Math.abs((iweights[k]||0) - IMAX[k]) > 1e-9);
+const weightsCustom = () => durCustom() || invCustom() || rankBy !== 'durability';
+function investabilityFor(r){
+  if (!r.investability_components_json) return r.investability_base ?? null;
+  let comp; try { comp = JSON.parse(r.investability_components_json); } catch(e){ return r.investability_base ?? null; }
+  const wsum = IKEYS.reduce((a,k)=>a+(iweights[k]||0), 0); if (!wsum) return null;
+  const v = IKEYS.reduce((a,k)=>a+(iweights[k]||0)*((comp[k]||0)/IMAX[k]), 0) / wsum;
+  return Math.round(v*1000)/10;
+}
+function durabilityFor(n){
+  const c = D.companies[n]; if (!c) return null;
+  const sc = c.scores.filter(x => x.score != null);
+  if (!sc.length) return null;
+  const wsum = sc.reduce((a,x)=>a+(weights[x.dimension]||0), 0); if (!wsum) return null;
+  const wm = sc.reduce((a,x)=>a+(weights[x.dimension]||0)*x.score, 0) / wsum;
+  return Math.round((wm-1)/4*1000)/10;
+}
+function applyWeights(){
+  for (const r of D.rankings){
+    r.durability_score = durCustom() ? durabilityFor(r.company_number) : r.durability_base;
+    r.investability_score = invCustom() ? investabilityFor(r) : r.investability_base;
+  }
+  const byDur = (a,b)=>(b.durability_score??-1)-(a.durability_score??-1) || (b.investability_score??-1)-(a.investability_score??-1);
+  const byInv = (a,b)=>(b.investability_score??-1)-(a.investability_score??-1) || (b.durability_score??-1)-(a.durability_score??-1);
+  const ranked = D.rankings.filter(r=>r.ranked).sort(rankBy==='investability' ? byInv : byDur);
+  ranked.forEach((r,i)=>{ r.rank = i+1; });
+}
+for (const r of D.rankings){ r.durability_base = r.durability_score; r.investability_base = r.investability_score; r.rank_base = r.rank; }
+if (weightsCustom()) applyWeights();
+function toggleStar(n){ shortlist.has(n) ? shortlist.delete(n) : shortlist.add(n); store.set('shortlist', [...shortlist]); }
+async function copyText(text, btn){
+  try { await navigator.clipboard.writeText(text); if (btn){ const t=btn.textContent; btn.textContent='Copied'; setTimeout(()=>btn.textContent=t, 1500); } }
+  catch(e){ const ta=document.createElement('textarea'); ta.value=text; document.body.appendChild(ta); ta.select(); try{ document.execCommand('copy'); }catch(_){ } document.body.removeChild(ta); if (btn){ btn.textContent='Copied'; } }
+}
+
+// ------------------------------------------------------------ routing
+function route(){
+  const h = (location.hash||'#ranked').slice(1);
+  main.classList.toggle('wide', h==='ranked' || h.startsWith('theme'));
+  document.querySelectorAll('#nav a').forEach(a => a.classList.toggle('active', h.startsWith(a.dataset.view)));
+  if (h.startsWith('c-')) return company(h.slice(2));
+  if (h.startsWith('brief-')) return brief(h.slice(6));
+  if (h.startsWith('theme-')) return themes(h.slice(6));
+  ({ranked, funnel, themes, methods, calibration, shortlist: shortlistView, lookup}[h] || ranked)();
+  window.scrollTo(0,0);
+}
+window.addEventListener('hashchange', route);
+
+// ------------------------------------------------------------ ranked
+const state = {q:'', verts:new Set(Object.keys(VERT).filter(v=>v!=='other')), gate:'all', cal:'fit_all', fits:'all', minStaff:0, minDur:0, comparables:false, small:false, sort:'rank', asc:true};
+try { Object.assign(state, JSON.parse(localStorage.getItem('screener-ranked')||'{}'), {verts:new Set(JSON.parse(localStorage.getItem('screener-verts')||'null')||[...state.verts])}); } catch(e){}
+function saveState(){ try { localStorage.setItem('screener-ranked', JSON.stringify({...state, verts:undefined})); localStorage.setItem('screener-verts', JSON.stringify([...state.verts])); } catch(e){} }
+
+function ranked(){
+  const rs = D.docs.rankings_summary||{}, bp=(D.docs.bp_pattern||{}).cohorts||{};
+  const nRanked = D.rankings.filter(r=>r.ranked).length, nLed = D.rankings.filter(r=>r.founder_led).length;
+  const inband = D.rankings.filter(r=>r.ranked && ['core','early','upper'].includes(r[state.cal])).length;
+  const band = (bp[state.cal.replace('fit_','')]||{}).headcount_band||{};
+  main.innerHTML = `
+    <div class="eyebrow">Ranked shortlist</div>
+    <h1>Founder-led UK software companies at the size Brighton Park enters at</h1>
+    <p class="lead">Compliance, fintech and healthcare software companies found on Companies House filings, scored on an AI-durability rubric adapted from Mark Dzialga (February 2026). Durability sorts the list; investability breaks ties; they are never blended. Click a row for the evidence.</p>
+    <div class="tiles">
+      <div class="tile"><div class="k">Ranked</div><div class="v num">${nRanked}</div><div class="s">founder-led, 80+ staff, size verified</div></div>
+      <div class="tile"><div class="k">In the fund's measured band</div><div class="v num">${inband}</div><div class="s">${band.min?`entries ${band.min} to ${band.max} staff, core ${band.core_lo} to ${band.core_hi}`:''}</div></div>
+      <div class="tile"><div class="k">Founder-led in the three verticals</div><div class="v num">${nLed}</div><div class="s">any size; ${D.rankings.filter(r=>r.founder_led && !r.ranked).length} unranked (small, unverified or reviewer-excluded)</div></div>
+      <div class="tile"><div class="k">Comparables</div><div class="v num">${D.rankings.length-nRanked}</div><div class="s">same verticals, failed a gate</div></div>
+    </div>
+    <div class="filters">
+      <label>Search<input id="f-q" value="${esc(state.q)}" placeholder="name, town, sub-vertical"></label>
+      <label>Vertical<span>${Object.keys(VERT).filter(v=>v!=='other').map(v=>`<label class="chk" style="display:inline-flex;margin-right:.5rem"><input type="checkbox" data-vert="${v}" ${state.verts.has(v)?'checked':''}>${VERT[v]}</label>`).join('')}</span></label>
+      <label>Gate<select id="f-gate"><option value="all">all</option><option value="founder-owned">founder-owned</option><option value="founder-led, prior capital">founder-led, prior capital</option></select></label>
+      <label>Size calibration<select id="f-cal">${Object.entries(fitLabel).map(([k,v])=>`<option value="${k}">${v}</option>`).join('')}</select></label>
+      <label>Fit<select id="f-fit"><option value="all">all</option><option value="inband">core, early or upper</option><option value="core">core only</option></select></label>
+      <label>Min staff<input id="f-staff" type="number" min="0" step="10" value="${state.minStaff}" style="width:5.5rem"></label>
+      <label>Min durability<input id="f-dur" type="number" min="0" max="100" step="5" value="${state.minDur}" style="width:5.5rem"></label>
+      <label class="chk"><input id="f-comp" type="checkbox" ${state.comparables?'checked':''}>Include comparables</label>
+      <label class="chk"><input id="f-small" type="checkbox" ${state.small?'checked':''}>Include founder-led under 80 staff</label>
+    </div>
+    <details id="w-panel" ${weightsCustom()?'open':''}><summary>Custom assessment: re-weight either score and the list re-ranks live${weightsCustom()?' (custom settings in use)':''}</summary>
+      <div class="toolbar" style="margin-top:.6rem"><label class="small" style="display:flex;gap:.5rem;align-items:center;font-weight:600">Rank by
+        <select id="w-rankby" style="font:inherit;font-size:.88rem;padding:.3rem .5rem;border-radius:10px;border:1px solid var(--line);background:var(--panel);color:var(--fg)">
+          <option value="durability" ${rankBy==='durability'?'selected':''}>AI durability, investability breaks ties (default)</option>
+          <option value="investability" ${rankBy==='investability'?'selected':''}>Investability, AI durability breaks ties</option>
+        </select></label><span class="hint">The two scores are never combined; this only changes which one sorts first.</span></div>
+      <h3 style="margin-top:.9rem">AI durability: ten dimensions</h3>
+      <p class="hint" style="margin:.2rem 0 .6rem">Defaults: stickiness 20%, cost of failure 15%, vertical depth 15%, control plane, architecture and metrics 10%, the rest 5%. Sliders are relative; the page normalises them.</p>
+      <div class="weights">${DIMS.map(k=>`<label><span>${k}. ${esc(D.config.rubric.dimension_names[k])}</span><input type="range" min="0" max="30" step="1" data-w="${k}" value="${Math.round((weights[k]||0)*100)}"><span class="num" id="wv-${k}">${Math.round((weights[k]||0)*100)}%</span></label>`).join('')}</div>
+      <h3 style="margin-top:1rem">Investability: five components</h3>
+      <p class="hint" style="margin:.2rem 0 .6rem">Defaults: size 30%, growth 25%, hiring 15%, financial leverage 15%, data reliability 15%. Each company's score on a component is kept; only the weight changes.</p>
+      <div class="weights">${IKEYS.map(k=>`<label><span>${ILABEL[k]}</span><input type="range" min="0" max="50" step="1" data-iw="${k}" value="${Math.round(iweights[k]||0)}"><span class="num" id="iwv-${k}">${Math.round(iweights[k]||0)}%</span></label>`).join('')}</div>
+      <div class="toolbar"><button class="btn" id="w-reset">Reset all to defaults</button><span class="hint">Both scores are recomputed in this browser as weighted means rescaled 0 to 100. Stored in this browser only.</span></div>
+    </details>
+    <div id="r-caption" class="small"></div>
+    <div class="tablewrap" id="r-table"></div>
+    <p class="hint">Durability: weighted mean of ten rubric dimensions, 0 to 100. Investability: size 30, growth 25, hiring 15, leverage 15, data quality 15. Fit: against the selected calibration (see Calibration). Why now: green reasons to approach, orange things to ask about.</p>`;
+  $('#f-gate').value = state.gate; $('#f-cal').value = state.cal; $('#f-fit').value = state.fits;
+  const bind = (id, key, get) => $(id).addEventListener('input', e => { state[key] = get(e.target); saveState(); drawTable(); });
+  bind('#f-q','q',t=>t.value.trim().toLowerCase()); bind('#f-gate','gate',t=>t.value); bind('#f-cal','cal',t=>t.value); bind('#f-fit','fits',t=>t.value);
+  bind('#f-staff','minStaff',t=>Number(t.value)||0); bind('#f-dur','minDur',t=>Number(t.value)||0); bind('#f-comp','comparables',t=>t.checked); bind('#f-small','small',t=>t.checked);
+  document.querySelectorAll('[data-vert]').forEach(cb => cb.addEventListener('change', e => { e.target.checked ? state.verts.add(e.target.dataset.vert) : state.verts.delete(e.target.dataset.vert); saveState(); drawTable(); }));
+  document.querySelectorAll('[data-w]').forEach(sl => sl.addEventListener('input', e => { const k=Number(e.target.dataset.w); weights[k]=Number(e.target.value)/100; $('#wv-'+k).textContent=e.target.value+'%'; store.set('weights', weights); applyWeights(); drawTable(); }));
+  document.querySelectorAll('[data-iw]').forEach(sl => sl.addEventListener('input', e => { const k=e.target.dataset.iw; iweights[k]=Number(e.target.value); $('#iwv-'+k).textContent=e.target.value+'%'; store.set('iweights', iweights); applyWeights(); drawTable(); }));
+  $('#w-rankby').addEventListener('change', e => { rankBy = e.target.value; store.set('rankBy', rankBy); applyWeights(); state.sort='rank'; state.asc=true; saveState(); drawTable(); });
+  $('#w-reset').addEventListener('click', () => { weights = Object.assign({}, DEFAULT_W); iweights = Object.assign({}, IMAX); rankBy = 'durability'; store.set('weights', {}); store.set('iweights', {}); store.set('rankBy', 'durability'); applyWeights(); ranked(); });
+  drawTable();
+}
+
+function drawTable(){
+  let rows = D.rankings.filter(r => r.ranked || (state.comparables) || (state.small && r.founder_led && (r.latest_employees||0) < 80));
+  rows = rows.filter(r => state.verts.has(r.vertical));
+  if (state.gate!=='all') rows = rows.filter(r => r.gate===state.gate);
+  if (state.fits==='inband') rows = rows.filter(r => ['core','early','upper'].includes(r[state.cal]));
+  if (state.fits==='core') rows = rows.filter(r => r[state.cal]==='core');
+  if (state.minStaff) rows = rows.filter(r => (r.latest_employees||0) >= state.minStaff);
+  if (state.minDur) rows = rows.filter(r => (r.durability_score||0) >= state.minDur);
+  if (state.q) rows = rows.filter(r => [r.name, r.post_town, r.sub_vertical, r.company_number].join(' ').toLowerCase().includes(state.q));
+  const key = state.sort, dir = state.asc?1:-1;
+  rows.sort((a,b) => { const x=a[key], y=b[key]; if (x==null && y==null) return 0; if (x==null) return 1; if (y==null) return -1; return (x<y?-1:x>y?1:0)*dir; });
+  const nR = D.rankings.filter(r=>r.ranked).length;
+  $('#r-caption').textContent = `${rows.length} companies shown of ${nR} ranked and ${D.rankings.length-nR} comparables. Calibration: ${fitLabel[state.cal]}.`;
+  const cols = [['star','',2],['rank','#',3],['name','Company',14],['vertical','Vertical',12],['latest_employees','Staff',5],['revenue_display','Revenue',12],[state.cal,'Fit',6],['durability_score','Durability',8],['investability_score','Invest&shy;ability',8],['gate','Gate',8],['why_now_approach','Why now',6],['evidence_quote','Evidence',18]];
+  const GATE = {'founder-owned':'owned', 'founder-led, prior capital':'led, prior capital', 'not founder-led':'not led'};
+  $('#r-table').innerHTML = `<table class="fit"><colgroup>${cols.map(c=>`<col style="width:${c[2]}%">`).join('')}</colgroup><thead><tr>${cols.map(([k,l])=>`<th data-k="${k}" class="${k===state.sort?'sorted'+(state.asc?' asc':''):''} ${['latest_employees','durability_score','investability_score','rank'].includes(k)?'r':''}">${l}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`
+    <tr class="row" data-n="${r.company_number}">
+      <td><span class="star ${shortlist.has(r.company_number)?'on':''}" data-star="${r.company_number}" title="Add to shortlist">${shortlist.has(r.company_number)?'\u2605':'\u2606'}</span></td>
+      <td class="r num">${r.rank??''}</td>
+      <td><strong>${esc(title(r.name))}</strong><span class="sub">${esc(title(r.post_town||''))} · ${esc(r.company_number)}</span></td>
+      <td>${vdot(r.vertical)}<span class="sub">${esc(r.sub_vertical||'')}</span></td>
+      <td class="r num">${num(r.latest_employees)}</td>
+      <td class="num" title="${esc(r.revenue_display||'')}">${esc((r.revenue_display||'n/a').split(' (')[0])}<span class="sub">${esc(r.tier?('Tier '+r.tier+(r.revenue_period_end?', FY '+String(r.revenue_period_end).slice(0,7):'')):'')}</span></td>
+      <td>${pill(r[state.cal])}</td>
+      <td class="r"><span class="num">${num(r.durability_score)}</span>${bar(r.durability_score,100,r.grey?'grey':'')}</td>
+      <td class="r"><span class="num">${num(r.investability_score)}</span>${bar(r.investability_score,100)}</td>
+      <td class="small">${esc(GATE[r.gate]||r.gate||'')}<span class="sub">${esc(r.founder_confidence||r.exclusion_reason||'')}</span></td>
+      <td class="num" title="green: reasons to approach; orange: things to ask about"><span style="color:var(--good)">${r.why_now_approach??0}</span> / <span style="color:var(--warn)">${r.why_now_caution??0}</span></td>
+      <td class="small" title="${esc(r.evidence_quote||'')}">${esc((r.evidence_quote||'').slice(0,110))}${(r.evidence_quote||'').length>110?'…':''}</td></tr>`).join('')}</tbody></table>`;
+  document.querySelectorAll('#r-table th').forEach(th => th.addEventListener('click', () => { const k=th.dataset.k; if (k==='star') return; if (state.sort===k) state.asc=!state.asc; else { state.sort=k; state.asc = !['durability_score','investability_score','latest_employees','why_now_approach'].includes(k); } saveState(); drawTable(); }));
+  document.querySelectorAll('#r-table tr.row').forEach(tr => tr.addEventListener('click', () => { location.hash = 'c-'+tr.dataset.n; }));
+  document.querySelectorAll('#r-table [data-star]').forEach(el => el.addEventListener('click', e => { e.stopPropagation(); toggleStar(el.dataset.star); drawTable(); }));
+  const cap = $('#r-caption'); if (weightsCustom()) cap.textContent += ' Custom settings in use (' + [durCustom()?'durability weights':'', invCustom()?'investability weights':'', rankBy!=='durability'?'ranked by investability':''].filter(Boolean).join(', ') + '); scores and rank are recomputed in this browser.';
+  if (shortlist.size) cap.textContent += ` ${shortlist.size} on the shortlist.`;
+}
+
+// ------------------------------------------------------------ company
+function svgBars(points, opts){
+  const w=opts.w||520, h=opts.h||170, pad={l:44,r:10,t:14,b:28};
+  const max = Math.max(...points.map(p=>p.v), 1)*1.15, iw=w-pad.l-pad.r, ih=h-pad.t-pad.b, bw=Math.min(60, iw/points.length*0.6);
+  const ticks=[0,0.5,1].map(f=>Math.round(max*f/ (max>100?10:1))*(max>100?10:1));
+  return `<svg viewBox="0 0 ${w} ${h}" width="100%" style="max-width:${w}px;display:block" role="img" aria-label="${esc(opts.label)}">
+    ${ticks.map(t=>`<g><line x1="${pad.l}" x2="${w-pad.r}" y1="${pad.t+ih-ih*t/max}" y2="${pad.t+ih-ih*t/max}" stroke="var(--line)"/><text x="${pad.l-6}" y="${pad.t+ih-ih*t/max+4}" text-anchor="end" fill="var(--muted)">${num(t)}</text></g>`).join('')}
+    ${points.map((p,i)=>{ const x=pad.l+iw*(i+0.5)/points.length-bw/2, bh=ih*p.v/max; return `<g><rect x="${x}" y="${pad.t+ih-bh}" width="${bw}" height="${bh}" fill="var(--accent)" rx="2"/><text x="${x+bw/2}" y="${pad.t+ih-bh-4}" text-anchor="middle">${num(p.v)}</text><text x="${x+bw/2}" y="${h-8}" text-anchor="middle" fill="var(--muted)">${esc(p.l)}</text></g>`; }).join('')}
+  </svg>`;
+}
+
+function company(n){
+  const c = D.companies[n];
+  if (!c){ main.innerHTML = `<a class="back" href="#ranked">← Ranked</a><p>Company ${esc(n)} is not in this build.</p>`; return; }
+  const r=c.ranking, u=c.universe, cl=c.classification, rv=c.revenue, w=c.website;
+  const flags = (u.flags||[]).concat(r.flags||[]).filter((x,i,a)=>a.indexOf(x)===i);
+  const inv = r.investability_components_json ? JSON.parse(r.investability_components_json) : null;
+  const inputs = rv.inputs_json ? JSON.parse(rv.inputs_json) : null;
+  const FIT = {core:'inside the band a $50M+ growth cheque needs (£8M to £60M p50)', early:'£3M to £8M on p50: a watch-list size for a minority cheque, or a buyout structure', 'too small':'under £3M on p50', large:'above £60M on p50', unknown:'no revenue estimate'};
+  const hc = c.accounts.filter(a=>a.employees!=null).map(a=>({l:date(a.period_end).slice(0,7), v:a.employees}));
+  main.innerHTML = `
+    <a class="back" href="#ranked">← Ranked</a>
+    <div class="eyebrow">${r.ranked?`Rank ${r.rank} of ${D.rankings.filter(x=>x.ranked).length}`:'Comparable (not ranked)'}</div>
+    <h1>${esc(title(r.name))}</h1>
+    <div class="toolbar"><button class="btn ${shortlist.has(n)?'on':''}" id="c-star">${shortlist.has(n)?'\u2605 On the shortlist':'\u2606 Add to shortlist'}</button><a class="btn" href="#brief-${esc(n)}">Investment brief</a><span class="hint">Brief: a one-page memo and an outreach draft built from the facts on this page.</span></div>
+    <p class="small">No. <span class="num">${esc(n)}</span> · SIC ${esc(c.sic_text||r.sic1||'')} · Incorporated ${date(r.inc_date)} · ${esc(title(r.post_town||''))}${w.domain?` · <a href="https://${esc(w.domain)}" target="_blank" rel="noopener">${esc(w.domain)}</a>`:''}</p>
+    <div class="tiles">
+      <div class="tile"><div class="k">Durability</div><div class="v num">${num(r.durability_score)}</div><div class="s">${r.grey?'grey: 2+ dimensions unscored':'Dzialga rubric, adapted, 0 to 100'}</div></div>
+      <div class="tile"><div class="k">Investability${invCustom()?' (custom weights)':''}</div><div class="v num">${num(r.investability_score)}</div><div class="s">${inv?`size ${inv.size}/30, growth ${inv.growth}/25, hiring ${inv.hiring}/15, leverage ${inv.leverage}/15, data ${inv.data_quality}/15`:''}</div></div>
+      <div class="tile"><div class="k">Vertical</div><div class="v" style="font-size:1.2rem">${esc(VERT[r.vertical]||'')}</div><div class="s">${esc(r.sub_vertical||'')}</div></div>
+      <div class="tile"><div class="k">Staff (latest filed)</div><div class="v num">${r.latest_employees!=null?num(r.latest_employees):(r.provisional?'unverified':'n/a')}</div><div class="s">${r.latest_period_end?'FY '+date(r.latest_period_end):(r.provisional?'scanned accounts not yet read':'')}</div></div>
+      <div class="tile"><div class="k">Ownership</div><div class="v" style="font-size:1.2rem">${esc(r.founder_flag||'n/a')}</div><div class="s">${esc(r.founder_confidence||r.exclusion_reason||'')} · ${esc(r.gate||'')}</div></div>
+      <div class="tile"><div class="k">Size fit</div><div class="v" style="font-size:1.1rem">${pill(r.fit_all)} ${pill(r.fit_uk)}</div><div class="s">measured US+UK · UK only; inference: ${esc(r.size_fit||'')}</div></div>
+    </div>
+    ${!r.ranked ? `<div class="note">Shown as a comparable: ${esc(r.exclusion_reason || (r.founder_led ? ((r.latest_employees||0)<80 ? 'founder-led but under 80 staff' : (r.provisional?'size unverified':'website unverified')) : 'not founder-led'))}${(u.investor_names||[]).length?`. Investor PSC: ${esc(u.investor_names.join(', '))}`:''}.</div>` : ''}
+    ${cl.evidence_quote ? `<div class="quote">"${esc(cl.evidence_quote)}" <a href="${esc(cl.evidence_url||'#')}" target="_blank" rel="noopener">${esc(cl.evidence_url||'')}</a> <span class="small">(classifier, confidence ${esc(cl.confidence||'')})</span></div>` : ''}
+
+    ${c.why_now.length ? `<h2>Why now</h2><p class="small">Timing hypotheses from dated register, accounts and careers-page facts. Not part of either score; each line says where it came from.</p>
+    <div class="why">${c.why_now.map(s=>`<div class="sig"><div class="dot ${esc(s.direction)}"></div><div><div class="lbl">${esc(s.label)}${s.date?` <span class="small num">· ${date(s.date)}</span>`:''}</div><div class="det">${esc(s.detail)} <i>Source: ${esc(s.source)}.</i></div></div></div>`).join('')}</div>` : ''}
+
+    <div class="grid2" style="margin-top:1.4rem">
+      <div class="stack">
+        <div class="card"><h3>Ownership</h3>
+          ${c.psc.length ? `<div class="tablewrap"><table><thead><tr><th>PSC</th><th>Kind</th><th>Control</th><th>Since</th><th>Status</th></tr></thead><tbody>${c.psc.map(p=>`<tr><td>${esc(title(p.name||p.statement||''))}</td><td class="small">${esc((p.kind||'').replace('-person-with-significant-control','').replace('persons-with-significant-control-statement','statement').replace('-entity',''))}</td><td class="small">${esc((p.natures_of_control||[]).map(x=>x.replace('ownership-of-shares-','shares ').replace('voting-rights-','votes ').replace('-percent','%')).join(', '))}</td><td class="num">${date(p.notified_on)}</td><td class="small">${p.ceased_on?'ceased '+date(p.ceased_on):'active'}</td></tr>`).join('')}</tbody></table></div>` : '<p class="small">No PSC records on the snapshot.</p>'}
+          ${u.walkup_path ? `<p class="small">Holdco walk-up: ${esc(u.walkup_path)}</p>`:''}
+          ${flags.length ? `<p class="small">Flags: ${esc(flags.join(', '))}</p>`:''}
+          ${c.directors.length ? `<p class="small">Directors: ${c.directors.slice(0,8).map(d=>`${esc(title(d.name))} (${date(d.appointed_on)}${d.dob_year?', b. '+d.dob_year:''})`).join('; ')}</p>`:''}
+        </div>
+        <div class="card"><h3>Revenue</h3>
+          ${rv.display ? `<div style="font-family:var(--display);font-size:1.25rem;font-weight:600">${esc(rv.display)}</div>
+          <div class="tiles" style="margin-block:.6rem"><div class="tile"><div class="k">p10</div><div class="v num" style="font-size:1.2rem">${gbp(rv.p10)}</div></div><div class="tile"><div class="k">p50</div><div class="v num" style="font-size:1.2rem">${gbp(rv.p50)}</div></div><div class="tile"><div class="k">p90</div><div class="v num" style="font-size:1.2rem">${gbp(rv.p90)}</div></div></div>
+          ${rv.extrapolated?'<p class="small">Flag: outside the training distribution (extrapolated).</p>':''}
+          <p class="small">Cheque-size inference: <strong>${esc(r.size_fit||'')}</strong>, ${esc(FIT[r.size_fit]||'')}.${rv.tier==='C'?' The p10 to p90 band is wide, so the label can move with a filed figure.':''}</p>
+          <p class="small">Measured against the fund's own entry headcounts: <strong>${esc(r.fit_all||'')}</strong> on the US + UK portfolio (core 140 to 280 staff, smallest entry 98), <strong>${esc(r.fit_uk||'')}</strong> on the UK portfolio only (core 118 to 186, smallest 100). 'below' means smaller than anything the fund has entered.</p>
+          ${inputs?`<details><summary>Inputs behind the estimate</summary><div class="kv" style="margin-top:.4rem">${Object.entries(inputs).map(([k,v])=>`<div class="k">${esc(k)}</div><div class="num">${typeof v==='number'?num(v,2):esc(JSON.stringify(v))}</div>`).join('')}</div></details>`:''}` : '<p class="small">No estimate.</p>'}
+        </div>
+        ${c.accounts.length ? `<div class="card"><h3>Headcount and balance sheet</h3>
+          ${hc.length ? svgBars(hc,{label:'Average employees by financial year'}) : ''}
+          <div class="tablewrap" style="margin-top:.6rem"><table><thead><tr><th>Period end</th><th>Type</th><th class="r">Turnover</th><th class="r">Gross profit</th><th class="r">Trade debtors</th><th class="r">Deferred income</th><th class="r">Cash</th><th class="r">Net assets</th><th class="r">Share premium</th></tr></thead><tbody>${c.accounts.map(a=>`<tr><td class="num">${date(a.period_end)}</td><td class="small">${esc(a.accounts_type||'')}</td>${['turnover','gross_profit','trade_debtors','accrued_deferred_income','cash','net_assets','share_premium'].map(k=>`<td class="r num">${a[k]!=null?gbp(a[k]):''}</td>`).join('')}</tr>`).join('')}</tbody></table></div></div>` : ''}
+      </div>
+      <div class="stack">
+        <div class="card"><h3>AI-durability rubric</h3>
+          <p class="small">Adapted from Mark Dzialga, Brighton Park Capital, Feb 2026. Weights are ours. Bar colour is the model's confidence: green high, amber medium, grey low.</p>
+          ${c.scores.length ? c.scores.map(s=>`<div class="rub"><div>${s.dimension}. ${esc(s.dimension_name)} <span class="small">(${Math.round((D.config.rubric.weights[s.dimension]||0)*100)}%)</span></div>${bar(s.score,5,esc(s.confidence||'low'))}<div class="num">${s.score??'–'}</div></div>`).join('') + c.scores.map(s=>`<details><summary>${s.dimension}. ${esc(s.dimension_name)}: ${s.score??'unscored'} (${esc(s.confidence||'')})</summary>${s.rationale?`<p class="small">${esc(s.rationale)}</p>`:''}${s.evidence_quote?`<div class="quote">"${esc(s.evidence_quote)}" ${String(s.evidence_url||'').startsWith('http')?`<a href="${esc(s.evidence_url)}" target="_blank" rel="noopener">${esc(s.evidence_url)}</a>`:esc(s.evidence_url||'')}</div>`:''}</details>`).join('') : '<p class="small">Not scored.</p>'}
+        </div>
+        <div class="card"><h3>Hiring</h3>
+          ${c.jobs_summary.open_roles!=null ? `<div class="tiles" style="margin-block:.4rem"><div class="tile"><div class="k">Open roles</div><div class="v num" style="font-size:1.2rem">${c.jobs_summary.open_roles}</div></div><div class="tile"><div class="k">Engineering</div><div class="v num" style="font-size:1.2rem">${pct(c.jobs_summary.engineering_share)}</div></div><div class="tile"><div class="k">AI roles</div><div class="v num" style="font-size:1.2rem">${c.jobs_summary.ai_roles??0}</div></div><div class="tile"><div class="k">Outside UK</div><div class="v num" style="font-size:1.2rem">${c.jobs_summary.international_roles??0}</div></div></div>
+          ${c.jobs.length?`<div class="tablewrap"><table><thead><tr><th>Title</th><th>Function</th><th>Location</th><th>Posted</th></tr></thead><tbody>${c.jobs.map(j=>`<tr><td>${j.url?`<a href="${esc(j.url)}" target="_blank" rel="noopener">${esc(j.title)}</a>`:esc(j.title)}</td><td class="small">${esc(j.function||'')}</td><td class="small">${esc(j.location||'')}</td><td class="num">${date(j.posted_at)}</td></tr>`).join('')}</tbody></table></div>`:''}` : `<p class="small">No public ATS detected${w.ats?' ('+esc(w.ats)+')':''}. The headcount trend is the lagged proxy.</p>`}
+        </div>
+        <div class="card"><h3>Registers and charges</h3>
+          ${c.register.fca_frn ? `<p>FCA register: <strong>${esc(c.register.fca_status)}</strong>, FRN <span class="num">${esc(c.register.fca_frn)}</span>, ${c.register.fca_permissions_count||0} permissions (${esc(c.register.fca_match_method||'')}).</p>` : '<p class="small">FCA register: not found under this name.</p>'}
+          ${c.charges.length ? `<p>${c.charges.filter(x=>!x.satisfied_on).length} outstanding charge(s) of ${c.charges.length} registered.</p><div class="tablewrap"><table><thead><tr><th>Created</th><th>Satisfied</th><th>Status</th><th>Persons entitled</th></tr></thead><tbody>${c.charges.map(x=>`<tr><td class="num">${date(x.created_on)}</td><td class="num">${date(x.satisfied_on)}</td><td class="small">${esc(x.status||'')}</td><td class="small">${esc((x.persons_entitled||[]).join(', '))}</td></tr>`).join('')}</tbody></table></div>` : '<p class="small">No charges registered.</p>'}
+        </div>
+        <div class="card"><h3>Diligence questions (not observable from outside)</h3><ul class="small">${D.diligence_questions.map(q=>`<li>${esc(q)}</li>`).join('')}</ul></div>
+      <div class="card"><h3>Your notes</h3><textarea class="brief" style="min-height:110px" id="c-notes" placeholder="Private to this browser. Appears on the Shortlist page and in the brief.">${esc(notes[n]||'')}</textarea></div>
+      </div>
+    </div>
+    ${similarHtml(n)}
+    ${c.filings.length ? `<h2>Filing timeline</h2><p class="small">Counts: ${Object.entries(c.filing_counts).sort((a,b)=>b[1]-a[1]).slice(0,8).map(([t,k])=>`${esc(t)} ${k}`).join(', ')}</p>
+    <div class="tablewrap"><table><thead><tr><th>Date</th><th>Type</th><th>Description</th><th>Category</th></tr></thead><tbody>${c.filings.map(f=>`<tr><td class="num">${date(f.date)}</td><td class="num">${esc(f.type)}</td><td class="small">${esc(f.description||'')}</td><td class="small">${esc(f.category||'')}</td></tr>`).join('')}</tbody></table></div>` : ''}`;
+  $('#c-star').addEventListener('click', () => { toggleStar(n); company(n); });
+  $('#c-notes').addEventListener('input', e => { notes[n] = e.target.value; store.set('notes', notes); });
+  document.querySelectorAll('#main tr.row[data-n]').forEach(tr => tr.addEventListener('click', () => { location.hash = 'c-'+tr.dataset.n; }));
+  window.scrollTo(0,0);
+}
+
+// ------------------------------------------------------------ similar companies (same vertical, vocabulary overlap, shared themes)
+const STOP = new Set(['the','and','for','with','that','this','from','are','our','your','their','is','a','an','of','to','in','on','by','or','as','at','it','its','we','you','platform','software','solutions','solution','company','limited','ltd','uk','service','services']);
+const toks = s => new Set(String(s||'').toLowerCase().replace(/[^a-z0-9 ]/g,' ').split(/\s+/).filter(t=>t.length>2 && !STOP.has(t)));
+function similar(n, k=6){
+  const me = D.rankings.find(r=>r.company_number===n); if (!me) return [];
+  const mine = toks((me.sub_vertical||'')+' '+(me.sub_vertical||'')+' '+(me.evidence_quote||''));
+  const myThemes = new Set(D.themes.filter(t=>t.company_number===n).map(t=>t.theme));
+  return D.rankings.filter(r=>r.company_number!==n && r.vertical===me.vertical).map(r=>{
+    const t = toks((r.sub_vertical||'')+' '+(r.sub_vertical||'')+' '+(r.evidence_quote||''));
+    let score = 0; for (const x of mine) if (t.has(x)) score += 1;
+    const th = D.themes.filter(x=>x.company_number===r.company_number && myThemes.has(x.theme)).length; score += 2*th;
+    return {r, score};
+  }).filter(x=>x.score>0).sort((a,b)=>b.score-a.score || (b.r.durability_score||0)-(a.r.durability_score||0)).slice(0,k).map(x=>x.r);
+}
+function similarHtml(n){
+  const sim = similar(n); if (!sim.length) return '';
+  return `<h2>Similar companies</h2><p class="small">Same vertical, ranked by shared vocabulary in the sub-vertical and evidence quote and by shared theme maps. Ownership and size beside each, so the market map is the comparables set.</p>
+    <div class="tablewrap"><table><thead><tr><th>Company</th><th>Sub-vertical</th><th class="r">Staff</th><th>Ownership</th><th>Fit</th><th class="r">Durability</th><th>Revenue</th></tr></thead><tbody>${sim.map(r=>`<tr class="row" data-n="${r.company_number}"><td><strong>${esc(title(r.name))}</strong><span class="sub">${esc(title(r.post_town||''))}</span></td><td class="small">${esc(r.sub_vertical||'')}</td><td class="r num">${num(r.latest_employees)}</td><td class="small">${esc(r.gate||'')}${r.ranked?'':' · comparable'}</td><td>${pill(r.fit_all)}</td><td class="r num">${num(r.durability_score)}</td><td class="small">${esc((r.revenue_display||'n/a').split(' (')[0])}</td></tr>`).join('')}</tbody></table></div>`;
+}
+
+// ------------------------------------------------------------ investment brief and outreach draft
+function firstPerson(c){
+  const p = (c.psc||[]).find(x => !x.ceased_on && (x.kind||'').startsWith('individual')) || (c.psc||[]).find(x => (x.kind||'').startsWith('individual'));
+  const raw = p ? p.name : ((c.directors||[])[0]||{}).name;
+  if (!raw) return null;
+  let s = String(raw).replace(/^(mr|mrs|ms|miss|dr|sir|dame|prof)\.?\s+/i,'');
+  if (s.includes(',')) { const [sur, giv] = s.split(','); s = (giv||'').trim()+' '+sur.trim(); }
+  const parts = s.trim().split(/\s+/); return {full: title(s), first: title(parts[0]||'')};
+}
+function briefText(n){
+  const c = D.companies[n]; if (!c) return '';
+  const r=c.ranking, rv=c.revenue;
+  const sc = c.scores.filter(x=>x.score!=null), strengths = sc.filter(x=>x.score>=4), weak = sc.filter(x=>x.score<=2), caution = c.why_now.filter(x=>x.direction==='caution');
+  const hc = c.accounts.filter(a=>a.employees!=null); const first = hc[0], last = hc[hc.length-1];
+  const growth = (first && last && first.period_end!==last.period_end) ? `${num(first.employees)} to ${num(last.employees)} staff between ${date(first.period_end).slice(0,7)} and ${date(last.period_end).slice(0,7)}` : (last ? `${num(last.employees)} staff at ${date(last.period_end)}` : 'headcount not filed');
+  const own = r.gate==='founder-owned' ? `founder-owned on the PSC register (${r.founder_confidence} confidence)` : r.gate==='founder-led, prior capital' ? 'founder-led with prior capital on the register' : (r.exclusion_reason ? `not founder-led (${r.exclusion_reason})` : 'ownership uncertain');
+  return [
+    `${title(r.name)} (${n}): investment brief`,
+    ``, `THESIS`, `${title(r.name)} is a ${r.sub_vertical||(VERT[r.vertical]||'software').toLowerCase()} business in ${title(r.post_town||'the UK')}, ${own}, with ${growth} and ${rv.display ? ((rv.tier==='A'||rv.tier==='A-ocr') ? 'filed revenue of ' : 'modelled revenue of ') + rv.display.split(' (')[0] : 'no revenue figure'}. Against the fund's measured entry band it is ${r.fit_all||'unknown'} (US + UK) and ${r.fit_uk||'unknown'} (UK only). Durability ${num(r.durability_score)}, investability ${num(r.investability_score)}.`,
+    ``, `WHY NOW`, ...(c.why_now.length ? c.why_now.map(x=>`- [${x.direction}] ${x.label}${x.date?' ('+date(x.date)+')':''}: ${x.detail} Source: ${x.source}.`) : ['- No dated signals on file.']),
+    ``, `STRENGTHS (rubric 4 or 5)`, ...(strengths.length ? strengths.map(x=>`- ${x.dimension_name} (${x.score}/5): ${x.rationale||''}${x.evidence_quote?' "'+x.evidence_quote+'"':''}`) : ['- none scored 4 or above']),
+    ``, `WATCH (rubric 1 or 2, cautions)`, ...weak.map(x=>`- ${x.dimension_name} (${x.score}/5): ${x.rationale||''}`), ...caution.map(x=>`- ${x.label}: ${x.detail}`), ...((weak.length||caution.length)?[]:['- nothing scored low; no cautions']),
+    ``, `OWNERSHIP`, ...c.psc.filter(p=>!p.ceased_on).map(p=>`- ${title(p.name||p.statement||'')}: ${(p.natures_of_control||[]).map(x=>x.replace('ownership-of-shares-','shares ').replace('voting-rights-','votes ').replace('-percent','%')).join(', ')} (since ${date(p.notified_on)})`), ...(c.universe.walkup_path?[`- Holdco walk-up: ${c.universe.walkup_path}`]:[]),
+    ``, `QUESTIONS FROM THE DATA GAPS`, ...(gapQuestions(c).length ? gapQuestions(c).map(q=>`- ${q}`) : ['- none: every dimension scored with evidence and revenue is filed']),
+    ``, `STANDARD DILIGENCE QUESTIONS`, ...D.diligence_questions.map(q=>`- ${q}`),
+    ...(notes[n] ? [``, `NOTES`, notes[n]] : []),
+    ``, `Sources: Companies House (accounts, PSC register, officers, filing history, charges), ${c.website.domain||'company website'}, FCA register where applicable. Revenue tier ${rv.tier||'none'}; headcount from filed average employees. Generated by BPC AI Screener (Beta).`
+  ].join('\n');
+}
+function brief(n){
+  const c = D.companies[n]; if (!c){ main.innerHTML = `<a class="back" href="#ranked">← Ranked</a><p>Company ${esc(n)} is not in this build.</p>`; return; }
+  const r=c.ranking, rv=c.revenue, cl=c.classification, w=c.website;
+  const sc = c.scores.filter(x=>x.score!=null), strengths = sc.filter(x=>x.score>=4).sort((a,b)=>(weights[b.dimension]||0)-(weights[a.dimension]||0)), weak = sc.filter(x=>x.score<=2);
+  const approach = c.why_now.filter(x=>x.direction==='approach'), caution = c.why_now.filter(x=>x.direction==='caution');
+  const person = firstPerson(c);
+  const hc = c.accounts.filter(a=>a.employees!=null); const first = hc[0], last = hc[hc.length-1];
+  const growth = (first && last && first.period_end!==last.period_end) ? `${num(first.employees)} to ${num(last.employees)} staff between ${date(first.period_end).slice(0,7)} and ${date(last.period_end).slice(0,7)}` : (last ? `${num(last.employees)} staff at ${date(last.period_end)}` : 'headcount not filed');
+  const own = r.gate==='founder-owned' ? `founder-owned on the PSC register (${r.founder_confidence} confidence)` : r.gate==='founder-led, prior capital' ? 'founder-led with prior capital on the register' : (r.exclusion_reason ? `not founder-led (${r.exclusion_reason})` : 'ownership uncertain');
+  const thesis = `${title(r.name)} is a ${esc(r.sub_vertical||(VERT[r.vertical]||'software').toLowerCase())} business in ${title(r.post_town||'the UK')}, ${own}, with ${growth} and ${rv.display ? (rv.tier==='A'||rv.tier==='A-ocr' ? 'filed revenue of '+esc(rv.display.split(' (')[0]) : 'modelled revenue of '+esc(rv.display.split(' (')[0])) : 'no revenue figure'}. Against the fund's measured entry band it is ${esc(r.fit_all||'unknown')} (US + UK) and ${esc(r.fit_uk||'unknown')} (UK only). Durability ${num(r.durability_score)}, investability ${num(r.investability_score)}.`;
+  const memo = briefText(n);
+  const email = person ? `Subject: ${title(r.name)} and Brighton Park Capital
+
+Dear ${person.first},
+
+I work with Brighton Park Capital, a growth investor in software and healthcare technology (PortSwigger and Person Centred Software are two of our UK partnerships). ${title(r.name)} stood out to us for ${cl.evidence_quote ? 'what you have built around ' + (r.sub_vertical||VERT[r.vertical]||'your product').toLowerCase() : (r.sub_vertical||VERT[r.vertical]||'its product')}${approach.length ? ', and ' + approach[0].label.charAt(0).toLowerCase() + approach[0].label.slice(1) : ''}.
+
+We back founders who keep running their companies, usually as a minority partner, and we take time to understand an end market before we talk about a deal. If a conversation about where ${title(r.name)} goes from here would be useful, I would welcome 30 minutes at your convenience.
+
+Kind regards,
+[Name]
+Brighton Park Capital, London` : 'No individual PSC or director on the register to address.';
+  main.innerHTML = `<a class="back" href="#c-${esc(n)}">← ${esc(title(r.name))}</a>
+    <div class="eyebrow">Investment brief</div><h1>${esc(title(r.name))}</h1>
+    <p class="small">Assembled from the company page's facts; every line traces to a filing, the website or the register. Edit either box before using it; the text stays in this browser.</p>
+    <div class="grid2" style="margin-top:1rem">
+      <div class="stack">
+        <div class="card memo"><h3>Thesis</h3><p>${thesis}</p>
+          <h3>Why now</h3>${c.why_now.length?`<div class="why">${c.why_now.map(x=>`<div class="sig"><div class="dot ${esc(x.direction)}"></div><div><div class="lbl">${esc(x.label)}${x.date?` <span class="small num">· ${date(x.date)}</span>`:''}</div><div class="det">${esc(x.detail)}</div></div></div>`).join('')}</div>`:'<p class="small">No dated signals on file.</p>'}
+          <h3>Strengths</h3>${strengths.length?`<ul class="small">${strengths.map(x=>`<li><strong>${esc(x.dimension_name)}</strong> (${x.score}/5): ${esc(x.rationale||'')}${x.evidence_quote?` <i>"${esc(x.evidence_quote)}"</i>`:''}</li>`).join('')}</ul>`:'<p class="small">Nothing scored 4 or above.</p>'}
+          <h3>Watch</h3>${(weak.length||caution.length)?`<ul class="small">${weak.map(x=>`<li><strong>${esc(x.dimension_name)}</strong> (${x.score}/5): ${esc(x.rationale||'')}</li>`).join('')}${caution.map(x=>`<li><strong>${esc(x.label)}</strong>: ${esc(x.detail)}</li>`).join('')}</ul>`:'<p class="small">Nothing scored low and no cautions.</p>'}
+          <h3>Questions from the data gaps</h3><p class="small">Generated from what the register and the website could not answer for this company, so the first call fills the holes in the evidence.</p>${gapQuestions(c).length?`<ul class="small">${gapQuestions(c).map(q=>`<li>${esc(q)}</li>`).join('')}</ul>`:'<p class="small">None: every dimension scored with evidence and revenue is filed.</p>'}
+        </div>
+      </div>
+      <div class="stack">
+        <div class="card"><h3>Memo text</h3><textarea class="brief" id="b-memo" style="min-height:320px">${esc(memo)}</textarea><div class="toolbar"><button class="btn primary" id="b-copy">Copy memo</button></div></div>
+        <div class="card"><h3>Outreach draft</h3><p class="small">Addressed to the first individual PSC on the register${person?` (${esc(person.full)})`:''}. A template, not a sent message: check the name and the claims before it leaves.</p><textarea class="brief" id="b-email">${esc(email)}</textarea><div class="toolbar"><button class="btn primary" id="e-copy">Copy email</button></div></div>
+      </div>
+    </div>`;
+  $('#b-copy').addEventListener('click', e => copyText($('#b-memo').value, e.target));
+  $('#e-copy').addEventListener('click', e => copyText($('#b-email').value, e.target));
+  window.scrollTo(0,0);
+}
+
+// ------------------------------------------------------------ look up any company the pipeline evaluated
+function lookup(){
+  main.innerHTML = `<div class="eyebrow">Look up a company</div><h1>Has the screener already evaluated it?</h1>
+    <p class="lead">Every one of the ${num(D.index.length)} UK software companies the pipeline read (25 to 800 staff, 5+ years old) is indexed here by name, town or company number. A hit shows how far it got: ranked, a comparable in the three verticals, or evaluated for size and ownership only.</p>
+    <div class="filters"><label style="flex:1;min-width:min(100%,360px)">Name, town or company number<input id="l-q" placeholder="e.g. Graphnet, Milton Keynes, 02933905" autocomplete="off"></label></div>
+    <div id="l-out"></div>`;
+  const out = $('#l-out');
+  const status = i => i[8] ? 'ranked' : (i[7] && i[7]!=='other') ? 'comparable in the three verticals' : i[7]==='other' ? 'evaluated: outside the three verticals' : i[6] ? 'evaluated: size unverified (scanned accounts)' : 'evaluated: size and ownership only';
+  const draw = () => {
+    const q = $('#l-q').value.trim().toLowerCase();
+    if (q.length < 2){ out.innerHTML = '<p class="hint">Type at least two characters.</p>'; return; }
+    const hits = D.index.filter(i => (i[1]||'').toLowerCase().includes(q) || (i[2]||'').toLowerCase().includes(q) || (i[0]||'').includes(q)).slice(0, 40);
+    out.innerHTML = hits.length ? `<div class="tablewrap"><table><thead><tr><th>Company</th><th>Town</th><th class="r">Staff</th><th>Ownership</th><th>Vertical</th><th>Status</th><th class="r">Durability</th></tr></thead><tbody>${hits.map(i=>`<tr ${D.companies[i[0]]?`class="row" data-n="${i[0]}"`:''}><td><strong>${esc(title(i[1]))}</strong><span class="sub">${esc(i[0])}</span></td><td class="small">${esc(title(i[2]||''))}</td><td class="r num">${num(i[3])}</td><td class="small">${esc(i[4]||'')}${i[5]?' · founder-led':''}</td><td class="small">${i[7]?vdot(i[7]):''}</td><td class="small">${esc(status(i))}${D.companies[i[0]]?' · open':''}</td><td class="r num">${num(i[9])}</td></tr>`).join('')}</tbody></table></div><p class="hint">${hits.length===40?'First 40 matches shown; narrow the search.':''} A name that is not here is outside the universe: not a software SIC code, under 25 or over 800 staff, under five years old, or no accounts with a headcount in the last year.</p>` : '<div class="note">No match in the universe. The company is outside the gate (software SIC, 25 to 800 staff, 5+ years old, accounts with a headcount) or trades under a different registered name; try the company number.</div>';
+    document.querySelectorAll('#l-out tr.row').forEach(tr => tr.addEventListener('click', () => { location.hash = 'c-'+tr.dataset.n; }));
+  };
+  $('#l-q').addEventListener('input', draw); draw(); $('#l-q').focus();
+}
+
+// ------------------------------------------------------------ founder questions from the data gaps
+function gapQuestions(c){
+  const r=c.ranking, rv=c.revenue, q=[];
+  if (!rv.tier || rv.tier==='C' || rv.tier==='none') q.push(`Revenue is not filed (${rv.tier==='C' ? 'the screener models ' + (rv.display||'').split(' (')[0] : 'no figure on the register'}): what was last year's revenue and ARR, and what is the split between recurring and services?`);
+  if ((r.flags||[]).includes('growth_unknown') || r.headcount_cagr==null) q.push('Only one year of headcount is on file: what was headcount two and three years ago, and what is the plan for the next 12 months?');
+  else if (r.headcount_cagr!=null && r.headcount_cagr < 0) q.push(`Average headcount fell (${pct(r.headcount_cagr)} a year): what drove the reduction, and has it reversed?`);
+  for (const s of c.scores.filter(x=>x.score==null)) q.push(`${s.dimension_name}: nothing on the website answered this. ${({1:'How does the product sit in the customer\'s workflow: system of record, orchestration layer, or a tool on the side?',2:'How is the product architected for AI: APIs, data model, where models plug in?',3:'What are gross retention, net retention and the share of revenue that is recurring?',4:'What leading indicators do you track: pipeline, sales cycle, usage?',5:'Is the category new or an established one being defended?',6:'What would it cost a customer to leave, in time and money?',7:'Who else is consolidating this space, and have you been approached?',8:'What happens to a customer when the product fails for a day?',9:'Which certifications and audits do customers require, and which do you hold?',10:'Which regulations shape the product, and how often do they change?'})[s.dimension]||''}`);
+  for (const s of c.scores.filter(x=>x.score!=null && x.confidence==='low')) q.push(`${s.dimension_name} was scored ${s.score} at low confidence: ${s.rationale||'the evidence was thin'}. What is the fuller picture?`);
+  for (const w of c.why_now.filter(x=>x.direction==='caution')) q.push(`${w.label}: ${w.detail.split('.')[0]}. What was it for?`);
+  if (c.charges.some(x=>!x.satisfied_on)) q.push(`There ${c.charges.filter(x=>!x.satisfied_on).length===1?'is an outstanding charge':'are outstanding charges'} on the register: what facility, what size, and what are the covenants?`);
+  if (!c.jobs_summary.open_roles) q.push('No public careers page was found: how many open roles are there today, and in which functions?');
+  if (r.gate==='founder-led, prior capital') q.push(`Prior capital sits on the register${(c.universe.investor_names||[]).length?' ('+c.universe.investor_names.join(', ')+')':''}: what are their rights, their time horizon, and would they sell down in a new round?`);
+  if ((r.flags||[]).includes('sh01_heavy') || (r.flags||[]).includes('share_premium_high') || (r.flags||[]).includes('check_share_premium')) q.push('The allotment and share-premium history suggests outside money the PSC register does not show: who is on the cap table below 25%, and are there options outstanding?');
+  if (c.universe.walkup_path) q.push(`Ownership runs through a holding company (${c.universe.walkup_path}): what sits in the holdco besides this company?`);
+  return q;
+}
+
+// ------------------------------------------------------------ shortlist
+const STAGES = ['new','contacted','meeting','diligence','pass'];
+let stages = store.get('stages', {});
+function shortlistView(){
+  const rows = [...shortlist].map(n => D.rankings.find(r=>r.company_number===n)).filter(Boolean).sort((a,b)=>(b.durability_score||0)-(a.durability_score||0));
+  const text = rows.map(r => `${title(r.name)} (${r.company_number}) · ${title(r.post_town||'')} · ${VERT[r.vertical]||''} · ${num(r.latest_employees)} staff · ${(r.revenue_display||'n/a').split(' (')[0]} · durability ${num(r.durability_score)} · ${r.gate||''} · fit ${r.fit_all||''}${notes[r.company_number]?'\n  Notes: '+notes[r.company_number]:''}`).join('\n');
+  main.innerHTML = `<div class="eyebrow">Shortlist</div><h1>Companies you starred</h1><p class="lead">Stars and notes live in this browser only. Copy the list to paste into a message or a CRM; open a brief for the memo and outreach draft.</p>
+    ${rows.length ? `<div class="toolbar"><button class="btn primary" id="s-copy">Copy as text</button><button class="btn" id="s-briefs">Copy all briefs</button><button class="btn" id="s-clear">Clear shortlist</button><span class="hint">Stage is a pipeline marker for your own tracking.</span></div>
+    <div class="tablewrap"><table><thead><tr><th></th><th>Company</th><th>Stage</th><th>Vertical</th><th class="r">Staff</th><th>Revenue</th><th>Fit</th><th class="r">Durability</th><th>Gate</th><th>Notes</th><th></th></tr></thead><tbody>${rows.map(r=>`<tr class="row" data-n="${r.company_number}"><td><span class="star on" data-star="${r.company_number}">\u2605</span></td><td><strong>${esc(title(r.name))}</strong><span class="sub">${esc(title(r.post_town||''))} · ${esc(r.company_number)}</span></td><td><select data-stage="${r.company_number}" style="font:inherit;font-size:.82rem;padding:.2rem .3rem;border-radius:8px;border:1px solid var(--line);background:var(--panel);color:var(--fg)">${STAGES.map(st=>`<option value="${st}" ${(stages[r.company_number]||'new')===st?'selected':''}>${st}</option>`).join('')}</select></td><td>${vdot(r.vertical)}</td><td class="r num">${num(r.latest_employees)}</td><td class="small">${esc((r.revenue_display||'n/a').split(' (')[0])}</td><td>${pill(r.fit_all)}</td><td class="r num">${num(r.durability_score)}</td><td class="small">${esc(r.gate||'')}</td><td class="small">${esc(notes[r.company_number]||'')}</td><td><a href="#brief-${esc(r.company_number)}" class="small">brief</a></td></tr>`).join('')}</tbody></table></div>
+    <h2>Side by side</h2><p class="small">The ten rubric dimensions, headcount growth and timing signals for the starred companies in one table.</p>
+    <div class="tablewrap"><table><thead><tr><th>Dimension</th>${rows.map(r=>`<th>${esc(title(r.name)).split(' ').slice(0,2).join(' ')}</th>`).join('')}</tr></thead><tbody>
+      ${DIMS.map(k=>`<tr><td class="small">${k}. ${esc(D.config.rubric.dimension_names[k])}</td>${rows.map(r=>{ const sc=(D.companies[r.company_number]||{scores:[]}).scores.find(x=>x.dimension===k)||{}; return `<td class="num" title="${esc(sc.rationale||'')}">${sc.score??'–'}<span class="sub">${esc(sc.confidence||'')}</span></td>`; }).join('')}</tr>`).join('')}
+      <tr><td class="small">Durability</td>${rows.map(r=>`<td class="num">${num(r.durability_score)}</td>`).join('')}</tr>
+      <tr><td class="small">Investability</td>${rows.map(r=>`<td class="num">${num(r.investability_score)}</td>`).join('')}</tr>
+      <tr><td class="small">Staff, latest filed</td>${rows.map(r=>`<td class="num">${num(r.latest_employees)}</td>`).join('')}</tr>
+      <tr><td class="small">Headcount CAGR</td>${rows.map(r=>`<td class="num">${r.headcount_cagr!=null?pct(r.headcount_cagr):'n/a'}</td>`).join('')}</tr>
+      <tr><td class="small">Revenue</td>${rows.map(r=>`<td class="small">${esc((r.revenue_display||'n/a').split(' (')[0])}<span class="sub">${esc(r.tier?'Tier '+r.tier:'')}</span></td>`).join('')}</tr>
+      <tr><td class="small">Fit (US+UK / UK)</td>${rows.map(r=>`<td>${pill(r.fit_all)} ${pill(r.fit_uk)}</td>`).join('')}</tr>
+      <tr><td class="small">Why now (approach / caution)</td>${rows.map(r=>`<td class="num"><span style="color:var(--good)">${r.why_now_approach??0}</span> / <span style="color:var(--warn)">${r.why_now_caution??0}</span></td>`).join('')}</tr>
+      <tr><td class="small">Ownership gate</td>${rows.map(r=>`<td class="small">${esc(r.gate||'')}</td>`).join('')}</tr>
+    </tbody></table></div>` : '<div class="note">Nothing starred yet. Use the star in the first column of the Ranked table or the button on a company page.</div>'}`;
+  if (rows.length){
+    $('#s-copy').addEventListener('click', e => copyText(text, e.target));
+    $('#s-briefs').addEventListener('click', e => copyText(rows.map(r => briefText(r.company_number)).join('\n\n' + '='.repeat(60) + '\n\n'), e.target));
+    document.querySelectorAll('#main [data-stage]').forEach(sel => { sel.addEventListener('click', ev => ev.stopPropagation()); sel.addEventListener('change', ev => { stages[sel.dataset.stage] = ev.target.value; store.set('stages', stages); }); });
+    $('#s-clear').addEventListener('click', () => { shortlist = new Set(); store.set('shortlist', []); shortlistView(); });
+    document.querySelectorAll('#main tr.row').forEach(tr => tr.addEventListener('click', () => { location.hash = 'c-'+tr.dataset.n; }));
+    document.querySelectorAll('#main [data-star]').forEach(el => el.addEventListener('click', e => { e.stopPropagation(); toggleStar(el.dataset.star); shortlistView(); }));
+  }
+}
+
+// ------------------------------------------------------------ funnel
+function funnel(){
+  const rows = D.funnel, max = Math.log10(Math.max(...rows.map(r=>r[1]),10));
+  main.innerHTML = `<div class="eyebrow">Funnel</div><h1>From 5.7 million companies to the shortlist</h1><p class="lead">Live counts at each stage, read from the database, with the rule that caused each drop. The axis is logarithmic.</p>
+    <div class="card" style="margin-block:1rem">${rows.map((r,i)=>{ const w = Math.max(2, 100*Math.log10(Math.max(r[1],1))/max); return `<div style="display:grid;grid-template-columns:minmax(0,260px) minmax(0,1fr) 90px;gap:.6rem;align-items:center;margin:.35rem 0"><div class="small">${esc(r[0])}</div><div class="bar" style="height:14px"><i style="width:${w}%"></i></div><div class="num r" style="text-align:right">${num(r[1])}</div></div>`; }).join('')}</div>
+    <div class="tablewrap"><table><thead><tr><th>Stage</th><th class="r">Companies</th><th class="r">Drop</th><th>Rule</th></tr></thead><tbody>${rows.map((r,i)=>`<tr><td>${esc(r[0])}</td><td class="r num">${num(r[1])}</td><td class="r num">${i?num(rows[i-1][1]-r[1]):''}</td><td class="small">${esc(r[2])}</td></tr>`).join('')}</tbody></table></div>
+    <h2>A false positive the rules caught</h2><p class="lead">PortSwigger (Knutsford, Burp Suite) ranked 42nd in the first build. The PSC register shows the founder at 50 to 75% and Mark Dzialga personally with significant influence since July 2024; the PSC rule reads an individual, the SH01 and share-premium check set investor possible, and the manual review excluded it as Brighton Park's own 2024 investment. The back-test still runs on it.</p>`;
+}
+
+// ------------------------------------------------------------ themes
+function themes(sel){
+  const keys = Object.keys(D.config.themes); sel = keys.includes(sel) ? sel : keys[0];
+  const rows = D.themes.filter(t=>t.theme===sel);
+  const own = t => t.founder_flag==='founder' ? `founder (${t.founder_confidence})` : t.founder_flag==='excluded' ? `excluded: ${t.exclusion_reason||''}${(t.investor_names||[]).length?' ('+t.investor_names.join(', ')+')':''}` : `uncertain${t.exclusion_reason?': '+t.exclusion_reason:''}`;
+  main.innerHTML = `<div class="eyebrow">Theme maps</div><h1>Every player in an end market, founder-led or not</h1>
+    <p class="lead">Every company in the 25 to 800 staff universe whose website uses a theme's vocabulary. A team that sources by end market sees all the players at once; the founder-led ones are the calls to make, the rest are the comparables. Keyword scan on fetched site text, no model call; the matching sentence is the evidence.</p>
+    <div class="filters"><label>Theme<select id="t-sel">${keys.map(k=>`<option value="${k}" ${k===sel?'selected':''}>${esc(D.config.themes[k].label)}</option>`).join('')}</select></label></div>
+    <p class="small">Vocabulary: ${esc(D.config.themes[sel].keywords.join(', '))}</p>
+    <div class="tiles"><div class="tile"><div class="k">On the map</div><div class="v num">${rows.length}</div></div><div class="tile"><div class="k">Founder-led</div><div class="v num">${rows.filter(t=>t.founder_led).length}</div></div><div class="tile"><div class="k">Ownership uncertain</div><div class="v num">${rows.filter(t=>t.founder_flag==='uncertain').length}</div></div><div class="tile"><div class="k">Investor or group owned</div><div class="v num">${rows.filter(t=>t.founder_flag==='excluded').length}</div></div></div>
+    <div class="tablewrap"><table><thead><tr><th>Company</th><th>Town</th><th class="r">Staff</th><th>Ownership</th><th>Revenue</th><th>Fit</th><th>Screened vertical</th><th>Terms</th><th>Evidence</th><th>Site</th></tr></thead><tbody>${rows.map(t=>`<tr ${D.companies[t.company_number]?`class="row" data-n="${t.company_number}"`:''}><td><strong>${esc(title(t.name))}</strong>${t.founder_led?' <span class="pill core">led</span>':''}</td><td class="small">${esc(title(t.post_town||''))}</td><td class="r num">${num(t.latest_employees)}</td><td class="small">${esc(own(t))}</td><td class="small">${esc(t.revenue_display||'not estimated')}</td><td>${t.fit_all?pill(t.fit_all):''}</td><td class="small">${t.vertical?vdot(t.vertical):'not in the three verticals'}</td><td class="small">${esc(t.top_keywords||'')}</td><td class="small" style="min-width:280px">${esc(t.snippet||'')}</td><td class="small">${t.domain?`<a href="https://${esc(t.domain)}" target="_blank" rel="noopener">${esc(t.domain)}</a>`:''}</td></tr>`).join('')}</tbody></table></div>
+    <p class="hint">Companies outside the three screened verticals have no durability score or revenue tier; scoring a theme end to end is one classifier run and one rubric run. Companies House is one register; the same theme across Europe is one ingest adapter per register with the pipeline unchanged.</p>`;
+  $('#t-sel').addEventListener('change', e => { location.hash = 'theme-'+e.target.value; });
+  document.querySelectorAll('#main tr.row').forEach(tr => tr.addEventListener('click', () => { location.hash = 'c-'+tr.dataset.n; }));
+}
+
+// ------------------------------------------------------------ methods
+function methods(){
+  const rep=D.docs.model_report||{}, o=rep.overall||{}, qa=D.docs.qa||{}, us=D.docs.usefulness||{}, bt=D.docs.backtests||{}, cs=D.docs.classification_summary||{}, man=D.docs.db_manifest||{}, cfg=D.config;
+  const pr=us.precision_before_review||{}, t30=pr.top30||{}, t71=pr.top71||{}, ev=us.evidence_coverage||{}, du=us.discovery_uplift_proxy||{}, ae=us.analyst_effort||{}, comp=us.completeness||{};
+  const w = cfg.rubric.weights, names = cfg.rubric.dimension_names;
+  main.innerHTML = `<div class="eyebrow">Methods</div><h1>How every number was made</h1><p class="lead">With the measured error where there is one.</p>
+    <h2>Scoring</h2>
+    <p class="lead">Companies receive two independent scores out of 100.</p>
+    <div class="grid2">
+      <div class="card"><h3>AI Durability</h3><p class="small" style="margin-top:0">Based on ten factors from Mark Dzialga's February 2026 framework.</p>
+        <ul class="small">
+          <li>Customer stickiness/value delivered (20%)</li>
+          <li>Workflow failure costs (15%)</li>
+          <li>Regulatory/industry expertise (15%)</li>
+          <li>Workflow control, AI readiness, business performance (10% each)</li>
+          <li>Four additional factors (5% each)</li>
+        </ul></div>
+      <div class="card"><h3>Investability</h3><p class="small" style="margin-top:0">Measures BPC fit.</p>
+        <ul class="small">
+          <li>Size (30%)</li>
+          <li>Growth (25%)</li>
+          <li>Hiring (15%)</li>
+          <li>Financial leverage (15%)</li>
+          <li>Data reliability (15%)</li>
+        </ul></div>
+    </div>
+    <div class="note" style="margin-top:1rem">Ranking prioritizes AI durability; investability breaks ties. Scores are not combined.</div>
+    <h2>Data vintage</h2><div class="tablewrap"><table><thead><tr><th>Source</th><th>Vintage</th><th>Note</th></tr></thead><tbody>
+      <tr><td>Basic company data</td><td class="num">${esc(cfg.build.snapshot_basic.replace('BasicCompanyDataAsOneFile-','').replace('.zip',''))}</td><td class="small">Companies House monthly snapshot (Open Government Licence)</td></tr>
+      <tr><td>PSC snapshot</td><td class="num">${esc(cfg.build.snapshot_psc_date)}</td><td class="small">Companies House daily PSC snapshot</td></tr>
+      <tr><td>Accounts bulk data</td><td class="num">${esc(String(cfg.build.accounts_monthly[0]).replace(/([A-Za-z])(\d{4})/,'$1 $2'))} to ${esc(String(cfg.build.accounts_monthly[cfg.build.accounts_monthly.length-1]).replace(/([A-Za-z])(\d{4})/,'$1 $2'))} plus dailies</td><td class="small">iXBRL filed electronically; PDF filers recovered through the document API and OCR where available</td></tr>
+      <tr><td>Companies House REST API</td><td>live, cached on first fetch</td><td class="small">officers, filing history, charges, profile</td></tr>
+      <tr><td>Websites</td><td>fetched during the build</td><td class="small">homepage plus up to four product pages, robots.txt respected</td></tr>
+      <tr><td>Database built</td><td class="num">${esc((man.built_at||'').slice(0,16))}</td><td class="small">${Object.keys(man.tables||{}).length} tables</td></tr></tbody></table></div>
+
+    <h2>Revenue estimator</h2><p class="lead">Filed beats observed beats modelled, and the tier is shown on every card. Tier A is filed turnover; A-ocr is read from a scanned filing (±10%); A-rolled rolls a prior year forward by headcount growth; A-derived backs turnover out of gross profit. Tier C is a LightGBM model of log turnover trained on software companies that do file turnover, using only lines a filleted filer also discloses. Validation is GroupKFold by company; the p10 to p90 band comes from out-of-fold residual quantiles within headcount bands.</p>
+    ${rep.overall?`<div class="tiles"><div class="tile"><div class="k">Training rows</div><div class="v num">${num(rep.training_rows)}</div><div class="s">${num(rep.training_companies)} companies that file turnover</div></div><div class="tile"><div class="k">MdAPE, LightGBM</div><div class="v num">${num(o.mdape_lgbm_pct)}%</div><div class="s">OLS baseline ${num(o.mdape_ols_pct)}%</div></div><div class="tile"><div class="k">p10 to p90 coverage</div><div class="v num">${num((o.p10_p90_coverage_split_half||0)*100)}%</div><div class="s">target ~80%</div></div><div class="tile"><div class="k">R² (log)</div><div class="v num">${num(o.r2_log_lgbm,2)}</div></div></div>
+    <div class="tablewrap"><table><thead><tr><th>Headcount band</th><th class="r">Rows</th><th class="r">MdAPE LightGBM</th><th class="r">MdAPE OLS</th><th>Typical band</th><th class="r">Coverage</th></tr></thead><tbody>${Object.entries(rep.by_band||{}).map(([b,v])=>`<tr><td class="num">${esc(b)}</td><td class="r num">${v.n}</td><td class="r num">${num(v.mdape_lgbm_pct)}%</td><td class="r num">${num(v.mdape_ols_pct)}%</td><td class="num small">${v.typical_band_pct.low>0?'+':''}${num(v.typical_band_pct.low)}% to +${num(v.typical_band_pct.high)}%</td><td class="r num">${num(v.p10_p90_coverage_in_sample*100)}%</td></tr>`).join('')}</tbody></table></div>
+    <p class="small">Revenue per head in the training set: p25 ${gbp((rep.revenue_per_head_gbp||{}).p25)}, p50 ${gbp((rep.revenue_per_head_gbp||{}).p50)}, p75 ${gbp((rep.revenue_per_head_gbp||{}).p75)}. Disclosers skew to medium and large filers; account category is a feature so the model learns the shift. Predictions outside the training distribution are flagged extrapolated. Model ${esc(rep.model_version||'')}, trained ${esc((rep.trained_at||'').slice(0,16))}.</p>`:''}
+
+    <h2>Classifier and rubric</h2><p class="lead">The vertical classifier reads up to ~7k characters of each company's website and returns a fixed-taxonomy label with a quote that must appear verbatim in the fetched text. Companies whose text has no keyword hit for any target vertical are labelled other deterministically and never reach the model. The rubric scores ten dimensions 1 to 5 the same way, with structured facts (FCA status, charges, headcount trend, open roles) passed as quotable lines. Temperature 0 throughout, Gemini free tier across three keys.</p>
+    ${cs.rows?`<p class="small">Classification run ${esc((cs.computed_at||'').slice(0,16))}: ${num(cs.rows)} companies; model-labelled ${num(cs.llm)}, keyword pre-filter other ${num(cs.keyword_prefilter_other)}, no website ${num(cs.no_website)}; classifier_failed ${cs.classifier_failed||0}.</p>`:''}
+    ${qa.labels_checked?`<div class="tiles"><div class="tile"><div class="k">Vertical labels hand-checked</div><div class="v num">${qa.labels_checked}</div><div class="s">agreement ${num(qa.label_agreement_pct)}% (blind re-labelling)</div></div><div class="tile"><div class="k">Rubric sub-scores hand-checked</div><div class="v num">${qa.subscores_checked}</div><div class="s">within one point ${num(qa.subscore_within_one_pct)}%, exact ${num(qa.subscore_exact_pct)}%</div></div><div class="tile"><div class="k">Ranked companies reviewed by hand</div><div class="v num">${qa.top30_reviewed}</div><div class="s">${qa.overrides} overrides applied</div></div></div>
+    <p class="small">The blind rubric check found the model lenient by about a third of a point with a compressed scale, so two corrections are applied by rule after the model: dimension 4 (leading indicators) is scored from the filed headcount trend and open engineering roles, and dimension 3 is capped at 3 when a non-bank lender took a charge in the last 18 months. Use the rank, not the absolute number: the three verticals were chosen for exactly the properties dimensions 6, 8 and 10 reward.</p>`:''}
+    ${D.score_stats.length?`<div class="tablewrap"><table><thead><tr><th>#</th><th>Dimension</th><th class="r">Mean</th><th class="r">Scored</th><th class="r">Unscored</th><th class="r">High confidence</th></tr></thead><tbody>${D.score_stats.map(s=>`<tr><td class="num">${s.dimension}</td><td>${esc(s.dimension_name)}</td><td class="r num">${num(s.mean_score,2)}</td><td class="r num">${s.scored}</td><td class="r num">${s.unscored}</td><td class="r num">${s.high_conf}</td></tr>`).join('')}</tbody></table></div>`:''}
+
+    <h2>Is it useful? Measured, not claimed</h2>
+    ${us.precision_before_review?`<div class="tiles"><div class="tile"><div class="k">Precision at top 30, before review</div><div class="v num">${num(t30.precision_pct)}%</div><div class="s">${t30.kept} of ${t30.reviewed} kept unchanged; ${t30.excluded} excluded, ${t30.relabelled} relabelled, ${t30.flagged_for_review} flagged. Across 71: ${num(t71.precision_pct)}%.</div></div>
+    <div class="tile"><div class="k">Sub-scores with a verbatim quote</div><div class="v num">${num(ev.quote_pct)}%</div><div class="s">${num(ev.with_verbatim_quote)} of ${num(ev.subscores_scored)} scored; ${num(ev.high_confidence_pct)}% high confidence; vertical labels quoted ${num(ev.vertical_labels_with_quote_pct)}%</div></div>
+    <div class="tile"><div class="k">Ranked companies with no share allotment ever</div><div class="v num">${num(du.no_share_allotment_pct)}%</div><div class="s">${du.no_share_allotment_ever} of ${du.ranked}: invisible to a round-driven database</div></div>
+    <div class="tile"><div class="k">Hand-reviewed</div><div class="v num">${ae.companies_hand_reviewed}</div><div class="s">${ae.overrides_applied} overrides; four minutes a company; the universe of ${num(ae.universe_companies)} would take ~${num(ae.universe_companies*4/60)} analyst hours</div></div></div>
+    <p class="small">Where the reviewer disagreed on the 71 (a company can fail more than one): ownership ${(pr.disagreement_reasons||{}).ownership}, website ${(pr.disagreement_reasons||{}).website}, vertical ${(pr.disagreement_reasons||{}).vertical}. Ownership misses are investors under 25% or exits the register shows late; vertical misses are services firms with a product page. Both became rules or overrides.</p>
+    <div class="tablewrap"><table><thead><tr><th>Stage</th><th class="r">Companies</th><th class="r">Size verified</th><th class="r">Founder flag decided</th><th class="r">Website found</th><th class="r">Revenue filed or OCR</th><th class="r">Revenue modelled</th><th class="r">No revenue figure</th><th class="r">Rubric scored</th></tr></thead><tbody>${[['universe','Universe (size and age gate)'],['target_verticals','Target verticals (classified)'],['ranked','Ranked (founder gate)']].map(([k,l])=>{const c=comp[k]||{}; return c.companies?`<tr><td>${l}</td><td class="r num">${num(c.companies)}</td><td class="r num">${num(c.size_verified_pct)}%</td><td class="r num">${num(c.founder_flag_decided_pct)}%</td><td class="r num">${num(c.website_found_pct)}%</td><td class="r num">${num(c.revenue_filed_or_ocr_pct)}%</td><td class="r num">${num(c.revenue_modelled_pct)}%</td><td class="r num">${num(c.revenue_none_pct)}%</td><td class="r num">${num(c.rubric_scored_pct)}%</td></tr>`:''}).join('')}</tbody></table></div>`:''}
+
+    <h2>Why now signals</h2><p class="lead">Timing is not scored. Each company page lists dated facts with the source for each: months since the last share allotment, PSC register movements and director changes in the last 12 months, owner-directors' tenure and register year of birth, charges created or satisfied in the last 18 months, headcount acceleration or contraction, an accounts category stepping up, and open senior commercial, finance or non-UK roles. They are hypotheses about the founder's position.</p>
+    ${D.why_stats.length?`<div class="tablewrap"><table><thead><tr><th>Signal</th><th>Direction</th><th class="r">Rows</th><th class="r">Companies</th></tr></thead><tbody>${D.why_stats.map(s=>`<tr><td class="num">${esc(s.signal)}</td><td>${esc(s.direction)}</td><td class="r num">${s.n}</td><td class="r num">${s.companies}</td></tr>`).join('')}</tbody></table></div>`:''}
+
+    <h2>Rubric weights</h2><p class="small"><strong>${esc(cfg.rubric.source_label)}</strong> Source: <a href="${esc(cfg.rubric.source_url)}" target="_blank" rel="noopener">${esc(cfg.rubric.source_url)}</a>. The post states that its views are qualitative and not investment criteria; the weights are a first pass.</p>
+    <div class="tablewrap"><table><thead><tr><th>#</th><th>Dimension</th><th class="r">Weight</th></tr></thead><tbody>${Object.keys(names).map(k=>`<tr><td class="num">${k}</td><td>${esc(names[k])}</td><td class="r num">${Math.round(w[k]*100)}%</td></tr>`).join('')}</tbody></table></div>
+    <p class="small">Durability = weighted mean of the scored dimensions rescaled to 0 to 100; two or more unscored dimensions show a grey score. Investability (0 to 100) is deterministic: founder-led is a gate; size 30 points (p50 revenue inside £${cfg.target.revenue_target_min_gbp/1e6}M to £${cfg.target.revenue_target_max_gbp/1e6}M), growth 25 (headcount CAGR, 20% scores full), hiring intensity 15, leverage 15 (no outstanding charges full, a charge in the last 18 months zero), data quality 15.</p>
+
+    <h2>Ownership rules</h2><p class="lead">Applied in order to the PSC register; the first rule that fires decides. (1) Only a statement record (nobody over 25%): excluded as dispersed. (2) An active corporate PSC on the investor list or carrying a fund token (LP, Nominees, Trustees, Fund, Ventures, Capital Partners), or an employee ownership trust: excluded as investor present. (3) A UK corporate PSC that is not an investor: walk up the holdco chain (up to three levels). (4) One to three individuals at 75% or more with a founding director among them: founder, high. (5) 50% to 75%, or the director test fails: founder, medium. (6) Trusts, firms, super-secure records, or every individual owner resident abroad: uncertain. SH01 allotments and share premium set investor possible without excluding.</p>
+    <p class="lead"><strong>Founder-led, the ranking gate since the calibration:</strong> any company where an individual PSC at 25% or more (direct or through the holdco walk) passes the founding-director test, whatever else sits on the register. Founder-owned companies qualify by definition; a VC-backed company whose founder keeps 25% and a board seat qualifies too; a company whose individual owners all live abroad does not. Ranked = founder-led, size verified, 80 staff or more, website verified where the name is a single token, and not excluded by the reviewer.</p>
+    <p class="small">Known gaps: investors under 25% never appear in PSC data; EMI options are invisible until exercised; a trading subsidiary under a group topco is scored at the topco; nominee holdings hide the beneficial owner.</p>
+
+    <h2>Back-tests</h2>${bt.results?`<div class="tablewrap"><table><thead><tr><th>Company</th><th>Number</th><th>Expected</th><th>Result</th><th>Detail</th></tr></thead><tbody>${bt.results.map(b=>`<tr><td>${esc(b.Company)}</td><td class="num">${esc(b.Number)}</td><td class="small">${esc(b.Expected)}</td><td><span class="pill ${b.Result==='pass'?'core':'early'}">${esc(b.Result)}</span></td><td class="small">${esc(b.Detail)}</td></tr>`).join('')}</tbody></table></div>`:''}
+    <h2>Not used, and why</h2><p class="small">LinkedIn (no API; scraping breaches terms; manual check for the top names only). Indeed (publisher API closed). Beauhurst, PitchBook, Grata, Harmonic, Specter (paid, no self-serve trial). Streaming API, public-spend joins, Adzuna, G-Cloud and CQC checks are on the cut list.</p>`;
+}
+
+// ------------------------------------------------------------ calibration
+function calibration(){
+  const bp = D.docs.bp_pattern||{}, co = bp.cohorts||{}, rs = D.docs.rankings_summary||{};
+  const row = (l, f) => `<tr><td>${l}</td><td>${f(co.all||{})}</td><td>${f(co.uk||{})}</td></tr>`;
+  const hb = c => c.headcount_band||{}, ir = c => c.implied_revenue_gbp_m||{}, rt = c => c.round_total_usd_m||{}, sh = (c,k) => c[k]||{};
+  const fits = k => Object.entries(rs[k]||{}).map(([a,b])=>`${a} ${b}`).join(', ');
+  main.innerHTML = `<div class="eyebrow">Calibration</div><h1>Measured against the fund's own entries</h1>
+    <p class="lead">The four UK back-tests check the pipeline's mechanics on known names. The target is the pattern the London office exists to replicate: Brighton Park's five-year, 31-company portfolio. Each company was profiled at entry from press releases, Companies House and headcount trackers, every figure tied to a quoted source. Revenue at entry is disclosed for four companies only, so the measured variable is entry headcount, with revenue implied through the screener's own revenue-per-head median.</p>
+    <div class="note">Public profile: growth cheques of roughly $50M to $250M, mostly minority, in profitable or near-profitable software; Fund I $1.1B, Fund II $1.8B (November 2022); about 32 portfolio companies; London office opened 2025. The first build ranked founder-owned companies at 25 to 400 staff and 33 of its 38 were smaller than anything the fund had entered; the list was rebuilt to the measured pattern: universe to 800 staff, ranking gate at 80, founder-led in place of founder-owned.</div>
+    <h2>Two calibrations</h2>
+    <div class="tablewrap"><table><thead><tr><th></th><th>US + UK + rest of world</th><th>UK only</th></tr></thead><tbody>
+      ${row('Companies', c=>`${c.n_all||0} (${c.n_private||0} private entries; band from ${c.n_headcount_known||0} software entries with a known headcount)`)}
+      ${row('Entry headcount core (p25 to p75)', c=>`<span class="num">${hb(c).core_lo} to ${hb(c).core_hi}</span>`)}
+      ${row('Smallest / largest software entry', c=>`<span class="num">${hb(c).min} / ${hb(c).max}</span>`)}
+      ${row('Implied revenue core', c=>`<span class="num">£${num(ir(c).core_lo)}M to £${num(ir(c).core_hi)}M</span> at £${num(ir(c).rev_per_head_gbp)} per head`)}
+      ${row('Round size, disclosed', c=>rt(c).n?`median $${num(rt(c).p50)}M (p25 $${num(rt(c).p25)}M, p75 $${num(rt(c).p75)}M, n=${rt(c).n})`:'n/a')}
+      ${row('Founder-led at entry', c=>`${sh(c,'founder_led').yes} of ${sh(c,'founder_led').of_known} (${sh(c,'founder_led').pct_of_known}%)`)}
+      ${row('Founder still CEO', c=>`${sh(c,'founder_ceo').yes} of ${sh(c,'founder_ceo').of_known}`)}
+      ${row('First institutional capital', c=>`${sh(c,'first_institutional').yes} of ${sh(c,'first_institutional').of_known} (${sh(c,'first_institutional').pct_of_known}%, ${sh(c,'first_institutional').unknown} unknown)`)}
+      ${row('Deal types', c=>Object.entries(c.by_deal_type||{}).map(([k,v])=>`${k} ${v}`).join(', '))}
+      ${row('Verticals', c=>Object.entries(c.by_vertical||{}).map(([k,v])=>`${k} ${v}`).join(', '))}
+      ${row('Revenue disclosed at entry', c=>(c.entry_revenue_disclosed||[]).map(x=>`${x.name} $${num(x.usd_m)}M ${x.basis}${x.headcount?' ('+x.headcount+' staff)':''}`).join('; ')||'none')}
+      <tr><td>Ranked list against the band</td><td>${fits('fit_all_ranked')}</td><td>${fits('fit_uk_ranked')}</td></tr>
+    </tbody></table></div>
+    <p class="small">Caveats: the UK cohort is four private entries, so its band is four numbers; headcounts for 2021 to 2026 entries come from Revelio quarterly estimates or press releases, earlier ones are often unknown; minority versus majority is inferred from syndicate structure for about half the deals; one entry (Darktrace) was an open-market purchase of listed shares and is excluded from the bands; tech-enabled services entries (1,000 to 3,000 staff) are excluded from the software band. The 2019 to 2020 vintage had two stated majority deals.</p>
+    <h2>The 31 entry profiles</h2>
+    <div class="tablewrap"><table><thead><tr><th>Company</th><th>Vertical</th><th>HQ</th><th class="r">Year</th><th>Deal</th><th class="r">Round $M</th><th class="r">BP $M</th><th>First institutional</th><th>Founder-led</th><th class="r">Entry revenue $M</th><th class="r">Entry staff</th><th>Status</th><th>Source</th></tr></thead><tbody>${(bp.table||[]).map(t=>`<tr><td><strong>${esc(t.name)}</strong></td><td class="small">${esc(t.bp_vertical||'')}</td><td class="small">${esc(t.hq_country||'')}</td><td class="r num">${t.bp_invest_year||''}</td><td class="small">${esc(t.deal_type||'')}</td><td class="r num">${t.round_total_usd_m??''}</td><td class="r num">${t.bp_amount_usd_m??''}</td><td class="small">${esc(t.first_institutional_capital||'')}</td><td class="small">${esc(t.founder_led_at_entry||'')}</td><td class="r num">${t.entry_revenue_or_arr_usd_m??''}</td><td class="r num">${t.entry_headcount_est??''}</td><td class="small">${esc(t.status||'')}</td><td class="small">${(t.sources||[])[0]?`<a href="${esc(t.sources[0])}" target="_blank" rel="noopener">source</a>`:''}</td></tr>`).join('')}</tbody></table></div>`;
+}
+
+route();
+})();
+</script>

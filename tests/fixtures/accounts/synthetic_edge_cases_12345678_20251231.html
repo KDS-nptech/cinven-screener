@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ix="http://www.xbrl.org/2013/inlineXBRL" xmlns:ixt="http://www.xbrl.org/inlineXBRL/transformation/2015-02-26" xmlns:ixt2="http://www.xbrl.org/inlineXBRL/transformation/2011-07-31" xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns:xbrldi="http://xbrl.org/2006/xbrldi" xmlns:iso4217="http://www.xbrl.org/2003/iso4217" xmlns:ns5="http://xbrl.frc.org.uk/fr/2023-01-01/core" xmlns:ns10="http://xbrl.frc.org.uk/cd/2023-01-01/business">
+<head><title>Synthetic edge cases</title></head>
+<body>
+<div style="display:none"><ix:header><ix:hidden>
+<ix:nonNumeric name="ns10:EntityDormantTruefalse" contextRef="cy" format="ixt2:booleanfalse">No</ix:nonNumeric>
+<ix:nonNumeric name="ns10:StartDateForPeriodCoveredByReport" contextRef="cy" format="ixt:datedaymonthyear">01/01/2025</ix:nonNumeric>
+</ix:hidden>
+<ix:resources>
+<xbrli:unit id="GBP"><xbrli:measure>iso4217:GBP</xbrli:measure></xbrli:unit>
+<xbrli:unit id="pure"><xbrli:measure>xbrli:pure</xbrli:measure></xbrli:unit>
+<xbrli:context id="cy"><xbrli:entity><xbrli:identifier scheme="http://www.companieshouse.gov.uk/">12345678</xbrli:identifier></xbrli:entity><xbrli:period><xbrli:startDate>2025-01-01</xbrli:startDate><xbrli:endDate>2025-12-31</xbrli:endDate></xbrli:period></xbrli:context>
+<xbrli:context id="py"><xbrli:entity><xbrli:identifier scheme="http://www.companieshouse.gov.uk/">12345678</xbrli:identifier></xbrli:entity><xbrli:period><xbrli:startDate>2024-01-01</xbrli:startDate><xbrli:endDate>2024-12-31</xbrli:endDate></xbrli:period></xbrli:context>
+<xbrli:context id="cye"><xbrli:entity><xbrli:identifier scheme="http://www.companieshouse.gov.uk/">12345678</xbrli:identifier></xbrli:entity><xbrli:period><xbrli:instant>2025-12-31</xbrli:instant></xbrli:period></xbrli:context>
+<xbrli:context id="pye"><xbrli:entity><xbrli:identifier scheme="http://www.companieshouse.gov.uk/">12345678</xbrli:identifier></xbrli:entity><xbrli:period><xbrli:instant>2024-12-31</xbrli:instant></xbrli:period></xbrli:context>
+<xbrli:context id="cye_within"><xbrli:entity><xbrli:identifier scheme="http://www.companieshouse.gov.uk/">12345678</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension="ns5:MaturitiesOrExpirationPeriodsDimension">ns5:WithinOneYear</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:instant>2025-12-31</xbrli:instant></xbrli:period></xbrli:context>
+<xbrli:context id="cye_after"><xbrli:entity><xbrli:identifier scheme="http://www.companieshouse.gov.uk/">12345678</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension="ns5:MaturitiesOrExpirationPeriodsDimension">ns5:AfterOneYear</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:instant>2025-12-31</xbrli:instant></xbrli:period></xbrli:context>
+<xbrli:context id="cye_sc"><xbrli:entity><xbrli:identifier scheme="http://www.companieshouse.gov.uk/">12345678</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension="ns5:EquityClassesDimension">ns5:ShareCapital</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:instant>2025-12-31</xbrli:instant></xbrli:period></xbrli:context>
+<xbrli:context id="cy_type"><xbrli:entity><xbrli:identifier scheme="http://www.companieshouse.gov.uk/">12345678</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension="ns10:AccountsTypeDimension">ns10:FullAccounts</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:startDate>2025-01-01</xbrli:startDate><xbrli:endDate>2025-12-31</xbrli:endDate></xbrli:period></xbrli:context>
+<xbrli:context id="cy_std"><xbrli:entity><xbrli:identifier scheme="http://www.companieshouse.gov.uk/">12345678</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension="ns10:AccountingStandardsDimension">ns10:FRS102</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:startDate>2025-01-01</xbrli:startDate><xbrli:endDate>2025-12-31</xbrli:endDate></xbrli:period></xbrli:context>
+</ix:resources></ix:header></div>
+<p>Company <ix:nonNumeric name="ns10:UKCompaniesHouseRegisteredNumber" contextRef="cy">12345678</ix:nonNumeric>
+<ix:nonNumeric name="ns10:EntityCurrentLegalOrRegisteredName" contextRef="cy">Synthetic <ix:exclude>(draft)</ix:exclude>Software Limited</ix:nonNumeric>
+balance sheet at <ix:nonNumeric name="ns10:BalanceSheetDate" contextRef="cye" format="ixt:datelonguk">31st December 2025</ix:nonNumeric>
+period end <ix:nonNumeric name="ns10:EndDateForPeriodCoveredByReport" contextRef="cy" format="ixt:datelonguk">31 December 2025</ix:nonNumeric></p>
+<p>Turnover <ix:nonFraction name="ns5:TurnoverRevenue" contextRef="cy" unitRef="GBP" decimals="-3" scale="3" format="ixt:numcommadot">12,345</ix:nonFraction>
+prior <ix:nonFraction name="ns5:TurnoverRevenue" contextRef="py" unitRef="GBP" decimals="-3" scale="3" format="ixt:numcommadot">11,000</ix:nonFraction></p>
+<p>Loss <ix:nonFraction name="ns5:ProfitLoss" contextRef="cy" unitRef="GBP" decimals="0" sign="-" format="ixt:numcommadot">1,500</ix:nonFraction></p>
+<p>Gross profit (european format) <ix:nonFraction name="ns5:GrossProfitLoss" contextRef="cy" unitRef="GBP" decimals="0" format="ixt:numcomma">7.500,75</ix:nonFraction></p>
+<p>Employees (CCH style) <ix:nonFraction name="ns5:AverageNumberEmployeesDuringPeriod" contextRef="cy" unitRef="pure" decimals="2" scale="-2">42</ix:nonFraction>
+prior <ix:nonFraction name="ns5:AverageNumberEmployeesDuringPeriod" contextRef="py" unitRef="pure" decimals="0">40</ix:nonFraction></p>
+<p>Nested: <ix:nonFraction name="ns5:FixedAssets" contextRef="cye" unitRef="GBP" decimals="0" format="ixt:numdotdecimal"><ix:nonFraction name="ns5:IntangibleAssets" contextRef="cye" unitRef="GBP" decimals="0" format="ixt:numdotdecimal">2,000</ix:nonFraction></ix:nonFraction></p>
+<p>Zero dash <ix:nonFraction name="ns5:CashBankOnHand" contextRef="pye" unitRef="GBP" decimals="0" format="ixt2:zerodash">-</ix:nonFraction>
+numdash <ix:nonFraction name="ns5:TradeDebtorsTradeReceivables" contextRef="pye" unitRef="GBP" decimals="0" format="ixt:numdash">-</ix:nonFraction>
+fixed zero <ix:nonFraction name="ns5:OtherCreditors" contextRef="pye" unitRef="GBP" decimals="0" format="ixt:fixed-zero">nil</ix:nonFraction></p>
+<p>Cash <ix:nonFraction name="ns5:CashBankOnHand" contextRef="cye" unitRef="GBP" decimals="0" format="ixt:numcommadot">99,999</ix:nonFraction>
+no format parentheses <ix:nonFraction name="ns5:NetCurrentAssetsLiabilities" contextRef="cye" unitRef="GBP" decimals="0">(250)</ix:nonFraction></p>
+<p>Creditors within <ix:nonFraction name="ns5:Creditors" contextRef="cye_within" unitRef="GBP" decimals="0" format="ixt:numcommadot">4,000</ix:nonFraction>
+after <ix:nonFraction name="ns5:Creditors" contextRef="cye_after" unitRef="GBP" decimals="0" format="ixt:numcommadot">1,000</ix:nonFraction></p>
+<p>Share capital <ix:nonFraction name="ns5:Equity" contextRef="cye_sc" unitRef="GBP" decimals="0" format="ixt:numcommadot">100</ix:nonFraction>
+Equity <ix:nonFraction name="ns5:Equity" contextRef="cye" unitRef="GBP" decimals="0" format="ixt:numcommadot">5,100</ix:nonFraction>
+Net assets <ix:nonFraction name="ns5:NetAssetsLiabilities" contextRef="cye" unitRef="GBP" decimals="0" format="ixt:numcommadot">5,100</ix:nonFraction></p>
+<p>Nil fact <ix:nonFraction name="ns5:Dividends" contextRef="cy" unitRef="GBP" decimals="0" xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/></p>
+<p>Director <ix:nonNumeric name="ns10:NameEntityOfficer" contextRef="cy">A Director</ix:nonNumeric></p>
+</body></html>

@@ -1,0 +1,47 @@
+company_number,kind,name,natures_of_control,notified_on,ceased_on,is_active,statement,corporate_reg_number,country_registered,legal_form,dob_year
+10000001,persons-with-significant-control-statement,,,2016-04-06,,true,no-individual-or-entity-with-signficant-control,,,,
+10000002,corporate-entity-person-with-significant-control,HG CAPITAL LLP,ownership-of-shares-50-to-75-percent,2016-04-06,,true,,OC123456,England,Limited Liability Partnership,
+10000002,individual-person-with-significant-control,Mr Peter Parker,ownership-of-shares-25-to-50-percent,2016-04-06,,true,,,,,1975
+10000003,corporate-entity-person-with-significant-control,XYZ FUND II LP,ownership-of-shares-75-to-100-percent,2016-04-06,,true,,,Cayman Islands,Limited Partnership,
+10000004,corporate-entity-person-with-significant-control,HIGHGATE SOFTWARE LTD,ownership-of-shares-75-to-100-percent|voting-rights-75-to-100-percent,2016-04-06,,true,,20000004,England,Limited Company,
+20000004,individual-person-with-significant-control,Mr Bruce Wayne,ownership-of-shares-75-to-100-percent|voting-rights-75-to-100-percent,2016-04-06,,true,,,,,1975
+10000005,corporate-entity-person-with-significant-control,TF HOLDINGS LTD,ownership-of-shares-75-to-100-percent|voting-rights-75-to-100-percent,2016-04-06,,true,,20000005,United Kingdom,Private Limited Company,
+20000005,individual-person-with-significant-control,Ms Alice Cooper,ownership-of-shares-50-to-75-percent,2016-04-06,,true,,,,,1975
+20000005,individual-person-with-significant-control,Mr Bob Dylan,ownership-of-shares-25-to-50-percent,2016-04-06,,true,,,,,1975
+10000006,corporate-entity-person-with-significant-control,HWI HOLDINGS LTD,ownership-of-shares-75-to-100-percent,2016-04-06,,true,,20000006,England,Limited Company,
+20000006,individual-person-with-significant-control,Mr Carl Sagan,ownership-of-shares-25-to-50-percent,2016-04-06,,true,,,,,1975
+20000006,corporate-entity-person-with-significant-control,LDC (MANAGERS) LIMITED,ownership-of-shares-50-to-75-percent,2016-04-06,,true,,02495714,England,Limited Company,
+10000007,corporate-entity-person-with-significant-control,ACME INC,ownership-of-shares-75-to-100-percent,2016-04-06,,true,,1234567,United States,Corporation,
+10000008,individual-person-with-significant-control,Mr David Jones,ownership-of-shares-75-to-100-percent|voting-rights-75-to-100-percent,2016-04-06,,true,,,,,1975
+10000009,individual-person-with-significant-control,Ms Emma Watson,ownership-of-shares-50-to-75-percent,2016-04-06,,true,,,,,1975
+10000010,individual-person-with-significant-control,Mr Thomas Trustee,ownership-of-shares-75-to-100-percent-as-trust|voting-rights-75-to-100-percent-as-trust,2016-04-06,,true,,,,,1975
+10000011,super-secure-person-with-significant-control,,,2016-04-06,,true,,,,,
+10000011,individual-person-with-significant-control,Ms Diana Prince,ownership-of-shares-25-to-50-percent,2016-04-06,,true,,,,,1975
+10000013,individual-person-with-significant-control,Mr Frank Castle,ownership-of-shares-75-to-100-percent,2016-04-06,,true,,,,,1975
+10000014,individual-person-with-significant-control,Ms Grace Hopper,ownership-of-shares-75-to-100-percent,2016-04-06,,true,,,,,1975
+10000015,individual-person-with-significant-control,Mr Gary Oldman,ownership-of-shares-75-to-100-percent,2016-04-06,,true,,,,,1975
+10000016,individual-person-with-significant-control,Mr Ian One,ownership-of-shares-25-to-50-percent,2016-04-06,,true,,,,,1975
+10000016,individual-person-with-significant-control,Mr Jack Two,ownership-of-shares-25-to-50-percent,2016-04-06,,true,,,,,1975
+10000016,individual-person-with-significant-control,Ms Kate Three,ownership-of-shares-25-to-50-percent,2016-04-06,,true,,,,,1975
+10000016,individual-person-with-significant-control,Mr Liam Four,ownership-of-shares-25-to-50-percent,2016-04-06,,true,,,,,1975
+10000017,corporate-entity-person-with-significant-control,HC HOLDINGS LTD,ownership-of-shares-75-to-100-percent,2016-04-06,,true,,20000017,England,Limited Company,
+20000017,corporate-entity-person-with-significant-control,HC TOPCO LTD,ownership-of-shares-75-to-100-percent,2016-04-06,,true,,20000018,England,Limited Company,
+20000018,individual-person-with-significant-control,Mr Mike Top,ownership-of-shares-75-to-100-percent,2016-04-06,,true,,,,,1975
+10000018,individual-person-with-significant-control,Ms Nina Simone,voting-rights-75-to-100-percent|right-to-appoint-and-remove-directors,2016-04-06,,true,,,,,1975
+10000019,corporate-entity-person-with-significant-control,MC HOLDINGS A LTD,ownership-of-shares-50-to-75-percent,2016-04-06,,true,,20000019,England,Limited Company,
+10000019,corporate-entity-person-with-significant-control,MC HOLDINGS B LTD,ownership-of-shares-25-to-50-percent,2016-04-06,,true,,20000020,England,Limited Company,
+20000019,individual-person-with-significant-control,Mr Henry Ford,ownership-of-shares-75-to-100-percent,2016-04-06,,true,,,,,1975
+20000020,individual-person-with-significant-control,Ms Clara Ford,ownership-of-shares-75-to-100-percent,2016-04-06,,true,,,,,1975
+10000020,corporate-entity-person-with-significant-control,HD HOLDINGS LTD,ownership-of-shares-75-to-100-percent,2016-04-06,,true,,20000021,England,Limited Company,
+20000021,persons-with-significant-control-statement,,,2016-04-06,,true,no-individual-or-entity-with-significant-control,,,,
+10000021,corporate-entity-person-with-significant-control,BGF INVESTMENTS LP,ownership-of-shares-25-to-50-percent,2017-01-01,2022-06-30,false,,,Scotland,Limited Partnership,
+10000021,individual-person-with-significant-control,Mr Oscar Wilde,ownership-of-shares-75-to-100-percent,2016-04-06,,true,,,,,1975
+10000022,individual-person-with-significant-control,Mr Paul Simon,significant-influence-or-control,2016-04-06,,true,,,,,1975
+10000023,individual-person-with-significant-control,Ms Rosa Parks,ownership-of-shares-25-to-50-percent,2016-04-06,,true,,,,,1975
+10000024,corporate-entity-person-with-significant-control,SOME PARENT LIMITED,ownership-of-shares-75-to-100-percent,2016-04-06,,true,,,England,Limited,
+10000025,individual-person-with-significant-control,Dr Anna Smith-Jones,ownership-of-shares-75-to-100-percent,2016-04-06,,true,,,,,1975
+10000026,individual-person-with-significant-control,Mr Sam Gone,ownership-of-shares-75-to-100-percent,2016-04-06,2023-01-01,false,,,,,1975
+10000027,individual-person-with-significant-control,Ms Tara Shop,ownership-of-shares-75-to-100-percent,2016-04-06,,true,,,,,1975
+10000028,corporate-entity-person-with-significant-control,NR HOLDINGS LIMITED,ownership-of-shares-75-to-100-percent,2016-04-06,,true,,,England,Private Limited,
+20000028,individual-person-with-significant-control,Mr Victor Hugo,ownership-of-shares-75-to-100-percent,2016-04-06,,true,,,,,1975
+10000097,individual-person-with-significant-control,Mr Tiny Owner,ownership-of-shares-75-to-100-percent,2016-04-06,,true,,,,,1975

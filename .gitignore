@@ -1,0 +1,24 @@
+data/raw/
+data/cache/
+data/parquet/formd_persons.parquet
+data/parquet/formd_filings.parquet
+data/*.duckdb
+data/*.duckdb.wal
+.env
+__pycache__/
+*.pyc
+.pytest_cache/
+docs/logs/
+site/data.json
+docs/research/raw/
+data/parquet/formd_persons_hist.parquet
+data/parquet/formd_filings_hist.parquet
+data/archives/
+# Cinven screener: raw register tables stay out of git (rebuilt by src.ingest.*); stage outputs are committed.
+data/parquet/companies.parquet
+data/parquet/psc/
+data/parquet/accounts_facts/
+data/parquet/accounts_meta/
+data/raw/
+docs/research/raw/
+docs/brand/*.html

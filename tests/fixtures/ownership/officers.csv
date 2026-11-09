@@ -1,0 +1,23 @@
+company_number,name,role,appointed_on,resigned_on,officer_id
+10000002,"PARKER, Peter",director,2015-01-01,,off-0001
+10000004,"WAYNE, Bruce",director,2015-01-01,,off-0002
+10000005,"COOPER, Alice",director,2015-06-01,,off-0003
+10000005,"DYLAN, Bob",director,2015-06-01,,off-0004
+10000008,"JONES, David",director,2015-01-01,,off-0005
+10000008,"BROWN, Sarah",secretary,2019-01-01,,off-0006
+10000009,"WATSON, Emma",director,2015-01-01,,off-0007
+10000010,"TRUSTEE, Thomas",director,2015-01-01,,off-0008
+10000011,"PRINCE, Diana",director,2015-01-01,,off-0009
+10000013,"CASTLE, Frank",director,2015-01-01,,off-0010
+10000014,"HOPPER, Grace",director,2015-01-01,,off-0011
+10000015,"SMITH, John",director,2015-01-01,,off-0012
+10000015,"OLDMAN, Gary",director,2020-02-01,,off-0013
+10000016,"ONE, Ian",director,2015-01-01,,off-0014
+10000018,"SIMONE, Nina",director,2015-01-01,,off-0015
+10000019,"FORD, Henry",director,2015-01-01,,off-0016
+10000021,"WILDE, Oscar",director,2015-01-01,,off-0017
+10000022,"SIMON, Paul",director,2015-01-01,,off-0018
+10000023,"PARKS, Rosa",director,2015-01-01,,off-0019
+10000025,"SMITH-JONES, Dr Anna",director,2015-07-01,,off-0020
+10000027,"SHOP, Tara",director,2015-01-01,,off-0021
+10000028,"HUGO, Victor",director,2015-01-01,,off-0022
