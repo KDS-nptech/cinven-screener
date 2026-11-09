@@ -148,3 +148,53 @@
     - usecure config (10113345): not present in the parsed data
     - Person Centred Software config (08539732): not present in the parsed data
     - Camascope config (09544682): not present in the parsed data
+
+### Build at 2026-11-09T21:58:29+00:00 (accounts_wide.parquet)
+
+- rows: 89983
+- rows_current: 33952
+- rows_comparative: 56031
+- companies: 32095
+- meta_files: 35537
+- facts_rows: 3376583
+- share_employees: 0.93
+- share_turnover: 0.374
+- employees_p10_p50_p90: [0.0, 50.0, 223.5]
+- turnover_p10_p50_p90: [515729.30000000005, 14311594.5, 50403412.0]
+- rows_employees_in_band: 5186
+- rows_employees_in_band_with_turnover: 2085
+- companies_employees_in_band_latest: 4903
+- share_net_assets: 0.914
+- share_creditors_within: 0.866
+- share_share_capital: 0.907
+- fractional_employees_rows: 8
+- Backtest rows [period_end, period_start, days, comparative, consolidated, employees, turnover, gross_profit, profit, net_assets, cash, creditors_within, share_capital, share_premium, retained_earnings, type, standard, latest]:
+    - PortSwigger config (06719143): not present in the parsed data
+    - usecure config (10113345): not present in the parsed data
+    - Person Centred Software config (08539732): not present in the parsed data
+    - Camascope config (09544682): not present in the parsed data
+
+### Build at 2026-11-09T22:10:54+00:00 (accounts_wide.parquet)
+
+- rows: 90034
+- rows_current: 33993
+- rows_comparative: 56041
+- companies: 32136
+- meta_files: 35722
+- facts_rows: 3377717
+- share_employees: 0.929
+- share_turnover: 0.421
+- employees_p10_p50_p90: [0.0, 50.0, 223.70000000000073]
+- turnover_p10_p50_p90: [691507.2000000003, 14925377.0, 61197854.0]
+- rows_employees_in_band: 5187
+- rows_employees_in_band_with_turnover: 2087
+- companies_employees_in_band_latest: 4904
+- share_net_assets: 0.913
+- share_creditors_within: 0.865
+- share_share_capital: 0.906
+- fractional_employees_rows: 7
+- Backtest rows [period_end, period_start, days, comparative, consolidated, employees, turnover, gross_profit, profit, net_assets, cash, creditors_within, share_capital, share_premium, retained_earnings, type, standard, latest]:
+    - PortSwigger config (06719143): not present in the parsed data
+    - usecure config (10113345): not present in the parsed data
+    - Person Centred Software config (08539732): not present in the parsed data
+    - Camascope config (09544682): not present in the parsed data

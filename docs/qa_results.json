@@ -1,5 +1,5 @@
 {
- "computed_at": "2026-11-09T21:25:49+00:00",
+ "computed_at": "2026-11-09T22:36:03+00:00",
  "checker_model": "claude-sonnet-5-5",
  "pdf_checked": 28,
  "pdf_turnover_within_2pct": 100.0,
@@ -10,13 +10,21 @@
  "labels_checked": 40,
  "label_agreement_pct": 80.0,
  "label_method": "same website extract and prompt, answered blind by the checker model; three quarters of the sample from the six sectors",
- "top30_reviewed": 49,
- "exclusions": 6,
+ "subscores_checked": 98,
+ "subscore_within_one_pct": 84.7,
+ "subscore_exact_pct": 43.9,
+ "iq_gap_mean": 9.3,
+ "subscore_method": "the eight website-read dimensions re-scored blind by the checker model from the same pages and facts; rule-scored dimensions excluded; IQ gap on the 0 to 100 scale",
+ "top30_reviewed": 112,
+ "exclusions": 32,
  "exclusion_reasons": {
-  "uk_arm_of_foreign_group": 1,
-  "not_a_buyout_business": 1,
+  "uk_arm_of_foreign_group": 4,
+  "not_a_buyout_business": 8,
   "charity": 1,
-  "unit_of_larger_group": 2,
-  "wrong_website": 1
+  "unit_of_larger_group": 4,
+  "wrong_website": 10,
+  "recently_sold_by_cinven": 1,
+  "figures_implausible": 2,
+  "infrastructure_concession": 2
  }
 }

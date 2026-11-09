@@ -400,7 +400,7 @@ def scanned_rows(number: str, filing: dict, pdf_path: Path, fetched_at: str) -> 
             continue
         facts.append({"company_number": number, "period_end": made_up, "concept": concept, "value": float(value), "value_literal": float(value),
                       "unit": "pure" if concept.startswith("Average") else "GBP", "context_id": "ocr-duration", "period_type": "duration",
-                      "instant": None, "start": None, "end": made_up, "is_within_one_year": False, "is_after_one_year": False, "n_dims": 0,
+                      "instant": None, "start": None, "end": made_up, "is_within_one_year": False, "is_after_one_year": False, "n_dims": 1 if (r.get("vision") or {}).get("consolidated") else 0,
                       "dims_json": json.dumps({"GroupCompanyDataDimension": "Consolidated"}) if (r.get("vision") or {}).get("consolidated") else "{}",
                       "scale": "1", "sign": None, "decimals": None, "source_file": pdf_path.name,
                       "source_zip": SOURCE_ZIP, "fetched_at": fetched_at})

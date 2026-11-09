@@ -1,27 +1,27 @@
 {
-  "computed_at": "2026-11-09T21:20:21+00:00",
-  "rows": 15288,
-  "llm": 24,
+  "computed_at": "2026-11-09T22:25:34+00:00",
+  "rows": 14156,
+  "llm": 154,
   "keyword_prefilter_other": 0,
-  "no_website": 14634,
+  "no_website": 13305,
   "pending_batch": 0,
   "provider": "anthropic_haiku45+anthropic_haiku55",
   "model": "claude-haiku-4-5+claude-haiku-5-5",
   "vertical_counts": {
-    "null": 14634,
-    "business_services": 159,
-    "consumer": 130,
-    "financial_services": 17,
-    "healthcare": 56,
-    "industrials": 125,
-    "other": 126,
-    "tmt": 41
+    "null": 13305,
+    "business_services": 181,
+    "consumer": 155,
+    "financial_services": 71,
+    "healthcare": 59,
+    "industrials": 160,
+    "other": 169,
+    "tmt": 56
   },
   "confidence_counts": {
-    "null": 14634,
-    "high": 429,
-    "low": 106,
-    "medium": 119
+    "null": 13305,
+    "high": 549,
+    "low": 132,
+    "medium": 170
   },
-  "classifier_failed": 42
+  "classifier_failed": 52
 }

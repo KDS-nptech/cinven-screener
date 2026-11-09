@@ -582,7 +582,7 @@ def build_wide(verbose: bool = True) -> dict:
                COALESCE(f.instant, f."end") AS pe, f.concept, f.value, f.period_type, f.start, f."end",
                f.instant, f.n_dims, f.is_within_one_year, f.is_after_one_year, f.source_file,
                json_extract_string(f.dims_json, '$.GroupCompanyDataDimension') AS grp_member,
-               f.n_dims - CASE WHEN json_extract_string(f.dims_json, '$.GroupCompanyDataDimension') IS NOT NULL THEN 1 ELSE 0 END AS extra_dims,
+               greatest(f.n_dims - CASE WHEN json_extract_string(f.dims_json, '$.GroupCompanyDataDimension') IS NOT NULL THEN 1 ELSE 0 END, 0) AS extra_dims,
                CASE WHEN json_extract_string(f.dims_json, '$.GroupCompanyDataDimension') = 'Consolidated' THEN 0 ELSE 1 END AS grp_rank,
                json_extract_string(f.dims_json, '$.EquityClassesDimension') AS eq_member,
                len(list_filter(json_keys(f.dims_json), lambda k: k IN ('MaturitiesOrExpirationPeriodsDimension',

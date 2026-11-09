@@ -1,63 +1,67 @@
 {
-  "computed_at": "2026-11-09T21:25:48+00:00",
-  "rows": 528,
-  "ranked": 38,
-  "comparables": 490,
+  "computed_at": "2026-11-09T22:36:02+00:00",
+  "rows": 677,
+  "ranked": 91,
+  "comparables": 586,
   "by_sector_ranked": {
-    "business_services": 10,
-    "consumer": 10,
-    "healthcare": 6,
-    "industrials": 10,
-    "tmt": 2
+    "business_services": 18,
+    "consumer": 29,
+    "financial_services": 2,
+    "healthcare": 7,
+    "industrials": 30,
+    "tmt": 5
   },
   "by_route_ranked": {
-    "founder_family": 30,
+    "founder_family": 78,
     "plc_dispersed": 1,
-    "sponsor": 7
+    "sponsor": 11,
+    "sponsor_offshore": 1
   },
   "size_fit_ranked": {
-    "flagship band": 2,
-    "strategic fund band": 32,
+    "flagship band": 15,
+    "flagship band (turnover only)": 1,
+    "strategic fund band": 71,
     "strategic fund band (turnover only)": 4
   },
   "by_sector_all": {
-    "business_services": 159,
-    "consumer": 130,
-    "financial_services": 17,
-    "healthcare": 56,
-    "industrials": 125,
-    "tmt": 41
+    "business_services": 179,
+    "consumer": 154,
+    "financial_services": 71,
+    "healthcare": 58,
+    "industrials": 159,
+    "tmt": 56
   },
   "by_route_all": {
-    "employee_owned": 12,
-    "founder_family": 469,
-    "plc_dispersed": 13,
-    "sponsor": 28,
-    "sponsor_offshore": 4,
+    "employee_owned": 13,
+    "founder_family": 539,
+    "plc_dispersed": 49,
+    "sponsor": 67,
+    "sponsor_offshore": 7,
     "uk_group": 1,
     "uncertain": 1
   },
   "size_fit_all": {
-    "flagship band": 3,
-    "flagship band (turnover only)": 1,
+    "flagship band": 54,
+    "flagship band (turnover only)": 5,
     "loss-making": 6,
     "loss-making (turnover at scale)": 5,
-    "mega-cap": 1,
-    "strategic fund band": 44,
-    "strategic fund band (turnover only)": 5,
-    "too small": 70,
-    "unknown": 393
+    "mega-cap": 12,
+    "mega-cap (turnover only)": 1,
+    "strategic fund band": 121,
+    "strategic fund band (turnover only)": 14,
+    "too small": 75,
+    "unknown": 384
   },
-  "size_unverified_in_scope": 37,
+  "size_unverified_in_scope": 27,
   "fit_quartiles_ranked": [
-    80.7,
-    91.0,
-    95.8
+    82.9,
+    87.2,
+    91.0
   ],
   "rubric_quartiles_ranked": [
-    50.0,
-    60.0,
-    65.8
+    47.5,
+    58.8,
+    68.8
   ],
   "rank_min_fit": 40
 }

@@ -104,6 +104,10 @@ def size_fit_label(ebitda, turnover) -> str:
     return "mega-cap (turnover only)"
 
 
+from src.filter.ownership import investor_match  # noqa: E402
+from src.filter.routes import compile_route_rules  # noqa: E402
+
+ROUTE_RULES = compile_route_rules()
 CORRECTIONS: dict = {}
 
 
@@ -230,6 +234,15 @@ def main(argv=None):
         part_of_group = sib >= 2 and rep != n          # a smaller unit: the representative carries the group
         if sib >= 2:
             flags.append("group_unit" if rep == n else "smaller_group_unit")
+        implausible = str(r.get("latest_accounts_type") or "").startswith("PDF") and (turnover or 0) > 5e9
+        if implausible:
+            flags.append("figures_implausible")
+        site_mismatch = bool(r.get("domain")) and r.get("name_match") is False
+        if site_mismatch:
+            flags.append("website_name_mismatch")
+        own_fund = bool([h for h in investor_match(r.get("name"), ROUTE_RULES.base) if h != "employee ownership trust"])
+        if own_fund:
+            flags.append("investment_firm")
         plc_pdf = r.get("route") == "plc_dispersed" and str(r.get("latest_accounts_type") or "").startswith("PDF")
         cinven_owned = any("cinven" in str(x).lower() for x in list(r.get("owner_names") or []) + list(r.get("sponsor_names") or []) + [r.get("parent_name") or ""])
         if cinven_owned:
@@ -238,7 +251,7 @@ def main(argv=None):
         at_scale = (ebitda >= TGT["ebitda_early_floor_gbp"]) if (ebitda is not None and ebitda > 0) else bool(r.get("at_scale")) if ebitda is None else False
         gate = (r.get("vertical") in SECTORS and r.get("is_software_product") is not False and bool(r.get("is_group_head", True))
                 and (r.get("route") in ROUTES) and not r.get("provisional") and at_scale and bool(r.get("domain"))
-                and "website_unverified" not in flags and fit >= FIT["rank_min_fit"] and not manual and not cinven_owned and not part_of_group and not plc_pdf and r.get("durability_score") is not None)
+                and "website_unverified" not in flags and fit >= FIT["rank_min_fit"] and not manual and not cinven_owned and not part_of_group and not plc_pdf and not own_fund and not site_mismatch and not implausible and r.get("durability_score") is not None)
         reasons = []
         if r.get("vertical") not in SECTORS:
             reasons.append("sector other")
@@ -264,6 +277,12 @@ def main(argv=None):
             reasons.append("already in Cinven's portfolio")
         if part_of_group:
             reasons.append(f"a smaller unit of a group: {uname.get(rep) or rep} ({rep}) is the largest of the {sib} UK companies under the same parent")
+        if implausible:
+            reasons.append("turnover above £5B read from a PDF for a private company; almost certainly a unit error, needs a manual check")
+        if site_mismatch:
+            reasons.append("the website found does not carry the company's name, so the label and rubric may describe another business")
+        if own_fund:
+            reasons.append("an investment firm or its UK arm, by its own name")
         if plc_pdf:
             reasons.append("listed company whose figures were read from a long annual report PDF and need a manual check")
         if corr and corr.get("note"):

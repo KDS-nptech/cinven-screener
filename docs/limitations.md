@@ -28,4 +28,12 @@ Each limit says what the screener does about it and what the fund's own data (de
 
 ## What the reviews found and what changed
 
-To be completed after the top-30 review (docs/qa/).
+Checked on 9 November 2026 by a model the pipeline never uses for its own answers (Claude Sonnet 5.5) and by a hand review of every ranked company (docs/qa/).
+
+- **PDF reader:** 28 PDF-read filings re-read from the same page. Turnover agreed within 2% on all 28 and operating profit on 26; no unit errors; period end agreed on all. Both misses took a neighbouring line (underlying against statutory profit; before against after a joint-venture share). The reader is reliable on the page it reads. Its weak point is page choice in annual reports of 150 pages or more, which the hand review caught on five listed companies; a PLC read from a PDF now never ranks.
+- **Sector labels:** 40 companies re-labelled blind; 80% agree. Six of the eight disagreements are the pipeline's "other" against a sector, so the pipeline errs toward leaving companies out.
+- **Rubric:** 98 website-read sub-scores on 13 companies re-scored blind; 85% within one point, 44% exact. The pipeline's model scores ~9 points higher on the 0 to 100 scale than the checker. Read Investment Quality as a ranking within this list; the absolute level is generous.
+- **Hand review:** three rounds, every ranked company read against register, chain and website (docs/qa/top30_review.md). 32 excluded with reasons (wrong websites, UK arms of foreign groups, trading firms and key-person asset managers, units of larger groups, infrastructure concessions, implausible figures), 2 corrected, 91 left ranked. Wrong websites were the largest single cause, so a site that does not carry the company's name now blocks ranking.
+- **A build bug the review exposed:** consolidated figures from PDF reads were being dropped before the size test (2,724 companies read, 83 arriving). Fixed at 22:15; the at-scale set rose from 180 to 412.
+- **Ownership rules:** tokens inherited from the founder screener had misread 992 companies as sponsor-owned (trustee companies, trading houses, "Partners Group" inside another name); fixed and re-run.
+- **Coverage gap that remains:** Financial Services is thin (2 of 91). A targeted read of 905 FS-coded companies mostly surfaced asset managers' UK arms, lenders and trading firms; brokers, wealth platforms and fund administrators sit under holding-company codes or in groups still unread. About 3,300 GROUP-account heads on actionable routes are unread, and 114 at-scale companies have no website found.

@@ -22,7 +22,7 @@ import sys
 
 import polars as pl
 
-from src.common import cfg, get_logger, now_iso, parquet_exists, read_parquet, read_parquet_where, write_parquet
+from src.common import REPO, cfg, get_logger, now_iso, parquet_exists, read_parquet, read_parquet_where, write_parquet
 
 log = get_logger("why_now")
 
@@ -169,7 +169,15 @@ def main(argv=None):
         for r in read_parquet("jobs").filter(pl.col("company_number").is_in(list(targets))).to_dicts():
             jobs_by.setdefault(r["company_number"], []).append(r)
     rows, summary = [], []
+    import yaml as _yaml
+    _ov = REPO / "overrides.yaml"
+    _corr = {str(k): v for k, v in ((_yaml.safe_load(_ov.read_text()) or {}).get("corrections") or {}).items()} if _ov.exists() else {}
     for u in uni.to_dicts():
+        c = _corr.get(u["company_number"])
+        if c:  # hand corrections to the register reading (overrides.yaml)
+            u.update({k: v for k, v in c.items() if k != "note"})
+            if c.get("hold_start"):
+                u["hold_years"] = round((as_of - dt.date.fromisoformat(str(c["hold_start"]))).days / 365.25, 1)
         n = u["company_number"]
         sig = signals_for(u, psc_by.get(n, []), holdco_inc, jobs_by.get(n, []), as_of)
         for s in sig:
