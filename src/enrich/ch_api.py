@@ -88,6 +88,11 @@ class CHClient:
         self.cache = cache or DiskCache("ch")
         self.limiter = limiter or SlidingWindowLimiter(api["companies_house_per_window"],
                                                        api["companies_house_window_seconds"])
+        # The document API (document-api.company-information.service.gov.uk) is a separate host; it is
+        # paced on its own window so a document fetch does not spend the main API's quota. 429s on either
+        # host still back off per the Retry-After header.
+        self.doc_limiter = SlidingWindowLimiter(api.get("companies_house_doc_per_window", api["companies_house_per_window"]),
+                                                api["companies_house_window_seconds"])
         self.session = session or requests.Session()
         self.max_retries = max_retries
         self.calls_made = 0
@@ -173,7 +178,10 @@ class CHClient:
                 self.cache.put(_NOT_FOUND, *key)
                 return None
             if r.status_code == 429:
-                time.sleep(float(r.headers.get("Retry-After", 60)))
+                ra = r.headers.get("Retry-After")
+                wait = float(ra) if ra and ra.replace(".", "").isdigit() else 60.0
+                log.warning("429 on document fetch; sleeping %.0fs", wait)
+                time.sleep(wait)
                 continue
             if r.status_code >= 500:
                 time.sleep(min(2.0 * attempt, 30))
@@ -187,7 +195,7 @@ class CHClient:
         auth header on the cross-host redirect, which is what S3 requires. Not cached on disk
         (binary); callers keep the file."""
         for attempt in range(1, self.max_retries + 1):
-            self.limiter.wait()
+            (self.doc_limiter if "document-api" in url else self.limiter).wait()
             try:
                 r = self.session.get(url, auth=(self.key, ""), timeout=90, headers={"Accept": accept}, allow_redirects=True)
             except requests.RequestException as e:
@@ -200,7 +208,10 @@ class CHClient:
             if r.status_code in (404, 406):
                 return None
             if r.status_code == 429:
-                time.sleep(float(r.headers.get("Retry-After", 60)))
+                ra = r.headers.get("Retry-After")
+                wait = float(ra) if ra and ra.replace(".", "").isdigit() else 60.0
+                log.warning("429 on document fetch; sleeping %.0fs", wait)
+                time.sleep(wait)
                 continue
             if r.status_code >= 500:
                 time.sleep(min(2.0 * attempt, 30))

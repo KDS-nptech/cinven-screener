@@ -1,0 +1,386 @@
+{
+ "source": "https://www.cinven.com/portfolio/",
+ "fetched": "2026-11-09",
+ "note": "Current portfolio as listed (status filter Current); sector pill as shown on the card.",
+ "items": [
+  {
+   "name": "Accumin",
+   "sector_pill": "Business Services",
+   "pills": [
+    "Business Services"
+   ],
+   "url": "https://www.cinven.com/portfolio/accumin/"
+  },
+  {
+   "name": "Alter Domus",
+   "sector_pill": "Business Services",
+   "pills": [
+    "Business Services",
+    "Financial Services"
+   ],
+   "url": "https://www.cinven.com/portfolio/alter-domus/"
+  },
+  {
+   "name": "Amara NZero",
+   "sector_pill": "Business Services",
+   "pills": [
+    "Business Services"
+   ],
+   "url": "https://www.cinven.com/portfolio/amara-nzero/"
+  },
+  {
+   "name": "Archer",
+   "sector_pill": "Business Services",
+   "pills": [
+    "Business Services",
+    "TMT"
+   ],
+   "url": "https://www.cinven.com/portfolio/archer/"
+  },
+  {
+   "name": "Artefact",
+   "sector_pill": "Business Services",
+   "pills": [
+    "Business Services"
+   ],
+   "url": "https://www.cinven.com/portfolio/artefact/"
+  },
+  {
+   "name": "Arxada",
+   "sector_pill": "Industrials",
+   "pills": [
+    "Industrials"
+   ],
+   "url": "https://www.cinven.com/portfolio/arxada/"
+  },
+  {
+   "name": "Barentz II",
+   "sector_pill": "Business Services",
+   "pills": [
+    "Business Services"
+   ],
+   "url": "https://www.cinven.com/portfolio/barentz/"
+  },
+  {
+   "name": "BioAgilytix",
+   "sector_pill": "Healthcare",
+   "pills": [
+    "Healthcare"
+   ],
+   "url": "https://www.cinven.com/portfolio/bioagilytix/"
+  },
+  {
+   "name": "Compre",
+   "sector_pill": "Financial Services",
+   "pills": [
+    "Financial Services",
+    "Strategic Funds"
+   ],
+   "url": "https://www.cinven.com/portfolio/compre/"
+  },
+  {
+   "name": "Domia Group",
+   "sector_pill": "Business Services",
+   "pills": [
+    "Business Services"
+   ],
+   "url": "https://www.cinven.com/portfolio/domia-group/"
+  },
+  {
+   "name": "Envirotainer",
+   "sector_pill": "Business Services",
+   "pills": [
+    "Business Services",
+    "Healthcare",
+    "Industrials"
+   ],
+   "url": "https://www.cinven.com/portfolio/envirotainer/"
+  },
+  {
+   "name": "Envu",
+   "sector_pill": "Industrials",
+   "pills": [
+    "Industrials"
+   ],
+   "url": "https://www.cinven.com/portfolio/envu/"
+  },
+  {
+   "name": "Finaxy Group",
+   "sector_pill": "Financial Services",
+   "pills": [
+    "Financial Services",
+    "Strategic Funds"
+   ],
+   "url": "https://www.cinven.com/portfolio/finaxy/"
+  },
+  {
+   "name": "Flint Global",
+   "sector_pill": "Business Services",
+   "pills": [
+    "Business Services"
+   ],
+   "url": "https://www.cinven.com/portfolio/flint-global/"
+  },
+  {
+   "name": "Fressnapf Group",
+   "sector_pill": "Consumer",
+   "pills": [
+    "Consumer"
+   ],
+   "url": "https://www.cinven.com/portfolio/fressnapf-group/"
+  },
+  {
+   "name": "Grant Thornton",
+   "sector_pill": "Financial Services",
+   "pills": [
+    "Financial Services"
+   ],
+   "url": "https://www.cinven.com/portfolio/grant-thornton/"
+  },
+  {
+   "name": "group.One",
+   "sector_pill": "TMT",
+   "pills": [
+    "TMT"
+   ],
+   "url": "https://www.cinven.com/portfolio/group-one/"
+  },
+  {
+   "name": "HBX Group",
+   "sector_pill": "Business Services",
+   "pills": [
+    "Business Services"
+   ],
+   "url": "https://www.cinven.com/portfolio/hbx-group/"
+  },
+  {
+   "name": "idealista",
+   "sector_pill": "TMT",
+   "pills": [
+    "TMT"
+   ],
+   "url": "https://www.cinven.com/portfolio/idealista/"
+  },
+  {
+   "name": "IFGL",
+   "sector_pill": "Financial Services",
+   "pills": [
+    "Financial Services",
+    "Strategic Funds"
+   ],
+   "url": "https://www.cinven.com/portfolio/ifgl/"
+  },
+  {
+   "name": "JLA",
+   "sector_pill": "Business Services",
+   "pills": [
+    "Business Services"
+   ],
+   "url": "https://www.cinven.com/portfolio/jla/"
+  },
+  {
+   "name": "LGC",
+   "sector_pill": "Healthcare",
+   "pills": [
+    "Healthcare"
+   ],
+   "url": "https://www.cinven.com/portfolio/lgc/"
+  },
+  {
+   "name": "Master Builders Solutions",
+   "sector_pill": "Industrials",
+   "pills": [
+    "Industrials"
+   ],
+   "url": "https://www.cinven.com/portfolio/master-builders-solutions/"
+  },
+  {
+   "name": "National Seating & Mobility",
+   "sector_pill": "Healthcare",
+   "pills": [
+    "Healthcare"
+   ],
+   "url": "https://www.cinven.com/portfolio/national-seating-mobility/"
+  },
+  {
+   "name": "NewDay",
+   "sector_pill": "Financial Services",
+   "pills": [
+    "Financial Services"
+   ],
+   "url": "https://www.cinven.com/portfolio/newday/"
+  },
+  {
+   "name": "Nutrisens",
+   "sector_pill": "Healthcare",
+   "pills": [
+    "Healthcare"
+   ],
+   "url": "https://www.cinven.com/portfolio/nutrisens/"
+  },
+  {
+   "name": "Objectway",
+   "sector_pill": "Financial Services",
+   "pills": [
+    "Financial Services"
+   ],
+   "url": "https://www.cinven.com/portfolio/objectway/"
+  },
+  {
+   "name": "OMNES Education",
+   "sector_pill": "Business Services",
+   "pills": [
+    "Business Services"
+   ],
+   "url": "https://www.cinven.com/portfolio/omnes-education/"
+  },
+  {
+   "name": "Ongoing Warehouse",
+   "sector_pill": "TMT",
+   "pills": [
+    "TMT"
+   ],
+   "url": "https://www.cinven.com/portfolio/ongoing-warehouse/"
+  },
+  {
+   "name": "Policy Expert",
+   "sector_pill": "Financial Services",
+   "pills": [
+    "Financial Services",
+    "Strategic Funds"
+   ],
+   "url": "https://www.cinven.com/portfolio/policy-expert/"
+  },
+  {
+   "name": "PPF",
+   "sector_pill": "Consumer",
+   "pills": [
+    "Consumer"
+   ],
+   "url": "https://www.cinven.com/portfolio/ppf/"
+  },
+  {
+   "name": "Regenity Biosciences",
+   "sector_pill": "Healthcare",
+   "pills": [
+    "Healthcare"
+   ],
+   "url": "https://www.cinven.com/portfolio/regenity-biosciences/"
+  },
+  {
+   "name": "Restaurant Brands Europe",
+   "sector_pill": "Consumer",
+   "pills": [
+    "Consumer"
+   ],
+   "url": "https://www.cinven.com/portfolio/restaurant-brands-europe/"
+  },
+  {
+   "name": "RTB House",
+   "sector_pill": "TMT",
+   "pills": [
+    "TMT"
+   ],
+   "url": "https://www.cinven.com/portfolio/rtb-house/"
+  },
+  {
+   "name": "S\u00e4kra",
+   "sector_pill": "Financial Services",
+   "pills": [
+    "Financial Services"
+   ],
+   "url": "https://www.cinven.com/portfolio/sakra/"
+  },
+  {
+   "name": "Salsify",
+   "sector_pill": "Consumer",
+   "pills": [
+    "Consumer",
+    "TMT"
+   ],
+   "url": "https://www.cinven.com/portfolio/salsify/"
+  },
+  {
+   "name": "Smart Communications",
+   "sector_pill": "TMT",
+   "pills": [
+    "TMT"
+   ],
+   "url": "https://www.cinven.com/portfolio/smart-communications/"
+  },
+  {
+   "name": "STADA",
+   "sector_pill": "Healthcare",
+   "pills": [
+    "Healthcare"
+   ],
+   "url": "https://www.cinven.com/portfolio/stada/"
+  },
+  {
+   "name": "SYNLAB",
+   "sector_pill": "Healthcare",
+   "pills": [
+    "Healthcare"
+   ],
+   "url": "https://www.cinven.com/portfolio/synlab/"
+  },
+  {
+   "name": "Taxwell",
+   "sector_pill": "TMT",
+   "pills": [
+    "TMT"
+   ],
+   "url": "https://www.cinven.com/portfolio/taxwell/"
+  },
+  {
+   "name": "think-cell",
+   "sector_pill": "TMT",
+   "pills": [
+    "TMT"
+   ],
+   "url": "https://www.cinven.com/portfolio/think-cell/"
+  },
+  {
+   "name": "TK Elevator",
+   "sector_pill": "Business Services",
+   "pills": [
+    "Business Services",
+    "Industrials"
+   ],
+   "url": "https://www.cinven.com/portfolio/tke/"
+  },
+  {
+   "name": "True Potential",
+   "sector_pill": "Financial Services",
+   "pills": [
+    "Financial Services",
+    "TMT"
+   ],
+   "url": "https://www.cinven.com/portfolio/true-potential/"
+  },
+  {
+   "name": "Ufinet International II",
+   "sector_pill": "TMT",
+   "pills": [
+    "TMT"
+   ],
+   "url": "https://www.cinven.com/portfolio/ufinet/"
+  },
+  {
+   "name": "Universidad Alfonso X el Sabio Group (UAX)",
+   "sector_pill": "Business Services",
+   "pills": [
+    "Business Services"
+   ],
+   "url": "https://www.cinven.com/portfolio/universidad-alfonso-x-el-sabio-group/"
+  },
+  {
+   "name": "Vitamin Well",
+   "sector_pill": "Consumer",
+   "pills": [
+    "Consumer"
+   ],
+   "url": "https://www.cinven.com/portfolio/vitamin-well/"
+  }
+ ]
+}

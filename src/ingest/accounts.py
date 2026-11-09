@@ -69,7 +69,7 @@ EXTRA_CONCEPTS = {
     "NetDebtFunds", "Borrowings", "OtherBorrowings", "LoansFromGroupUndertakings",
     "ExceptionalItems", "GainLossOnDisposalsPropertyPlantEquipment", "InterestReceivableSimilarIncome",
     "NetCashFlowsFromUsedInInvestingActivities", "NetCashFlowsFromUsedInFinancingActivities",
-    "PurchasePropertyPlantEquipment", "IncreaseDecreaseInCashCashEquivalents",
+    "PurchasePropertyPlantEquipment", "IncreaseDecreaseInCashCashEquivalents", "EBITDAStated",
 }
 CONCEPT_SUBSTRINGS = ("Employee", "Turnover", "Revenue", "Deferred", "Accrual", "SharePremium",
                       "ShareCapital", "Taxation", "Tax")
@@ -493,6 +493,7 @@ WIDE_COLUMNS: list[tuple[str, str, list[str] | str, str | None]] = [
     ("other_creditors", "instant", ["OtherCreditors"], None),
     ("ppe", "instant", ["PropertyPlantEquipment"], None),
     ("inventories", "instant", ["TotalInventories"], None),
+    ("ebitda_stated", "duration", ["EBITDAStated"], None),
 ]
 
 
@@ -584,7 +585,7 @@ def build_wide(verbose: bool = True) -> dict:
                f.n_dims - CASE WHEN json_extract_string(f.dims_json, '$.GroupCompanyDataDimension') IS NOT NULL THEN 1 ELSE 0 END AS extra_dims,
                CASE WHEN json_extract_string(f.dims_json, '$.GroupCompanyDataDimension') = 'Consolidated' THEN 0 ELSE 1 END AS grp_rank,
                json_extract_string(f.dims_json, '$.EquityClassesDimension') AS eq_member,
-               len(list_filter(json_keys(f.dims_json), k -> k IN ('MaturitiesOrExpirationPeriodsDimension',
+               len(list_filter(json_keys(f.dims_json), lambda k: k IN ('MaturitiesOrExpirationPeriodsDimension',
                    'FinancialInstrumentCurrentNon-currentDimension'))) AS mat_dims,
                CASE WHEN COALESCE(f.instant, f."end") = f.period_end THEN m.period_start
                     WHEN f.period_type = 'duration' THEN f.start END AS period_start
