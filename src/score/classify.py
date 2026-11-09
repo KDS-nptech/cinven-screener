@@ -1,9 +1,9 @@
-"""Stage 5: vertical classifier.
+"""Stage 5: sector classifier (Cinven's six sectors plus other).
 
 Two passes:
 1. Keyword pre-filter on the fetched website text (config.classifier.keywords) plus a SIC
-   hint (66190 implies fintech). Companies with no hit in any target vertical are labelled
-   `other` deterministically and never reach the LLM.
+   hint (the primary SIC's section maps to a sector). Companies with no hit in any sector
+   and no SIC hint are labelled `other` deterministically and never reach the LLM.
 2. One LLM call per remaining company (JSON output, temperature 0). The evidence quote
    must appear verbatim in the fetched text and the URL must be a fetched page; a failed
    validation re-runs once with a stricter reminder, then the company is flagged
@@ -29,9 +29,16 @@ from src.score.llm import LLM, quote_in_text
 log = get_logger("classify")
 PROMPT_VERSION = cfg()["classifier"]["prompt_version"]
 SYSTEM = (REPO / "src" / "score" / "prompts" / f"{PROMPT_VERSION.replace('classify-', 'classify_')}.md").read_text()
-VERTICALS = {"compliance_grc", "fintech_financial", "healthcare", "other"}
+VERTICALS = set(cfg()["target"]["sectors"]) | {"other"}
 TEXT_BUDGET = 7000      # chars sent to the model; homepage first, then product pages
-SIC_HINTS = {"66190": "fintech_financial"}
+SIC_HINTS = cfg()["classifier"].get("sic_hints", {})   # SIC code or 2-digit division -> sector
+
+
+def sic_hint(sic: str | None) -> str | None:
+    if not sic:
+        return None
+    s = str(sic)
+    return SIC_HINTS.get(s) or SIC_HINTS.get(s[:3]) or SIC_HINTS.get(s[:2])
 
 
 def load_web(company_number: str) -> dict | None:
@@ -83,7 +90,7 @@ def validate(data: dict | None, body: str, urls: set[str]) -> list[str]:
     problems = []
     if not isinstance(data, dict):
         return ["no_json"]
-    if data.get("vertical") not in VERTICALS:
+    if data.get("sector") not in VERTICALS:
         problems.append("bad_vertical")
     if not quote_in_text(str(data.get("evidence_quote", "")), body):
         problems.append("quote_not_verbatim")
@@ -123,13 +130,15 @@ def classify_one(llm: LLM, row: dict, web: dict) -> dict:
         else:
             out["flags"].append("classifier_failed")
             out["flags"].extend(sorted(set(problems2)))
-            if res2.data and res2.data.get("vertical") in VERTICALS:
+            if res2.data and res2.data.get("sector") in VERTICALS:
                 res = res2
     d = res.data or {}
     out.update(
-        vertical=d.get("vertical") if d.get("vertical") in VERTICALS else "other",
-        sub_vertical=(d.get("sub_vertical") or "")[:60],
-        is_software_product=bool(d.get("is_software_product")) if d else None,
+        vertical=d.get("sector") if d.get("sector") in VERTICALS else "other",
+        sub_vertical=(d.get("sub_sector") or "")[:60],
+        is_software_product=bool(d.get("is_operating_business")) if d else None,
+        business_model=(d.get("business_model") or "")[:40] if d else None,
+        uk_headquartered=d.get("uk_headquartered") if isinstance(d.get("uk_headquartered"), bool) else None,
         evidence_quote=(d.get("evidence_quote") or "")[:400],
         evidence_url=d.get("evidence_url") if d.get("evidence_url") in urls else None,
         confidence="low" if "classifier_failed" in out["flags"] else (d.get("confidence") if d.get("confidence") in {"high", "medium", "low"} else "low"),
@@ -150,19 +159,17 @@ def main(argv=None):
     uni = read_parquet("universe")
     if args.numbers:
         uni = uni.filter(pl.col("company_number").is_in(args.numbers.split(",")))
-    elif not args.all_universe and "founder_flag" in uni.columns:
-        keep = pl.col("founder_flag") != "excluded"
-        if "founder_led" in uni.columns:
-            keep = keep | pl.col("founder_led").fill_null(False)
-        uni = uni.filter(keep)
+    elif not args.all_universe and "route" in uni.columns:
+        routes = cfg()["classifier"].get("routes", ["founder_family", "sponsor", "sponsor_offshore", "plc_dispersed", "employee_owned"])
+        uni = uni.filter(pl.col("route").is_in(routes) & pl.col("is_group_head").fill_null(True))
     if parquet_exists("websites"):
         wcols = ["company_number", "domain", "text_chars"] + [c for c in ("name_match", "uk_signal", "discovery_method") if c in read_parquet("websites").columns]
         web = read_parquet("websites").select(wcols).unique(subset=["company_number"])
         uni = uni.join(web, on="company_number", how="left")
     else:
         uni = uni.with_columns(pl.lit(None).alias("domain"), pl.lit(None).alias("text_chars"))
-    if "sic_text1" not in uni.columns and parquet_exists("companies"):
-        comp = read_parquet("software_companies").select(["company_number", "sic_text1"])
+    if "sic_text1" not in uni.columns and parquet_exists("candidate_companies"):
+        comp = read_parquet("candidate_companies").select(["company_number", "sic_text1"])
         uni = uni.join(comp, on="company_number", how="left")
     if args.limit:
         uni = uni.head(args.limit)
@@ -197,8 +204,8 @@ def main(argv=None):
                            "raw_json": None, "computed_at": now_iso()}
         text = " ".join((p.get("text") or "") for p in web["pages"])
         hits = keyword_hits(text)
-        sic_hint = SIC_HINTS.get(str(r.get("sic1") or ""))
-        if sum(hits.values()) < min_hits and not sic_hint:
+        hint = sic_hint(r.get("sic1"))
+        if sum(hits.values()) < min_hits and not hint:
             return "row", {"company_number": r["company_number"], "vertical": "other", "sub_vertical": None, "is_software_product": None,
                            "evidence_quote": None, "evidence_url": None, "confidence": "low", "method": "keyword_prefilter",
                            "keyword_hits_json": json.dumps(hits), "model": None, "prompt_version": PROMPT_VERSION, "flags": [],
@@ -230,7 +237,7 @@ def main(argv=None):
         r, web, hits = job
         out = classify_one(llm, r, web)
         out["keyword_hits_json"] = json.dumps(hits)
-        for k in ("vertical", "sub_vertical", "is_software_product", "evidence_quote", "evidence_url", "confidence", "raw_json"):
+        for k in ("vertical", "sub_vertical", "is_software_product", "business_model", "uk_headquartered", "evidence_quote", "evidence_url", "confidence", "raw_json"):
             out.setdefault(k, None)
         return out
 
@@ -268,6 +275,7 @@ def main(argv=None):
 
 def _frame(rows: list[dict]) -> pl.DataFrame:
     schema = {"company_number": pl.Utf8, "vertical": pl.Utf8, "sub_vertical": pl.Utf8, "is_software_product": pl.Boolean,
+              "business_model": pl.Utf8, "uk_headquartered": pl.Boolean,
               "evidence_quote": pl.Utf8, "evidence_url": pl.Utf8, "confidence": pl.Utf8, "method": pl.Utf8,
               "keyword_hits_json": pl.Utf8, "model": pl.Utf8, "prompt_version": pl.Utf8, "flags": pl.List(pl.Utf8),
               "raw_json": pl.Utf8, "computed_at": pl.Utf8}

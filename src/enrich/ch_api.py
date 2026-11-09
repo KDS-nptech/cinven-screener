@@ -197,7 +197,8 @@ class CHClient:
         for attempt in range(1, self.max_retries + 1):
             (self.doc_limiter if "document-api" in url else self.limiter).wait()
             try:
-                r = self.session.get(url, auth=(self.key, ""), timeout=90, headers={"Accept": accept}, allow_redirects=True)
+                # fresh connection per document: a stalled keep-alive through the egress proxy hung workers for minutes
+                r = requests.get(url, auth=(self.key, ""), timeout=(20, 40), headers={"Accept": accept, "Connection": "close"}, allow_redirects=True)
             except requests.RequestException as e:
                 log.warning("%s attempt %d network error %s", url, attempt, e)
                 time.sleep(min(2.0 * attempt, 30))

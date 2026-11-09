@@ -125,13 +125,25 @@ def read_report(pdf: Path, window: int = 10, use_vision: bool = True, dpi: int =
             m2 = CONTENTS_PL_PRE_RE.search(front_text)
             if m2:
                 printed = int(m2.group(1))
+        if (not printed or not (1 <= printed <= n)) and use_vision and n > 12:
+            # the OCR of the contents page did not parse: one cheap vision call reads the contents page
+            for pg in (2, 3):
+                img = next(iter(tmp.glob(f"p2-{pg}.pgm")), None) or next(iter(tmp.glob(f"p2-0{pg}.pgm")), None) or next(iter(tmp.glob(f"p2-00{pg}.pgm")), None)
+                if img is None:
+                    continue
+                cv = vision_contents(img)
+                out["vision_calls"] += 1
+                if cv and isinstance(cv.get("pl_printed_page"), int) and 1 <= cv["pl_printed_page"] <= n:
+                    printed = cv["pl_printed_page"]
+                    out["method"] = "contents-vision"
+                    break
         if printed and 1 <= printed <= n:
             candidates = [p for p in range(printed, min(n, printed + window) + 1) if p not in texts]
-            out["method"] = "contents"
+            out["method"] = out["method"] or "contents"
         else:
-            lo, hi = max(5, int(n * 0.30)), min(n, int(n * 0.72) + 1)
-            step = 1 if n <= 45 else 2
-            candidates = [p for p in range(lo, hi, step) if p not in texts]
+            lo, hi = max(5, int(n * 0.33)), min(n, int(n * 0.70) + 1)
+            step = 1 if n <= 30 else (2 if n <= 60 else 3)
+            candidates = [p for p in range(lo, hi, step) if p not in texts][:12]
             out["method"] = "scan"
         pl_img = None
         # a short set of accounts (under 30 pages) sometimes has the P&L in the front pages already read
@@ -211,40 +223,76 @@ def _env(name: str) -> str | None:
     return None
 
 
-def vision_extract(image: Path, model: str = "claude-haiku-4-5") -> dict | None:
-    """Ask Claude to read the P&L page image. Returns the parsed JSON or None."""
-    key = _env("ANTHROPIC_API_KEY")
-    if not key or not image or not Path(image).exists():
-        return None
+VISION_CALLS = {"n": 0, "in": 0, "out": 0}
+
+
+def _vision_post(png: Path, prompt: str, model: str, max_tokens: int) -> dict | None:
+    """One image plus prompt to the Messages API, JSON back. Retries 429 and 5xx with backoff."""
+    import time as _t
+
     import httpx
 
-    png = Path(image).with_suffix(".png")
-    try:
-        subprocess.run(["convert", str(image), str(png)], capture_output=True, timeout=60)
-    except (OSError, subprocess.TimeoutExpired):
-        return None
-    if not png.exists():
+    key = _env("ANTHROPIC_API_KEY")
+    if not key:
         return None
     b64 = base64.b64encode(png.read_bytes()).decode()
     headers = {"x-api-key": key, "anthropic-version": "2023-06-01", "content-type": "application/json"}
     ws = _env("ANTHROPIC_WORKSPACE_ID")
     if ws:
         headers["anthropic-workspace-id"] = ws
-    body = {"model": model, "max_tokens": 400, "temperature": 0,
+    body = {"model": model, "max_tokens": max_tokens, "temperature": 0,
             "messages": [{"role": "user", "content": [
                 {"type": "image", "source": {"type": "base64", "media_type": "image/png", "data": b64}},
-                {"type": "text", "text": VISION_PROMPT}]}]}
-    try:
-        r = httpx.post("https://api.anthropic.com/v1/messages", json=body, headers=headers, timeout=90)
-        if r.status_code != 200:
-            log.warning("vision %s: %s", r.status_code, r.text[:200])
-            return None
-        txt = "".join(c.get("text", "") for c in r.json().get("content", []))
-        m = re.search(r"\{.*\}", txt, re.S)
-        return json.loads(m.group(0)) if m else None
-    except Exception as e:  # noqa: BLE001
-        log.warning("vision error: %s", e)
+                {"type": "text", "text": prompt}]}]}
+    for attempt in range(5):
+        try:
+            r = httpx.post("https://api.anthropic.com/v1/messages", json=body, headers=headers, timeout=60)
+        except Exception as e:  # noqa: BLE001
+            log.warning("vision error: %s", e)
+            _t.sleep(2 * (attempt + 1))
+            continue
+        if r.status_code == 200:
+            j = r.json()
+            VISION_CALLS["n"] += 1
+            u = j.get("usage") or {}
+            VISION_CALLS["in"] += u.get("input_tokens") or 0
+            VISION_CALLS["out"] += u.get("output_tokens") or 0
+            txt = "".join(c.get("text", "") for c in j.get("content", []))
+            m = re.search(r"\{.*\}", txt, re.S)
+            try:
+                return json.loads(m.group(0)) if m else None
+            except json.JSONDecodeError:
+                return None
+        if r.status_code in (429, 500, 502, 503, 529):
+            ra = r.headers.get("retry-after")
+            wait = float(ra) if ra and ra.replace(".", "").isdigit() else 3.0 * (attempt + 1)
+            log.warning("vision %s, sleeping %.0fs", r.status_code, wait)
+            _t.sleep(min(wait, 60))
+            continue
+        log.warning("vision %s: %s", r.status_code, r.text[:200])
         return None
+    return None
+
+
+def _to_png(image: Path, resize: str | None = None) -> Path | None:
+    png = Path(image).with_suffix(".png")
+    cmd = ["convert", str(image)] + (["-resize", resize] if resize else []) + [str(png)]
+    try:
+        subprocess.run(cmd, capture_output=True, timeout=60)
+    except (OSError, subprocess.TimeoutExpired):
+        return None
+    return png if png.exists() else None
+
+
+def vision_extract(image: Path, model: str = "claude-haiku-4-5") -> dict | None:
+    """Ask Claude to read the P&L page image. Returns the parsed JSON or None."""
+    if not image or not Path(image).exists():
+        return None
+    png = _to_png(image)
+    if not png:
+        return None
+    try:
+        return _vision_post(png, VISION_PROMPT, model, 400)
     finally:
         png.unlink(missing_ok=True)
 
@@ -255,38 +303,70 @@ pl_printed_page is the printed page number of the (consolidated) income statemen
 
 
 def vision_contents(image: Path, model: str = "claude-haiku-4-5") -> dict | None:
-    key = _env("ANTHROPIC_API_KEY")
-    if not key or not image or not Path(image).exists():
+    if not image or not Path(image).exists():
         return None
-    import httpx
-
-    png = Path(image).with_suffix(".c.png")
+    png = _to_png(image, "70%")
+    if not png:
+        return None
     try:
-        subprocess.run(["convert", str(image), "-resize", "60%", str(png)], capture_output=True, timeout=60)
-    except (OSError, subprocess.TimeoutExpired):
-        return None
-    if not png.exists():
-        return None
-    b64 = base64.b64encode(png.read_bytes()).decode()
-    headers = {"x-api-key": key, "anthropic-version": "2023-06-01", "content-type": "application/json"}
-    ws = _env("ANTHROPIC_WORKSPACE_ID")
-    if ws:
-        headers["anthropic-workspace-id"] = ws
-    body = {"model": model, "max_tokens": 120, "temperature": 0,
-            "messages": [{"role": "user", "content": [
-                {"type": "image", "source": {"type": "base64", "media_type": "image/png", "data": b64}},
-                {"type": "text", "text": CONTENTS_PROMPT}]}]}
-    try:
-        r = httpx.post("https://api.anthropic.com/v1/messages", json=body, headers=headers, timeout=90)
-        if r.status_code != 200:
-            return None
-        txt = "".join(c.get("text", "") for c in r.json().get("content", []))
-        m = re.search(r"\{.*\}", txt, re.S)
-        return json.loads(m.group(0)) if m else None
-    except Exception:  # noqa: BLE001
-        return None
+        return _vision_post(png, CONTENTS_PROMPT, model, 120)
     finally:
         png.unlink(missing_ok=True)
+
+
+def read_report_vision(pdf: Path, dpi: int = 110) -> dict:
+    """Vision-only read, no tesseract: the contents page gives the printed page of the P&L, then the
+    candidate PDF pages (printed + 1, + 2, + 0, + 3: the index runs ahead of the printed number by the
+    unnumbered front pages) are read until one is a P&L. Without a usable contents page, pages at 50%,
+    60% and 40% of the document are tried. At most six model calls."""
+    n = n_pages(pdf)
+    out = {"text": "", "pages_read": [], "pl_page": None, "n_pages": n, "method": None, "vision": None, "vision_calls": 0, "highlights": {}, "pl_text": ""}
+    if n == 0:
+        return out
+    tmp = Path(tempfile.mkdtemp(prefix="ocr_"))
+    try:
+        printed = None
+        if n > 8:
+            for pg in (2, 3):
+                imgs = render(pdf, pg, pg, tmp, dpi=80)
+                if not imgs:
+                    continue
+                cv = vision_contents(imgs[0])
+                out["vision_calls"] += 1
+                if cv and isinstance(cv.get("pl_printed_page"), int) and 1 <= cv["pl_printed_page"] <= n:
+                    printed = cv["pl_printed_page"]
+                    break
+        if printed:
+            candidates = [q for q in (printed + 1, printed + 2, printed, printed + 3) if 1 <= q <= n]
+            out["method"] = "contents-vision"
+        else:
+            fr = (0.5, 0.6, 0.4) if n > 12 else (0.5, 0.7)
+            candidates = list(dict.fromkeys(max(1, int(n * f)) for f in fr))
+            out["method"] = "scan-vision"
+        for q in candidates:
+            if out["vision_calls"] >= 6:
+                break
+            imgs = render(pdf, q, q, tmp, dpi=dpi)
+            if not imgs:
+                continue
+            v = vision_extract(imgs[0])
+            out["vision_calls"] += 1
+            out["pages_read"].append(q)
+            if v and (v.get("revenue") is not None or v.get("operating_profit") is not None or v.get("profit_before_tax") is not None):
+                out["vision"] = v
+                out["pl_page"] = q
+                break
+        return out
+    except Exception as e:  # noqa: BLE001
+        log.warning("vision read failed for %s: %s", pdf.name, e)
+        return out
+    finally:
+        for f in tmp.glob("*"):
+            f.unlink(missing_ok=True)
+        try:
+            tmp.rmdir()
+        except OSError:
+            pass
 
 
 def vision_to_pounds(v: dict) -> dict:

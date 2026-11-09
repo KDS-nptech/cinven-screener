@@ -93,6 +93,7 @@ joined AS (
         c.inc_date,
         c.account_category,
         c.last_made_up_date,
+        c.next_due_date,
         c.post_town,
         c.postcode,
         c.county,

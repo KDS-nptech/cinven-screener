@@ -47,6 +47,7 @@ class Provider:
     model: str
     key: str
     rps: float
+    headers: dict = field(default_factory=dict)
     last_call: float = 0.0
     cooldown_until: float = 0.0
     calls: int = 0
@@ -105,7 +106,12 @@ class LLM:
                 continue
             key = _env(p["key_env"])
             if key:
-                self.providers.append(Provider(p["name"], p["base_url"].rstrip("/"), p["model"], key, float(p.get("requests_per_second", 0.5))))
+                extra = {}
+                for hk, hv in (p.get("headers") or {}).items():
+                    val = _env(hv[4:]) if str(hv).startswith("env:") else hv
+                    if val:
+                        extra[hk] = val
+                self.providers.append(Provider(p["name"], p["base_url"].rstrip("/"), p["model"], key, float(p.get("requests_per_second", 0.5)), extra))
         # legacy single provider
         legacy_key = _env(api.get("llm_key_env", "LLM_API_KEY"))
         if legacy_key and _env("LLM_BASE_URL"):
@@ -227,7 +233,7 @@ class LLM:
             "messages": [{"role": "system", "content": system}, {"role": "user", "content": user}],
             "response_format": {"type": "json_object"},
         }
-        headers = {"Authorization": f"Bearer {p.key}", "Content-Type": "application/json"}
+        headers = {"Authorization": f"Bearer {p.key}", "Content-Type": "application/json", **p.headers}
         r = self.client.post(f"{p.base_url}/chat/completions", json=body, headers=headers)
         if r.status_code == 400 and "response_format" in r.text:
             body.pop("response_format")

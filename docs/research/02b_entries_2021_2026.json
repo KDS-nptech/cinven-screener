@@ -1,0 +1,1618 @@
+{
+ "meta": {
+  "version": "v2",
+  "generated": "2026-11-09",
+  "status": "complete first pass: all 39 platform rows sourced; EV present for 20 rows (13 press estimates marked ~); fund attribution verified for SFF, SF2, Seventh (where named) and for Domia and Nutrisens (Eighth, ADLC); Eighth attribution for other 2023 to 2026 flagship deals inferred from vintage",
+  "fx_rates_used": {
+   "2021": {
+    "GBP": 1.16,
+    "USD": 0.85,
+    "CHF": 0.92,
+    "SEK": 0.099
+   },
+   "2022": {
+    "GBP": 1.17,
+    "USD": 0.95,
+    "CHF": 0.99,
+    "SEK": 0.094
+   },
+   "2023": {
+    "GBP": 1.15,
+    "USD": 0.92,
+    "CHF": 1.03,
+    "SEK": 0.087
+   },
+   "2024": {
+    "GBP": 1.18,
+    "USD": 0.92,
+    "CHF": 1.05,
+    "SEK": 0.087
+   },
+   "2025": {
+    "GBP": 1.19,
+    "USD": 0.9,
+    "CHF": 1.07,
+    "SEK": 0.091
+   },
+   "2026": {
+    "GBP": 1.17,
+    "USD": 0.86,
+    "CHF": 1.07,
+    "SEK": 0.09
+   }
+  },
+  "window": "announcements 2021-01-01 to 2026-11-09; Compre and Miller (announced late 2020, closed 2021) included as boundary cases and flagged",
+  "core_stats": {
+   "n_core": 17,
+   "ev_eur_m": {
+    "n": 11,
+    "p25": 1395,
+    "median": 2000,
+    "p75": 2750
+   },
+   "equity_eur_m": {
+    "n": 2,
+    "range": [
+     1000,
+     1100
+    ],
+    "confidence": "low"
+   },
+   "revenue_eur_m": {
+    "n": 8,
+    "p25": 211,
+    "median": 512,
+    "p75": 877
+   },
+   "ebitda_eur_m": {
+    "n": 5,
+    "p25": 80,
+    "median": 82,
+    "p75": 150
+   },
+   "headcount": {
+    "n": 12,
+    "p25": 500,
+    "median": 1350,
+    "p75": 2750
+   }
+  }
+ },
+ "platform_entries": [
+  {
+   "name": "Drake Software (now Taxwell)",
+   "sector_cinven": "TMT",
+   "sub_sector": "Tax preparation software",
+   "hq_country": "United States",
+   "hq_city": "Franklin, NC",
+   "announced": "2021-02",
+   "closed": "2021-03",
+   "fund": "Seventh",
+   "deal_type": "primary (founder or family)",
+   "seller": "Founder Phil Drake (founded 1977)",
+   "ev_eur_m": null,
+   "ev_source_currency_amount": "",
+   "equity_eur_m": null,
+   "cinven_stake": "majority",
+   "co_investors": [],
+   "revenue_at_entry_eur_m": null,
+   "ebitda_at_entry_eur_m": null,
+   "headcount_at_entry": 600,
+   "founder_or_family_involved_at_entry": "yes",
+   "lead_office": "New York",
+   "outlier": true,
+   "outlier_reason": "US-headquartered, led by Cinven's US TMT team (Chris Good, Daniel Garin)",
+   "exit": {
+    "year": null,
+    "buyer": "",
+    "type": ""
+   },
+   "sources": [
+    "https://www.cinven.com/portfolio/taxwell/",
+    "https://www.cinven.com/news-insights/cinven-to-invest-in-drake-software/",
+    "https://www.cinven.com/news-insights/cinven-to-acquire-taxact/"
+   ],
+   "notes": "'Significant investment', announced 5 Feb 2021; Nitel PR (Nov 2021) calls it a majority investment in a founder-owned business. 600+ employees, 64,000 tax professionals, 33M returns a year. TaxAct bought Nov 2022 for ~$720M and combined under Taxwell holding. No EV disclosed."
+  },
+  {
+   "name": "Arxada (Lonza Specialty Ingredients)",
+   "sector_cinven": "Industrials",
+   "sub_sector": "Specialty chemicals, microbial control",
+   "hq_country": "Switzerland",
+   "hq_city": "Basel",
+   "announced": "2021-02",
+   "closed": "2021-07",
+   "fund": "Seventh",
+   "deal_type": "corporate carve-out",
+   "seller": "Lonza Group AG",
+   "ev_eur_m": null,
+   "ev_source_currency_amount": "CHF 4.2B",
+   "equity_eur_m": null,
+   "cinven_stake": "co-control",
+   "co_investors": [
+    "Bain Capital Private Equity"
+   ],
+   "revenue_at_entry_eur_m": null,
+   "ebitda_at_entry_eur_m": null,
+   "headcount_at_entry": 2800,
+   "founder_or_family_involved_at_entry": "no",
+   "lead_office": "London",
+   "outlier": true,
+   "outlier_reason": "Club deal: 50/50 consortium with Bain Capital; EV CHF 4.2B (~EUR 3.9B) is at the top of the range",
+   "exit": {
+    "year": null,
+    "buyer": "",
+    "type": ""
+   },
+   "sources": [
+    "https://www.cinven.com/portfolio/arxada/",
+    "https://www.cinven.com/news-insights/bain-capital-private-equity-and-cinven-enter-into-definitive-agreements-to-acquire-lonza-specialty-ingredients/"
+   ],
+   "notes": "Announced 8 Feb 2021, closed Jul 2021. EV CHF 4.2B stated by Cinven; ~2,800 employees, 17 manufacturing sites, c. 5,300 customers. Troy add-on announced Nov 2021. 2025 to 2026 recapitalisation and amend-and-extend reported by Octus and Debtwire; no exit found as of 9 Nov 2026."
+  },
+  {
+   "name": "Compre",
+   "sector_cinven": "Financial Services",
+   "sub_sector": "Legacy / run-off P&C reinsurance",
+   "hq_country": "United Kingdom",
+   "hq_city": "London",
+   "announced": "2020-12",
+   "closed": "2021-04",
+   "fund": "SFF",
+   "deal_type": "secondary buyout",
+   "seller": "CBPE Capital",
+   "ev_eur_m": null,
+   "ev_source_currency_amount": "",
+   "equity_eur_m": null,
+   "cinven_stake": "co-control",
+   "co_investors": [
+    "British Columbia Investment Management Corporation (BCI)"
+   ],
+   "revenue_at_entry_eur_m": null,
+   "ebitda_at_entry_eur_m": null,
+   "headcount_at_entry": null,
+   "founder_or_family_involved_at_entry": "no",
+   "lead_office": "London",
+   "outlier": true,
+   "outlier_reason": "Strategic Financials Fund deal (SFF investment no. 2 per Cinven's Sakra release); co-control with BCI; announced Dec 2020, completed Apr 2021 so sits on the window boundary",
+   "exit": {
+    "year": null,
+    "buyer": "",
+    "type": ""
+   },
+   "sources": [
+    "https://www.cinven.com/portfolio/compre/",
+    "https://www.cinven.com/news-insights/cinven-to-acquire-sakra/"
+   ],
+   "notes": "Cinven's Säkra release lists Compre as an SFF investment completed April 2021 in partnership with BCI. Announcement reported Dec 2020 (boundary case). Seller CBPE Capital per press (to verify). Financial terms not disclosed."
+  },
+  {
+   "name": "Miller Insurance Services",
+   "sector_cinven": "Financial Services",
+   "sub_sector": "Specialty insurance and reinsurance broking",
+   "hq_country": "United Kingdom",
+   "hq_city": "London",
+   "announced": "2020-11",
+   "closed": "2021-03",
+   "fund": "SFF",
+   "deal_type": "corporate carve-out",
+   "seller": "Willis Towers Watson",
+   "ev_eur_m": null,
+   "ev_source_currency_amount": "",
+   "equity_eur_m": null,
+   "cinven_stake": "co-control",
+   "co_investors": [
+    "GIC"
+   ],
+   "revenue_at_entry_eur_m": null,
+   "ebitda_at_entry_eur_m": null,
+   "headcount_at_entry": 640,
+   "founder_or_family_involved_at_entry": "no",
+   "lead_office": "London",
+   "outlier": true,
+   "outlier_reason": "SFF investment no. 1 (completed Mar 2021, announced Nov 2020); co-control with GIC; on the window boundary",
+   "exit": {
+    "year": 2024,
+    "buyer": "GIC (Cinven stake sold to co-shareholder GIC)",
+    "type": "secondary sale of stake"
+   },
+   "sources": [
+    "https://www.cinven.com/portfolio/miller/",
+    "https://www.cinven.com/news-insights/cinven-to-sell-its-stake-in-miller/",
+    "https://www.cinven.com/news-insights/cinven-to-acquire-sakra/"
+   ],
+   "notes": "Acquired from Willis Towers Watson by Cinven SFF and GIC, completed March 2021 (Cinven exit release). Exit agreed 11 Dec 2023, completed Mar 2024. Headcount 640+ at entry per portfolio page; 900+ at exit."
+  },
+  {
+   "name": "think-cell",
+   "sector_cinven": "TMT",
+   "sub_sector": "Productivity software (PowerPoint add-in)",
+   "hq_country": "Germany",
+   "hq_city": "Berlin",
+   "announced": "2021-06",
+   "closed": "2021-09",
+   "fund": "Seventh",
+   "deal_type": "primary (founder or family)",
+   "seller": "Founders Markus Hannebauer and Arno Schödl (remain significant minority)",
+   "ev_eur_m": 1000,
+   "ev_source_currency_amount": "EUR 1B+ (Bloomberg estimate via Unquote, Jun 2021)",
+   "equity_eur_m": null,
+   "cinven_stake": "majority",
+   "co_investors": [],
+   "revenue_at_entry_eur_m": 88,
+   "ebitda_at_entry_eur_m": 80,
+   "headcount_at_entry": null,
+   "founder_or_family_involved_at_entry": "yes",
+   "lead_office": "Frankfurt",
+   "outlier": false,
+   "outlier_reason": "",
+   "exit": {
+    "year": null,
+    "buyer": "",
+    "type": ""
+   },
+   "sources": [
+    "https://www.cinven.com/portfolio/think-cell/",
+    "https://www.cinven.com/news-insights/cinven-to-make-a-majority-investment-in-think-cell/",
+    "https://www.unquote.com/dach/official-record/3024034/cinven-buys-majority-stake-in-think-cell"
+   ],
+   "notes": "Announced 1 Jun 2021, closed Sep 2021. Seventh Cinven Fund (Unquote). Primary from founders who keep a significant minority. Unquote: 2019 revenue EUR 88M, EBIT ~EUR 80M (EBIT used as EBITDA proxy, ~); EV 'EUR 1bn+ est' (Bloomberg). Late 2025: Bloomberg reported Arma Partners mandated for a possible ~EUR 3B sale in early 2026 (~EUR 200M recurring revenue, ~EUR 150M EBITDA now). Still in current portfolio on cinven.com as of 9 Nov 2026; no completed exit found."
+  },
+  {
+   "name": "Arcaplanet (with Maxi Zoo Italia)",
+   "sector_cinven": "Consumer",
+   "sub_sector": "Pet care retail",
+   "hq_country": "Italy",
+   "hq_city": "Carasco (Genoa)",
+   "announced": "2021-06",
+   "closed": "2022-03",
+   "fund": "Seventh",
+   "deal_type": "secondary buyout",
+   "seller": "Permira and Winch Capital Partners (Arcaplanet); Fressnapf Group (Maxi Zoo Italia, reinvested as minority)",
+   "ev_eur_m": null,
+   "ev_source_currency_amount": "",
+   "equity_eur_m": null,
+   "cinven_stake": "majority",
+   "co_investors": [
+    "Fressnapf Group (minority)"
+   ],
+   "revenue_at_entry_eur_m": 593,
+   "ebitda_at_entry_eur_m": null,
+   "headcount_at_entry": 2000,
+   "founder_or_family_involved_at_entry": "yes",
+   "lead_office": "Milan",
+   "outlier": false,
+   "outlier_reason": "",
+   "exit": {
+    "year": 2024,
+    "buyer": "Fressnapf Group",
+    "type": "trade sale to strategic partner"
+   },
+   "sources": [
+    "https://www.cinven.com/portfolio/arcaplanet/",
+    "https://www.cinven.com/news-insights/cinven-to-create-a-leading-pet-care-platform-in-italy-through-the-combination-of-arcaplanet-and-maxi-zoo-italia/",
+    "https://www.cinven.com/news-insights/cinven-completes-acquisition-of-majority-investment-in-arcaplanet-and-maxi-zoo-italia/",
+    "https://www.cinven.com/news-insights/cinven-sale-of-arcaplanet-to-fressnapf-and-concurrent-minority-investment-in-fressnapf-group/"
+   ],
+   "notes": "Announced 25 Jun 2021, completed 9 Mar 2022. Revenue at entry: Arcaplanet >EUR 400M plus Maxi Zoo Italia >EUR 193M (2021) = ~EUR 593M combined. Headcount c. 2,000 in Mar 2022 (per 2024 exit release). Founder Michele Foppiani (CEO) continued. Exit: sale to Fressnapf agreed Jul 2024; Arcaplanet Group >EUR 700M revenue 2024. EV not disclosed (press reported ~EUR 1B+, to verify)."
+  },
+  {
+   "name": "Restaurant Brands Iberia (now Restaurant Brands Europe)",
+   "sector_cinven": "Consumer",
+   "sub_sector": "Quick service restaurants (Burger King, Popeyes, Tim Hortons master franchisee)",
+   "hq_country": "Spain",
+   "hq_city": "Madrid",
+   "announced": "2021-07",
+   "closed": "2021-10",
+   "fund": "Seventh",
+   "deal_type": "primary (founder or family)",
+   "seller": "Founder Gregorio Jiménez and co-founders (remain minority) with Burger King Europe GmbH (RBI) as minority",
+   "ev_eur_m": 1000,
+   "ev_source_currency_amount": "EUR >1.0B (valuation stated by Cinven)",
+   "equity_eur_m": null,
+   "cinven_stake": "majority",
+   "co_investors": [
+    "Restaurant Brands International (Burger King Europe GmbH), minority"
+   ],
+   "revenue_at_entry_eur_m": null,
+   "ebitda_at_entry_eur_m": null,
+   "headcount_at_entry": 14000,
+   "founder_or_family_involved_at_entry": "yes",
+   "lead_office": "Madrid",
+   "outlier": false,
+   "outlier_reason": "",
+   "exit": {
+    "year": 2026,
+    "buyer": "Consortium led by founder Gregorio Jiménez",
+    "type": "sale to founder-led consortium (agreed 6 Nov 2026)"
+   },
+   "sources": [
+    "https://www.cinven.com/portfolio/restaurant-brands-europe/",
+    "https://www.cinven.com/news-insights/cinven-becomes-a-majority-shareholder-of-restaurant-brands-iberia/",
+    "https://www.cinven.com/news-insights/cinven-agrees-to-the-sale-of-restaurant-brands-europe/"
+   ],
+   "notes": "Announced 28 Jul 2021, closed Oct 2021. 'Valued at more than EUR 1bn', c. 14,000 employees, 500 own and 500 franchised restaurants. Cinven had held a minority since 2018 (to verify); this entry is the step-up to majority. Exit agreed 6 Nov 2026 to a consortium led by founder Gregorio Jiménez; EBITDA more than doubled under Cinven; 1,400+ restaurants."
+  },
+  {
+   "name": "True Potential",
+   "sector_cinven": "Financial Services",
+   "sub_sector": "Wealth management platform and advice",
+   "hq_country": "United Kingdom",
+   "hq_city": "Newcastle upon Tyne",
+   "announced": "2021-09",
+   "closed": "2022-01",
+   "fund": "Seventh",
+   "deal_type": "primary (founder or family)",
+   "seller": "Founders David Harrison (Chairman) and Daniel Harrison (CEO), hundreds of individual partners, and FTV Capital (minority)",
+   "ev_eur_m": 2090,
+   "ev_source_currency_amount": "GBP 1.6B to 2.0B (Sky News via PE Insights, Sep 2021; midpoint GBP 1.8B ~EUR 2.09B)",
+   "equity_eur_m": null,
+   "cinven_stake": "majority",
+   "co_investors": [],
+   "revenue_at_entry_eur_m": 215,
+   "ebitda_at_entry_eur_m": 157,
+   "headcount_at_entry": 350,
+   "founder_or_family_involved_at_entry": "yes",
+   "lead_office": "London",
+   "outlier": false,
+   "outlier_reason": "",
+   "exit": {
+    "year": null,
+    "buyer": "",
+    "type": ""
+   },
+   "sources": [
+    "https://www.cinven.com/portfolio/true-potential/",
+    "https://www.cinven.com/news-insights/cinven-to-make-majority-investment-in-true-potential/",
+    "https://pe-insights.com/cinven-to-snap-up-2bn-wealth-management-platform-true-potential/",
+    "https://ftvcapital.com/2021/true-potential-welcomes-major-investment-from-cinven"
+   ],
+   "notes": "Announced 9 Sep 2021, closed Jan 2022. Cinven: c. GBP 135M EBITDA FY2021E (~EUR 157M), >GBP 20B AuM, 350+ staff. Sky News: GBP 1.6B to 2.0B valuation (~). FY2020 turnover GBP 185M (~EUR 215M) and EBITDA GBP 74M per PE Insights. Fund not named in release; Seventh assumed (Fund 7 investing period), with SFF possibly co-investing (unverified)."
+  },
+  {
+   "name": "BioAgilytix",
+   "sector_cinven": "Healthcare",
+   "sub_sector": "Bioanalytical CRO (large molecule)",
+   "hq_country": "United States",
+   "hq_city": "Durham, NC",
+   "announced": "2021-11",
+   "closed": "2021-12",
+   "fund": "Seventh",
+   "deal_type": "secondary buyout",
+   "seller": "Cobepa (majority seller, re-invests significant minority)",
+   "ev_eur_m": null,
+   "ev_source_currency_amount": "",
+   "equity_eur_m": null,
+   "cinven_stake": "majority",
+   "co_investors": [
+    "Cobepa (significant minority)"
+   ],
+   "revenue_at_entry_eur_m": null,
+   "ebitda_at_entry_eur_m": null,
+   "headcount_at_entry": 870,
+   "founder_or_family_involved_at_entry": "no",
+   "lead_office": "New York",
+   "outlier": true,
+   "outlier_reason": "US-headquartered (Durham, NC)",
+   "exit": {
+    "year": null,
+    "buyer": "",
+    "type": ""
+   },
+   "sources": [
+    "https://www.cinven.com/portfolio/bioagilytix/",
+    "https://www.cinven.com/news-insights/cinven-to-invest-in-bioagilytix/"
+   ],
+   "notes": "Announced 17 Nov 2021, closed Dec 2021. 870 staff, five locations. Financial terms not disclosed."
+  },
+  {
+   "name": "Nitel",
+   "sector_cinven": "TMT",
+   "sub_sector": "Managed network services for SMEs",
+   "hq_country": "United States",
+   "hq_city": "Chicago, IL",
+   "announced": "2021-11",
+   "closed": "2021-12",
+   "fund": "Seventh",
+   "deal_type": "primary (founder or family)",
+   "seller": "Founders Rick Stern and Ron Grason",
+   "ev_eur_m": null,
+   "ev_source_currency_amount": "",
+   "equity_eur_m": null,
+   "cinven_stake": "majority",
+   "co_investors": [],
+   "revenue_at_entry_eur_m": null,
+   "ebitda_at_entry_eur_m": null,
+   "headcount_at_entry": null,
+   "founder_or_family_involved_at_entry": "yes",
+   "lead_office": "New York",
+   "outlier": true,
+   "outlier_reason": "US-headquartered (Chicago), US TMT team",
+   "exit": {
+    "year": 2025,
+    "buyer": "Comcast Business",
+    "type": "trade sale"
+   },
+   "sources": [
+    "https://www.cinven.com/portfolio/nitel/",
+    "https://www.cinven.com/news-insights/cinven-to-invest-in-nitel/",
+    "https://business.comcast.com/about-us/press-releases/2025/cb-closes-nitel-acquisition"
+   ],
+   "notes": "Announced 18 Nov 2021, closed Dec 2021; 'third majority investment in a founder-owned business in 2021'. Exit: Comcast Business acquisition closed 1 Apr 2025 (terms undisclosed)."
+  },
+  {
+   "name": "Ufinet International (II)",
+   "sector_cinven": "TMT",
+   "sub_sector": "Fibre infrastructure (Latin America)",
+   "hq_country": "Spain",
+   "hq_city": "Madrid",
+   "announced": "2021-12",
+   "closed": "2022-03",
+   "fund": "Seventh",
+   "deal_type": "secondary buyout",
+   "seller": "Sixth Cinven Fund (fund-to-fund), Enel reinvests minority",
+   "ev_eur_m": 2500,
+   "ev_source_currency_amount": "EUR ~2.5B",
+   "equity_eur_m": null,
+   "cinven_stake": "majority",
+   "co_investors": [
+    "Enel (minority)"
+   ],
+   "revenue_at_entry_eur_m": null,
+   "ebitda_at_entry_eur_m": null,
+   "headcount_at_entry": 1400,
+   "founder_or_family_involved_at_entry": "no",
+   "lead_office": "Madrid",
+   "outlier": true,
+   "outlier_reason": "Fund-to-fund continuation (Seventh Fund buying from Sixth Fund); operations in Latin America",
+   "exit": {
+    "year": null,
+    "buyer": "",
+    "type": ""
+   },
+   "sources": [
+    "https://www.cinven.com/portfolio/ufinet/",
+    "https://www.cinven.com/news-insights/cinven-to-invest-in-ufinet-international/"
+   ],
+   "notes": "Announced 21 Dec 2021, closed Mar 2022. EV approximately EUR 2.5B stated by Cinven; c. 1,400 employees. Jul 2025 Cinven insight '10 years of transformation'; still in current portfolio."
+  },
+  {
+   "name": "International Financial Group Limited (IFGL)",
+   "sector_cinven": "Financial Services",
+   "sub_sector": "Cross-border life insurance and savings (RL360, Friends Provident International)",
+   "hq_country": "Isle of Man",
+   "hq_city": "Douglas",
+   "announced": "2022-02",
+   "closed": "2023-01",
+   "fund": "SFF",
+   "deal_type": "secondary buyout",
+   "seller": "Vitruvian Partners (to verify) and management",
+   "ev_eur_m": null,
+   "ev_source_currency_amount": "",
+   "equity_eur_m": null,
+   "cinven_stake": "majority",
+   "co_investors": [],
+   "revenue_at_entry_eur_m": null,
+   "ebitda_at_entry_eur_m": null,
+   "headcount_at_entry": 550,
+   "founder_or_family_involved_at_entry": "no",
+   "lead_office": "London",
+   "outlier": true,
+   "outlier_reason": "Strategic Financials Fund deal (SFF investment no. 3); Isle of Man regulated life insurer",
+   "exit": {
+    "year": null,
+    "buyer": "",
+    "type": ""
+   },
+   "sources": [
+    "https://www.cinven.com/portfolio/ifgl/",
+    "https://www.cinven.com/news-insights/cinven-to-acquire-life-insurer-international-financial-group-limited/"
+   ],
+   "notes": "Announced 1 Feb 2022, completed Jan 2023 (long regulatory process). GBP 19B AuA, 550+ employees. Financial terms not disclosed."
+  },
+  {
+   "name": "Envu (Bayer Environmental Science Professional)",
+   "sector_cinven": "Industrials",
+   "sub_sector": "Environmental science / professional pest and vegetation management",
+   "hq_country": "United States",
+   "hq_city": "Cary, NC",
+   "announced": "2022-03",
+   "closed": "2022-10",
+   "fund": "Seventh",
+   "deal_type": "corporate carve-out",
+   "seller": "Bayer AG",
+   "ev_eur_m": 2400,
+   "ev_source_currency_amount": "USD 2.6B (~EUR 2.4B per Cinven)",
+   "equity_eur_m": null,
+   "cinven_stake": "majority",
+   "co_investors": [],
+   "revenue_at_entry_eur_m": null,
+   "ebitda_at_entry_eur_m": null,
+   "headcount_at_entry": 800,
+   "founder_or_family_involved_at_entry": "no",
+   "lead_office": "Frankfurt",
+   "outlier": true,
+   "outlier_reason": "US-headquartered (Cary, NC) although originated by DACH and Industrials teams from Bayer",
+   "exit": {
+    "year": null,
+    "buyer": "",
+    "type": ""
+   },
+   "sources": [
+    "https://www.cinven.com/portfolio/envu/",
+    "https://www.cinven.com/news-insights/cinven-agrees-to-acquire-bayer-environmental-science-professional/",
+    "https://www.cinven.com/news-insights/cinven-welcomes-strategic-minority-investment-in-envu-from-gic/"
+   ],
+   "notes": "Announced 10 Mar 2022, closed Oct 2022. EV USD 2.6B (~EUR 2.4B) per Cinven; c. 800 employees. Mar 2026: GIC took a strategic minority stake (partial sell-down; Cinven retains control)."
+  },
+  {
+   "name": "Netceed (Euro Techno Com Group)",
+   "sector_cinven": "Business Services",
+   "sub_sector": "Distribution to telecom infrastructure industry",
+   "hq_country": "France",
+   "hq_city": "Nanterre",
+   "announced": "2022-06",
+   "closed": "2022-10",
+   "fund": "Seventh",
+   "deal_type": "secondary buyout",
+   "seller": "Carlyle (reinvests minority); founder and CEO Cédric Varasteh retains significant stake",
+   "ev_eur_m": null,
+   "ev_source_currency_amount": "",
+   "equity_eur_m": null,
+   "cinven_stake": "majority",
+   "co_investors": [
+    "Carlyle (minority)",
+    "Founder Cédric Varasteh"
+   ],
+   "revenue_at_entry_eur_m": 1000,
+   "ebitda_at_entry_eur_m": null,
+   "headcount_at_entry": 1100,
+   "founder_or_family_involved_at_entry": "yes",
+   "lead_office": "Paris",
+   "outlier": false,
+   "outlier_reason": "",
+   "exit": {
+    "year": null,
+    "buyer": "",
+    "type": ""
+   },
+   "sources": [
+    "https://www.cinven.com/portfolio/netceed/",
+    "https://www.cinven.com/news-insights/cinven-enters-into-exclusive-negotiations-to-acquire-a-majority-stake-in-euro-techno-com-group/"
+   ],
+   "notes": "Exclusive negotiations announced 3 Jun 2022, closed Oct 2022. Revenue >EUR 1B, c. 1,100 employees, c. 14,000 customers. Appears on cinven.com realised list (date Oct 2022) with no exit release found; exit status to verify."
+  },
+  {
+   "name": "Säkra",
+   "sector_cinven": "Financial Services",
+   "sub_sector": "Insurance broking (SME life and non-life)",
+   "hq_country": "Sweden",
+   "hq_city": "Stockholm",
+   "announced": "2022-09",
+   "closed": "2023-02",
+   "fund": "SFF",
+   "deal_type": "secondary buyout",
+   "seller": "Adelis Equity Partners",
+   "ev_eur_m": null,
+   "ev_source_currency_amount": "",
+   "equity_eur_m": null,
+   "cinven_stake": "majority",
+   "co_investors": [],
+   "revenue_at_entry_eur_m": null,
+   "ebitda_at_entry_eur_m": null,
+   "headcount_at_entry": 350,
+   "founder_or_family_involved_at_entry": "no",
+   "lead_office": "London",
+   "outlier": true,
+   "outlier_reason": "Strategic Financials Fund deal (SFF investment no. 4)",
+   "exit": {
+    "year": null,
+    "buyer": "",
+    "type": ""
+   },
+   "sources": [
+    "https://www.cinven.com/portfolio/sakra/",
+    "https://www.cinven.com/news-insights/cinven-to-acquire-sakra/",
+    "https://news.cision.com/adelis-equity-partners/r/adelis-divests-its-majority-stake-in-sakra,c3626303"
+   ],
+   "notes": "Announced 6 Sep 2022, closed Feb 2023. 350 employees, 60+ offices at entry. Still in current portfolio on 9 Nov 2026; no exit found."
+  },
+  {
+   "name": "group.ONE and dogado",
+   "sector_cinven": "TMT",
+   "sub_sector": "Web hosting and online presence for SMEs",
+   "hq_country": "Sweden",
+   "hq_city": "Malmö",
+   "announced": "2022-12",
+   "closed": "2023-03",
+   "fund": "Seventh",
+   "deal_type": "secondary buyout",
+   "seller": "Sixth Cinven Fund (group.ONE, fund-to-fund) and Triton (dogado, to verify)",
+   "ev_eur_m": null,
+   "ev_source_currency_amount": "",
+   "equity_eur_m": null,
+   "cinven_stake": "co-control",
+   "co_investors": [
+    "Ontario Teachers' Pension Plan",
+    "Founder Jacob Nordestgaard Jensen (significant minority)"
+   ],
+   "revenue_at_entry_eur_m": null,
+   "ebitda_at_entry_eur_m": null,
+   "headcount_at_entry": 1150,
+   "founder_or_family_involved_at_entry": "yes",
+   "lead_office": "London",
+   "outlier": true,
+   "outlier_reason": "Fund-to-fund transfer of group.ONE from Sixth to Seventh Fund combined with dogado; co-investment with Ontario Teachers'",
+   "exit": {
+    "year": null,
+    "buyer": "",
+    "type": ""
+   },
+   "sources": [
+    "https://www.cinven.com/portfolio/group-one/",
+    "https://www.cinven.com/news-insights/cinven-and-ontario-teachers-to-invest-in-the-combination-of-group-one-and-dogado-group/",
+    "https://www.cinven.com/news-insights/cinven-fund-6-to-sell-group-one/"
+   ],
+   "notes": "Announced 5 Dec 2022, closed Mar 2023. Seventh Cinven Fund named. group.ONE HQ Sweden (650+ employees, 1.6M customers), dogado HQ Germany (500+ employees). Press reported EV ~EUR 1.2B (to verify)."
+  },
+  {
+   "name": "Master Builders Solutions (MBCC Admixtures)",
+   "sector_cinven": "Industrials",
+   "sub_sector": "Construction chemicals (concrete admixtures)",
+   "hq_country": "Germany",
+   "hq_city": "Mannheim",
+   "announced": "2023-03",
+   "closed": "2023-05",
+   "fund": "Eighth",
+   "deal_type": "corporate carve-out",
+   "seller": "Sika AG (antitrust remedy disposal of MBCC Group admixtures)",
+   "ev_eur_m": null,
+   "ev_source_currency_amount": "",
+   "equity_eur_m": null,
+   "cinven_stake": "majority",
+   "co_investors": [],
+   "revenue_at_entry_eur_m": 945,
+   "ebitda_at_entry_eur_m": null,
+   "headcount_at_entry": 1600,
+   "founder_or_family_involved_at_entry": "no",
+   "lead_office": "Frankfurt",
+   "outlier": false,
+   "outlier_reason": "",
+   "exit": {
+    "year": null,
+    "buyer": "",
+    "type": ""
+   },
+   "sources": [
+    "https://www.cinven.com/portfolio/master-builders-solutions/",
+    "https://www.cinven.com/news-insights/cinven-agrees-to-acquire-mbcc-admixtures/",
+    "https://www.chemanager-online.com/en/news/cinven-buy-mbcc-admixture-assets-sika"
+   ],
+   "notes": "Announced 22 Mar 2023, closed May 2023. Remedy disposal by Sika after its MBCC Group acquisition. 2022 sales CHF 920M (~EUR 945M), 1,600+ employees, 35 sites (CHEManager). Price not disclosed. Fund: Eighth inferred from timing, unverified. Lead: Industrials (Pontus Pettersson) with DACH team."
+  },
+  {
+   "name": "Archer",
+   "sector_cinven": "Business Services",
+   "sub_sector": "GRC / integrated risk management software",
+   "hq_country": "United States",
+   "hq_city": "Overland Park, KS",
+   "announced": "2023-04",
+   "closed": "2023-06",
+   "fund": "Eighth",
+   "deal_type": "corporate carve-out",
+   "seller": "RSA Security (Clearlake Capital and Symphony Technology Group)",
+   "ev_eur_m": 1850,
+   "ev_source_currency_amount": "USD >2B sought by RSA (Reuters, Jan 2023); final price undisclosed",
+   "equity_eur_m": null,
+   "cinven_stake": "majority",
+   "co_investors": [],
+   "revenue_at_entry_eur_m": 205,
+   "ebitda_at_entry_eur_m": null,
+   "headcount_at_entry": null,
+   "founder_or_family_involved_at_entry": "no",
+   "lead_office": "New York",
+   "outlier": true,
+   "outlier_reason": "US-headquartered (Overland Park, Kansas), led by Head of North America Julia Kahr",
+   "exit": {
+    "year": null,
+    "buyer": "",
+    "type": ""
+   },
+   "sources": [
+    "https://www.cinven.com/portfolio/archer/",
+    "https://www.cinven.com/news-insights/cinven-agrees-to-acquire-archer/",
+    "https://investing.com/news/stock-market-news/rsa-security-explores-2-billionplus-sale-of-archer-sources-2983306"
+   ],
+   "notes": "Announced 13 Apr 2023, closed Jun 2023. Carve-out from RSA Security (Clearlake and STG). Reuters (Jan 2023): RSA sought 'more than USD 2 billion'; Archer revenue USD 220M in 2022 (~EUR 205M). EV recorded at ~EUR 1.85B (USD 2B at 0.92) as a press-based estimate (~, medium confidence). Fund: Eighth inferred from timing, unverified."
+  },
+  {
+   "name": "Amara NZero",
+   "sector_cinven": "Business Services",
+   "sub_sector": "Energy transition B2B distribution",
+   "hq_country": "Spain",
+   "hq_city": "Madrid",
+   "announced": "2023-04",
+   "closed": "2023-08",
+   "fund": "Eighth",
+   "deal_type": "secondary buyout",
+   "seller": "ProA Capital (retains minority) with chairman Pablo Arnus and CEO retaining minority stakes",
+   "ev_eur_m": null,
+   "ev_source_currency_amount": "",
+   "equity_eur_m": null,
+   "cinven_stake": "majority",
+   "co_investors": [
+    "ProA Capital (minority)"
+   ],
+   "revenue_at_entry_eur_m": null,
+   "ebitda_at_entry_eur_m": null,
+   "headcount_at_entry": null,
+   "founder_or_family_involved_at_entry": "yes",
+   "lead_office": "Madrid",
+   "outlier": false,
+   "outlier_reason": "",
+   "exit": {
+    "year": null,
+    "buyer": "",
+    "type": ""
+   },
+   "sources": [
+    "https://www.cinven.com/portfolio/amara-nzero/",
+    "https://www.cinven.com/news-insights/cinven-agrees-to-acquire-a-majority-stake-in-amara-nzero-from-proa-capital/"
+   ],
+   "notes": "Announced 27 Apr 2023, closed Aug 2023. Revenue grown c. 65% p.a. organically since 2020 (no absolute figure). Family (Arnus) remains minority. Fund attribution to verify."
+  },
+  {
+   "name": "Alter Domus",
+   "sector_cinven": "Business Services",
+   "sub_sector": "Fund administration",
+   "hq_country": "Luxembourg",
+   "hq_city": "Luxembourg",
+   "announced": "2024-03",
+   "closed": "2024-10",
+   "fund": "Eighth",
+   "deal_type": "secondary buyout",
+   "seller": "Permira funds and founders (each sells ~half their shares, retain significant stakes)",
+   "ev_eur_m": 4900,
+   "ev_source_currency_amount": "EUR 4.9B (press: MergerSight, Investment Officer, City AM)",
+   "equity_eur_m": null,
+   "cinven_stake": "majority",
+   "co_investors": [
+    "Permira (significant minority)",
+    "Founders"
+   ],
+   "revenue_at_entry_eur_m": null,
+   "ebitda_at_entry_eur_m": null,
+   "headcount_at_entry": 5000,
+   "founder_or_family_involved_at_entry": "yes",
+   "lead_office": "London",
+   "outlier": false,
+   "outlier_reason": "",
+   "exit": {
+    "year": null,
+    "buyer": "",
+    "type": ""
+   },
+   "sources": [
+    "https://www.cinven.com/portfolio/alter-domus/",
+    "https://www.cinven.com/news-insights/cinven-agrees-to-make-significant-strategic-investment-in-alter-domus/",
+    "https://www.mergersight.com/post/cinven-agrees-to-pay-4-9bn-for-a-majority-stake-in-alter-domus",
+    "https://www.permira.com/news-and-insights/news/permira-agrees-partial-monetisation-of-alter-domus"
+   ],
+   "notes": "Announced 4 Mar 2024, closed Oct 2024. Cinven calls it a majority investment; founders and Permira (34% holder) each sold about half their shares and stay invested. EV EUR 4.9B per MergerSight and Investment Officer (press figure; Cinven did not disclose). ~5,000 employees. Revenue +54% since 2021; AuA USD 2.5tn. Lead: Business Services (Rory Neeson) and Financial Services (Maxim Crewe), London."
+  },
+  {
+   "name": "idealista",
+   "sector_cinven": "TMT",
+   "sub_sector": "Online real estate classifieds",
+   "hq_country": "Spain",
+   "hq_city": "Madrid",
+   "announced": "2024-06",
+   "closed": "2024-12",
+   "fund": "Eighth",
+   "deal_type": "secondary buyout",
+   "seller": "EQT (majority seller); founder Jesús Encinar and management reinvest",
+   "ev_eur_m": 2900,
+   "ev_source_currency_amount": "EUR 2.9B",
+   "equity_eur_m": null,
+   "cinven_stake": "majority",
+   "co_investors": [
+    "Founder and management (reinvest)"
+   ],
+   "revenue_at_entry_eur_m": null,
+   "ebitda_at_entry_eur_m": null,
+   "headcount_at_entry": null,
+   "founder_or_family_involved_at_entry": "yes",
+   "lead_office": "Madrid",
+   "outlier": false,
+   "outlier_reason": "",
+   "exit": {
+    "year": null,
+    "buyer": "",
+    "type": ""
+   },
+   "sources": [
+    "https://www.cinven.com/portfolio/idealista/",
+    "https://www.cinven.com/news-insights/cinven-agrees-to-acquire-a-majority-stake-in-idealista/"
+   ],
+   "notes": "Announced 28 Jun 2024, closed Dec 2024. EV EUR 2.9B stated by Cinven. Seller EQT per press (to verify)."
+  },
+  {
+   "name": "Fressnapf Group (minority)",
+   "sector_cinven": "Consumer",
+   "sub_sector": "Pet supplies retail",
+   "hq_country": "Germany",
+   "hq_city": "Krefeld",
+   "announced": "2024-07",
+   "closed": "2024-12",
+   "fund": "Eighth",
+   "deal_type": "minority",
+   "seller": "Founder Torsten Toeller (retains majority)",
+   "ev_eur_m": null,
+   "ev_source_currency_amount": "",
+   "equity_eur_m": null,
+   "cinven_stake": "minority",
+   "co_investors": [],
+   "revenue_at_entry_eur_m": null,
+   "ebitda_at_entry_eur_m": null,
+   "headcount_at_entry": null,
+   "founder_or_family_involved_at_entry": "yes",
+   "lead_office": "Frankfurt",
+   "outlier": true,
+   "outlier_reason": "Minority stake in a founder-controlled group, made concurrently with the Arcaplanet exit",
+   "exit": {
+    "year": null,
+    "buyer": "",
+    "type": ""
+   },
+   "sources": [
+    "https://www.cinven.com/portfolio/fressnapf-group/",
+    "https://www.cinven.com/news-insights/cinven-sale-of-arcaplanet-to-fressnapf-and-concurrent-minority-investment-in-fressnapf-group/"
+   ],
+   "notes": "Announced 4 Jul 2024, closed Dec 2024. Combined group expected ~EUR 5B gross revenue 2024, 2,600+ stores in 14 countries. Financial terms not disclosed."
+  },
+  {
+   "name": "Vitamin Well",
+   "sector_cinven": "Consumer",
+   "sub_sector": "Functional food and beverage brands",
+   "hq_country": "Sweden",
+   "hq_city": "Stockholm",
+   "announced": "2024-08",
+   "closed": "2024-10",
+   "fund": "Eighth",
+   "deal_type": "secondary buyout",
+   "seller": "Bridgepoint (retains significant minority); co-founder Jonas Pettersson continues",
+   "ev_eur_m": 3000,
+   "ev_source_currency_amount": "EUR ~3.0B at ~20x EBITDA (NKP M&A Insights, Aug 2024; Bloomberg reported talks)",
+   "equity_eur_m": null,
+   "cinven_stake": "majority",
+   "co_investors": [
+    "Bridgepoint (significant minority)",
+    "Co-founder Jonas Pettersson"
+   ],
+   "revenue_at_entry_eur_m": null,
+   "ebitda_at_entry_eur_m": 150,
+   "headcount_at_entry": 500,
+   "founder_or_family_involved_at_entry": "yes",
+   "lead_office": "London",
+   "outlier": false,
+   "outlier_reason": "",
+   "exit": {
+    "year": null,
+    "buyer": "",
+    "type": ""
+   },
+   "sources": [
+    "https://www.cinven.com/portfolio/vitamin-well/",
+    "https://www.cinven.com/news-insights/cinven-to-become-lead-investor-in-vitamin-well/",
+    "https://www.mainsights.io/ma-news/cinven-becomes-lead-investor-in-vitamin-well-at-an-ev-of-eur-3bn-and-evebitda-of-20x",
+    "https://bnnbloomberg.ca/business/2024/08/06/cinven-to-become-lead-investor-in-bridgepoints-vitamin-well-sources-say"
+   ],
+   "notes": "Announced 6 Aug 2024, closed Oct 2024. 'Lead investor', Bridgepoint keeps a significant minority; c. 500 employees. EV ~EUR 3B and ~EUR 150M EBITDA (marketed figure) per NKP M&A Insights; both are press estimates (~). Jul 2026: EMPWR combination (add-on). Lead team: Nordic regional (Pontus Pettersson) and Consumer (Matteo Corà), London."
+  },
+  {
+   "name": "Finaxy Group",
+   "sector_cinven": "Financial Services",
+   "sub_sector": "P&C insurance broking (France)",
+   "hq_country": "France",
+   "hq_city": "Paris",
+   "announced": "2024-09",
+   "closed": "2024-12",
+   "fund": "SFF",
+   "deal_type": "secondary buyout",
+   "seller": "Ardian (Expansion); founder-CEO Erick Berville and management reinvest significantly",
+   "ev_eur_m": 490,
+   "ev_source_currency_amount": "EUR 'un peu moins de 500M' (CFNEWS, Sep 2024)",
+   "equity_eur_m": null,
+   "cinven_stake": "majority",
+   "co_investors": [],
+   "revenue_at_entry_eur_m": 100,
+   "ebitda_at_entry_eur_m": null,
+   "headcount_at_entry": 330,
+   "founder_or_family_involved_at_entry": "yes",
+   "lead_office": "Paris",
+   "outlier": true,
+   "outlier_reason": "Strategic Financials Fund deal",
+   "exit": {
+    "year": null,
+    "buyer": "",
+    "type": ""
+   },
+   "sources": [
+    "https://www.cinven.com/portfolio/finaxy/",
+    "https://www.cinven.com/news-insights/cinven-enters-into-exclusive-negotiations-with-ardian-to-acquire-the-finaxy-group/",
+    "https://www.cfnews.net/Acces-libre/Finaxy-s-assure-un-LBO-ter-496562"
+   ],
+   "notes": "Exclusivity 3 Sep 2024, closed 2 Dec 2024. SFF named by Cinven. CFNEWS: valuation just under EUR 500M (~), ~EUR 100M revenue (commissions), EBITDA almost tripled in five years, Cinven stake ~54%, 330+ staff. Seller Ardian Expansion V; founder-CEO Erick Berville reinvests."
+  },
+  {
+   "name": "Policy Expert",
+   "sector_cinven": "Financial Services",
+   "sub_sector": "Home and motor insurance MGA",
+   "hq_country": "United Kingdom",
+   "hq_city": "London",
+   "announced": "2024-09",
+   "closed": "2025-01",
+   "fund": "SFF",
+   "deal_type": "secondary buyout",
+   "seller": "Abu Dhabi Investment Authority subsidiary (sells 50%, retains 50%)",
+   "ev_eur_m": null,
+   "ev_source_currency_amount": "",
+   "equity_eur_m": null,
+   "cinven_stake": "co-control",
+   "co_investors": [
+    "ADIA (50%)"
+   ],
+   "revenue_at_entry_eur_m": null,
+   "ebitda_at_entry_eur_m": null,
+   "headcount_at_entry": null,
+   "founder_or_family_involved_at_entry": "no",
+   "lead_office": "London",
+   "outlier": true,
+   "outlier_reason": "Strategic Financials Fund deal; 50% stake alongside ADIA",
+   "exit": {
+    "year": null,
+    "buyer": "",
+    "type": ""
+   },
+   "sources": [
+    "https://www.cinven.com/portfolio/policy-expert/",
+    "https://www.cinven.com/news-insights/policy-expert-positioned-for-growth-as-cinven-acquires-50-shareholding/",
+    "https://www.insurancetimes.co.uk/news/pe-firm-acquires-50-stake-in-home-and-motor-mga/1453008.article",
+    "https://agbi.com/banking-finance/2024/09/abu-dhabi-fund-sells-stake-in-uk-insurance-company"
+   ],
+   "notes": "Announced 11 Sep 2024, closed Jan 2025. SFF named by Cinven; 50% from ADIA subsidiary, ADIA keeps 50%. 1.5M customers. No financial details disclosed (methods tried: Cinven release, AGBI, Insurance Times, Zawya)."
+  },
+  {
+   "name": "Domia Group",
+   "sector_cinven": "Business Services",
+   "sub_sector": "Home services (tutoring, home cleaning)",
+   "hq_country": "France",
+   "hq_city": "Paris",
+   "announced": "2024-08",
+   "closed": "2024-10",
+   "fund": "Eighth",
+   "deal_type": "secondary buyout",
+   "seller": "IK Partners (IK Small Cap)",
+   "ev_eur_m": null,
+   "ev_source_currency_amount": "",
+   "equity_eur_m": null,
+   "cinven_stake": "majority",
+   "co_investors": [],
+   "revenue_at_entry_eur_m": null,
+   "ebitda_at_entry_eur_m": null,
+   "headcount_at_entry": null,
+   "founder_or_family_involved_at_entry": "no",
+   "lead_office": "Paris",
+   "outlier": false,
+   "outlier_reason": "",
+   "exit": {
+    "year": null,
+    "buyer": "",
+    "type": ""
+   },
+   "sources": [
+    "https://www.cinven.com/portfolio/domia-group/",
+    "https://www.autoritedelaconcurrence.fr/sites/default/files/integral_texts/2024-10/24-201-%20Publique%20-%20D%C3%A9cision%20simplifi%C3%A9e%2024DCC195.pdf",
+    "https://mergr.com/transaction/cinven-acquires-domia-group",
+    "https://www.cfnews.net/L-actualite/LBO/Operations/LBO-ter/Domia-approfondit-sa-connaissance-du-LBO-506604"
+   ],
+   "notes": "No Cinven press release. French competition authority decision 24-DCC-195 (16 Sep 2024): exclusive control of groupe Domia (Acadomia, Shiva) by BloCin BidCo, indirectly held by the Eighth Cinven Fund; put option letter signed 1 Aug 2024. Seller IK Partners (Mergr, CFNEWS). Below EU merger thresholds, so EU turnover under EUR 250M (method: EUMR thresholds, low confidence). Terms undisclosed. Brands: Acadomia (tutoring, 150k pupils), Shiva (home cleaning)."
+  },
+  {
+   "name": "Grant Thornton UK",
+   "sector_cinven": "Financial Services",
+   "sub_sector": "Audit, tax and advisory",
+   "hq_country": "United Kingdom",
+   "hq_city": "London",
+   "announced": "2024-11",
+   "closed": "2025-04",
+   "fund": "Eighth",
+   "deal_type": "primary (founder or family)",
+   "seller": "Partnership (240+ partners remain significant shareholders)",
+   "ev_eur_m": 1770,
+   "ev_source_currency_amount": "GBP up to 1.5B (PE Insights, industry sources; ~EUR 1.77B at 1.18)",
+   "equity_eur_m": null,
+   "cinven_stake": "majority",
+   "co_investors": [],
+   "revenue_at_entry_eur_m": 854,
+   "ebitda_at_entry_eur_m": null,
+   "headcount_at_entry": 5500,
+   "founder_or_family_involved_at_entry": "no",
+   "lead_office": "London",
+   "outlier": false,
+   "outlier_reason": "",
+   "exit": {
+    "year": null,
+    "buyer": "",
+    "type": ""
+   },
+   "sources": [
+    "https://www.cinven.com/portfolio/grant-thornton/",
+    "https://www.cinven.com/news-insights/cinven-news-grant-thornton/",
+    "https://pe-insights.com/cinven-completes-buyout-of-grant-thornton-uk-in-deal-expected-to-value-firm-at-up-to-1-5bn/",
+    "https://www.accountancyage.com/2025/04/16/grant-thornton-partners-paid-682k-as-cinven-deal-closes/"
+   ],
+   "notes": "Announced 21 Nov 2024, completed Apr 2025. Majority investment; 240+ partners keep a significant stake. 5,500+ employees. Valuation 'up to GBP 1.5B' per PE Insights (press, ~). Net revenue GBP 724M (FY2024, ~EUR 854M). Primary deal from a partnership (no founder). Lead: London FS and BS teams."
+  },
+  {
+   "name": "Nutrisens",
+   "sector_cinven": "Healthcare",
+   "sub_sector": "Clinical nutrition",
+   "hq_country": "France",
+   "hq_city": "Chaponost (Lyon)",
+   "announced": "2025-05",
+   "closed": "2025-09",
+   "fund": "Eighth",
+   "deal_type": "secondary buyout",
+   "seller": "Sagard MidCap; founder-CEO Georges Devesa and management reinvest significantly",
+   "ev_eur_m": null,
+   "ev_source_currency_amount": "",
+   "equity_eur_m": null,
+   "cinven_stake": "majority",
+   "co_investors": [],
+   "revenue_at_entry_eur_m": null,
+   "ebitda_at_entry_eur_m": null,
+   "headcount_at_entry": 750,
+   "founder_or_family_involved_at_entry": "yes",
+   "lead_office": "Paris",
+   "outlier": false,
+   "outlier_reason": "",
+   "exit": {
+    "year": null,
+    "buyer": "",
+    "type": ""
+   },
+   "sources": [
+    "https://www.cinven.com/portfolio/nutrisens/",
+    "https://www.cinven.com/news-insights/cinven-in-exclusive-negotiations-with-sagard-to-acquire-nutrisens/",
+    "https://www.autoritedelaconcurrence.fr/sites/default/files/integral_texts/2025-07/25-151%20-%20D%C3%A9cision%20simplifi%C3%A9e%2025DCC159%20-%20version%20publique.pdf"
+   ],
+   "notes": "Exclusivity 20 May 2025, closed Sep 2025. ADLC decision 25-DCC-159 (4 Jul 2025) names the Eighth Cinven Fund as acquirer of exclusive control (promise signed 16 May 2025). 750+ employees, 30+ countries; 20% organic growth, 8 acquisitions under Sagard. Below EU thresholds (EU turnover under EUR 250M, low confidence). Financial terms undisclosed."
+  },
+  {
+   "name": "Artefact",
+   "sector_cinven": "Business Services",
+   "sub_sector": "Data and AI consulting",
+   "hq_country": "France",
+   "hq_city": "Paris",
+   "announced": "2025-07",
+   "closed": "2025-12",
+   "fund": "Eighth",
+   "deal_type": "secondary buyout",
+   "seller": "Ardian (Ardian Expansion, majority seller; option to stay as minority); founders keep 'several tens of percent'",
+   "ev_eur_m": 1150,
+   "ev_source_currency_amount": "EUR 1.1B to 1.2B (CFNEWS, Jul 2025); 'over EUR 1B' (NKP, consultancy.eu)",
+   "equity_eur_m": null,
+   "cinven_stake": "majority",
+   "co_investors": [],
+   "revenue_at_entry_eur_m": 200,
+   "ebitda_at_entry_eur_m": 60,
+   "headcount_at_entry": 1700,
+   "founder_or_family_involved_at_entry": "yes",
+   "lead_office": "Paris",
+   "outlier": false,
+   "outlier_reason": "",
+   "exit": {
+    "year": null,
+    "buyer": "",
+    "type": ""
+   },
+   "sources": [
+    "https://www.cinven.com/portfolio/artefact/",
+    "https://www.cinven.com/news-insights/cinven-in-exclusive-negotiations-to-acquire-artefact/",
+    "https://www.autoritedelaconcurrence.fr/sites/default/files/integral_texts/2025-10/25-235%20-%20Publique%20-%20D%C3%A9cision%20simplifi%C3%A9e%2025DCC236.pdf",
+    "https://www.cfnews.net/Acces-libre/Artefact-signe-un-nouveau-LBO-538025",
+    "https://www.mainsights.io/ma-news/cinven-to-acquire-a-majority-stake-in-artefact-from-ardian-at-an-enterprise-value-exceeding-eur-10-billion",
+    "https://www.consultancy.eu/news/12212/data-and-ai-consultancy-artefact-partners-with-cinven-to-triple-the-business-by-2030"
+   ],
+   "notes": "Exclusivity 28 Jul 2025, closed Dec 2025 (CFNEWS op date 1 Dec 2025). ADLC 25-DCC-236: Datheos BidCo (Cinven) majority of TopSky (Artefact holding). CFNEWS: EV EUR 1.1B to 1.2B (~), 2025E revenue ~EUR 200M and EBITDA ~EUR 60M (NKP: EUR 40M 2024 EBITDA, ~25x 2024 / ~16.6x 2025E). 1,700 employees. Fund: Eighth inferred, unverified."
+  },
+  {
+   "name": "Smart Communications",
+   "sector_cinven": "TMT",
+   "sub_sector": "Customer communications management SaaS",
+   "hq_country": "United Kingdom",
+   "hq_city": "London",
+   "announced": "2025-08",
+   "closed": "2025-10",
+   "fund": "Eighth",
+   "deal_type": "secondary buyout",
+   "seller": "Accel-KKR (majority seller since 2016, retains minority)",
+   "ev_eur_m": 1640,
+   "ev_source_currency_amount": "GBP 1.4B / USD 1.8B (Bloomberg, 1 Aug 2025); ~20x 2025 EBITDA per NKP",
+   "equity_eur_m": null,
+   "cinven_stake": "majority",
+   "co_investors": [],
+   "revenue_at_entry_eur_m": null,
+   "ebitda_at_entry_eur_m": 82,
+   "headcount_at_entry": 400,
+   "founder_or_family_involved_at_entry": "no",
+   "lead_office": "London",
+   "outlier": false,
+   "outlier_reason": "",
+   "exit": {
+    "year": null,
+    "buyer": "",
+    "type": ""
+   },
+   "sources": [
+    "https://www.cinven.com/portfolio/smart-communications/",
+    "https://www.cinven.com/news-insights/cinven-to-acquire-smart-communications/",
+    "https://www.bloomberg.com/news/articles/2025-08-01/cinven-acquires-uk-tech-firm-smart-at--1-8-billion-valuation",
+    "https://www.accel-kkr.com/accel-kkr-to-sell-majority-interest-in-smart-communications-to-cinven/",
+    "https://www.mainsights.io/ma-news/cinven-acquires-a-majority-stake-in-uk-based-customer-communications-software-provider-smart-communications-from-accel-kkr-at-an-enterprise-value-of-gbp-14bn-implying-an-evebitda-2025-multiple-of-around-20x"
+   ],
+   "notes": "Announced 1 Aug 2025, closed Oct 2025. Bloomberg: USD 1.8B valuation (GBP 1.4B, ~EUR 1.64B at 1.17). EBITDA ~GBP 70M implied by the ~20x multiple reported by NKP (derived, ~, low confidence). 400+ employees, 650+ customers; 5x revenue growth under Accel-KKR. Lead: TMT (Thomas Railhac, Adam Prindis), London."
+  },
+  {
+   "name": "Objectway",
+   "sector_cinven": "Financial Services",
+   "sub_sector": "Wealth management software",
+   "hq_country": "Italy",
+   "hq_city": "Milan",
+   "announced": "2025-08",
+   "closed": "2025-11",
+   "fund": "SF2",
+   "deal_type": "primary (founder or family)",
+   "seller": "Founder Luigi Marciano (remains significant shareholder, CEO and Chair)",
+   "ev_eur_m": null,
+   "ev_source_currency_amount": "",
+   "equity_eur_m": null,
+   "cinven_stake": "majority",
+   "co_investors": [],
+   "revenue_at_entry_eur_m": null,
+   "ebitda_at_entry_eur_m": null,
+   "headcount_at_entry": null,
+   "founder_or_family_involved_at_entry": "yes",
+   "lead_office": "Milan",
+   "outlier": true,
+   "outlier_reason": "First investment of Cinven's Strategic Fund 2 (mid-market strategy), a separate fund from the flagship",
+   "exit": {
+    "year": null,
+    "buyer": "",
+    "type": ""
+   },
+   "sources": [
+    "https://www.cinven.com/portfolio/objectway/",
+    "https://www.cinven.com/news-insights/objectway-investment/",
+    "https://www.cinven.com/news-insights/cinven-closes-second-strategic-fund/",
+    "https://www.aziendabanca.it/notizie/legal/cinven-acquisisce-objectway-operazione-strategica-nel-settore-software-finanziario"
+   ],
+   "notes": "Announced 7 Aug 2025, closed Nov 2025 (Aziendabanca legal note 17 Nov 2025). 'First investment from Cinven's new mid-market strategy' = SF2 (EUR 2.3B, closed Sep 2026). 250+ financial institution customers, 16+ countries. Financing from Banca Popolare di Sondrio and others. No financial terms (methods tried: Cinven, Business Wire, Aziendabanca, Freshfields)."
+  },
+  {
+   "name": "Universidad Alfonso X el Sabio (UAX)",
+   "sector_cinven": "Business Services",
+   "sub_sector": "Private higher education",
+   "hq_country": "Spain",
+   "hq_city": "Madrid",
+   "announced": "2025-10",
+   "closed": "2026-07",
+   "fund": "Eighth",
+   "deal_type": "secondary buyout",
+   "seller": "CVC Funds; founder Jesús Núñez and management reinvest",
+   "ev_eur_m": 2000,
+   "ev_source_currency_amount": "EUR ~2B (Bloomberg Sep 2025: 'could be valued at more than EUR 2 billion', ~EUR 1B debt; InforCapital ~EUR 2B)",
+   "equity_eur_m": 1000,
+   "cinven_stake": "majority",
+   "co_investors": [
+    "Mubadala Investment Company",
+    "Founder Jesús Núñez"
+   ],
+   "revenue_at_entry_eur_m": null,
+   "ebitda_at_entry_eur_m": null,
+   "headcount_at_entry": null,
+   "founder_or_family_involved_at_entry": "yes",
+   "lead_office": "Madrid",
+   "outlier": false,
+   "outlier_reason": "",
+   "exit": {
+    "year": null,
+    "buyer": "",
+    "type": ""
+   },
+   "sources": [
+    "https://www.cinven.com/portfolio/universidad-alfonso-x-el-sabio-group/",
+    "https://www.cinven.com/news-insights/cinven-to-acquire-universidad-alfonso-x-el-sabio-group-from-cvc-funds/",
+    "https://news.bloomberglaw.com/bankruptcy-law/cvc-sale-of-spanish-university-pits-private-credit-against-banks",
+    "https://pe-insights.com/cinven-to-acquire-spains-uax-from-cvc-in-partnership-with-founder-and-mubadala/"
+   ],
+   "notes": "Announced 28 Oct 2025, closed Jul 2026. Majority stake from CVC; founder Jesús Núñez and Mubadala co-invest. 35k students. EV ~EUR 2B is a press estimate (Bloomberg pre-deal: 'more than EUR 2 billion', up to EUR 1B debt offered), so equity ~EUR 1B shared with Mubadala and founder (method: EV less debt, low confidence). Lead: Iberia (Jorge Quemada, Madrid)."
+  },
+  {
+   "name": "Flint Global",
+   "sector_cinven": "Business Services",
+   "sub_sector": "Regulatory and policy advisory",
+   "hq_country": "United Kingdom",
+   "hq_city": "London",
+   "announced": "2025-12",
+   "closed": "2025-12",
+   "fund": "SF2",
+   "deal_type": "primary (founder or family)",
+   "seller": "Co-founders Ed Richards and Sir Simon Fraser (remain significant shareholders) and existing investors",
+   "ev_eur_m": 222,
+   "ev_source_currency_amount": "GBP ~190M (Bloomberg Deals via NKP, Dec 2025); ~16x FY1 EBITDA of ~GBP 12M",
+   "equity_eur_m": null,
+   "cinven_stake": "majority",
+   "co_investors": [],
+   "revenue_at_entry_eur_m": null,
+   "ebitda_at_entry_eur_m": 14,
+   "headcount_at_entry": null,
+   "founder_or_family_involved_at_entry": "yes",
+   "lead_office": "London",
+   "outlier": true,
+   "outlier_reason": "Second investment of Strategic Fund 2 (mid-market strategy)",
+   "exit": {
+    "year": null,
+    "buyer": "",
+    "type": ""
+   },
+   "sources": [
+    "https://www.cinven.com/portfolio/flint-global/",
+    "https://www.cinven.com/news-insights/cinven-to-invest-in-flint-global/",
+    "https://www.cinven.com/news-insights/cinven-closes-second-strategic-fund/",
+    "https://www.mainsights.io/ma-news/cinven-set-to-acquire-flint-global-a-provider-of-policy-advisory-services-for-gbp-190m",
+    "https://corinthiagm.com/press-releases/corinthia-backs-cinvens-majority-investment-in-flint-global-with-tailored-financing-package/"
+   ],
+   "notes": "Announced 8 Dec 2025, completed by year end 2025. Majority investment, primary (founders Ed Richards and Sir Simon Fraser stay as significant shareholders). Bloomberg Deals (via NKP): EV ~GBP 190M (~EUR 222M at 1.17), marketed off ~GBP 12M EBITDA (~EUR 14M), ~16x; Alantra ran the process; Corinthia provided financing. Second SF2 investment."
+  },
+  {
+   "name": "Regenity Biosciences",
+   "sector_cinven": "Healthcare",
+   "sub_sector": "Bioresorbable biomaterials (medtech)",
+   "hq_country": "United States",
+   "hq_city": "Paramus, NJ",
+   "announced": "2026-02",
+   "closed": "2026-04",
+   "fund": "Eighth",
+   "deal_type": "minority",
+   "seller": "Linden Capital Partners (remains as partner)",
+   "ev_eur_m": null,
+   "ev_source_currency_amount": "",
+   "equity_eur_m": null,
+   "cinven_stake": "unknown",
+   "co_investors": [
+    "Linden Capital Partners"
+   ],
+   "revenue_at_entry_eur_m": null,
+   "ebitda_at_entry_eur_m": null,
+   "headcount_at_entry": 250,
+   "founder_or_family_involved_at_entry": "no",
+   "lead_office": "New York",
+   "outlier": true,
+   "outlier_reason": "US-headquartered (New Jersey), led by Head of North America; 'strategic investment' alongside incumbent sponsor Linden, stake undisclosed",
+   "exit": {
+    "year": null,
+    "buyer": "",
+    "type": ""
+   },
+   "sources": [
+    "https://www.cinven.com/portfolio/regenity-biosciences/",
+    "https://www.cinven.com/news-insights/regenity-biosciences-announcement/"
+   ],
+   "notes": "Announced 12 Feb 2026, closed Apr 2026. 250+ employees, 125+ customers, 80+ product lines. Stake not stated; structure is a partnership with incumbent sponsor Linden (Cinven 'adding new partner alongside Linden'), so likely co-control or significant minority. Deal type recorded as minority pending verification; no financial terms (methods tried: Cinven and Linden releases)."
+  },
+  {
+   "name": "Ongoing Warehouse",
+   "sector_cinven": "TMT",
+   "sub_sector": "Warehouse management SaaS",
+   "hq_country": "Sweden",
+   "hq_city": "Gothenburg",
+   "announced": "2026-05",
+   "closed": "2026-07",
+   "fund": "SF2",
+   "deal_type": "primary (founder or family)",
+   "seller": "Co-founders Henrik Ekman and Gerhard Guron (remain significant shareholders)",
+   "ev_eur_m": null,
+   "ev_source_currency_amount": "",
+   "equity_eur_m": null,
+   "cinven_stake": "majority",
+   "co_investors": [],
+   "revenue_at_entry_eur_m": null,
+   "ebitda_at_entry_eur_m": null,
+   "headcount_at_entry": null,
+   "founder_or_family_involved_at_entry": "yes",
+   "lead_office": "Frankfurt",
+   "outlier": true,
+   "outlier_reason": "Third investment of Strategic Fund 2 (mid-market strategy)",
+   "exit": {
+    "year": null,
+    "buyer": "",
+    "type": ""
+   },
+   "sources": [
+    "https://www.cinven.com/portfolio/ongoing-warehouse/",
+    "https://www.cinven.com/news-insights/cinven-to-invest-in-ongoing-warehouse-alongside-founders/",
+    "https://www.mainsights.io/ma-news/cinven-invests-in-swedish-cloud-native-wms-provider-ongoing-warehouse"
+   ],
+   "notes": "Announced 6 May 2026, closed Jul 2026. Third SF2 investment. DNB Carnegie ran the sale process (NKP, from Sep 2025). Stake not stated explicitly; founders remain significant shareholders and SF2 targets control positions, so recorded as majority (medium confidence). Led by Michael Weber (Frankfurt, SF2 co-head) and Pontus Pettersson. No financials disclosed."
+  },
+  {
+   "name": "Salsify",
+   "sector_cinven": "Consumer",
+   "sub_sector": "Product experience management SaaS",
+   "hq_country": "United States",
+   "hq_city": "Boston, MA",
+   "announced": "2026-07",
+   "closed": "2026-09",
+   "fund": "Eighth",
+   "deal_type": "secondary buyout",
+   "seller": "VC and growth investors (to verify)",
+   "ev_eur_m": null,
+   "ev_source_currency_amount": "",
+   "equity_eur_m": null,
+   "cinven_stake": "majority",
+   "co_investors": [],
+   "revenue_at_entry_eur_m": null,
+   "ebitda_at_entry_eur_m": null,
+   "headcount_at_entry": null,
+   "founder_or_family_involved_at_entry": "unknown",
+   "lead_office": "New York",
+   "outlier": true,
+   "outlier_reason": "US-headquartered (Boston), US team led",
+   "exit": {
+    "year": null,
+    "buyer": "",
+    "type": ""
+   },
+   "sources": [
+    "https://www.cinven.com/portfolio/salsify/",
+    "https://www.cinven.com/news-insights/cinven-to-acquire-salsify/"
+   ],
+   "notes": "Announced 22 Jul 2026, closed Sep 2026. 2,000+ customers, 70,000 users; Moelis advised Salsify; Goodwin advised Salsify, Simpson Thacher advised Cinven. Financial terms not disclosed (methods tried: Cinven, Dealroom, Goodwin, STB releases). Dealroom lists USD 453M raised historically; sellers are existing VC and growth investors (not named). Founder involvement unknown."
+  },
+  {
+   "name": "Optio",
+   "sector_cinven": "Financial Services",
+   "sub_sector": "Specialty insurance MGA platform",
+   "hq_country": "United Kingdom",
+   "hq_city": "London",
+   "announced": "2026-07",
+   "closed": null,
+   "fund": "SF2",
+   "deal_type": "secondary buyout",
+   "seller": "Preservation Capital Partners",
+   "ev_eur_m": null,
+   "ev_source_currency_amount": "",
+   "equity_eur_m": null,
+   "cinven_stake": "co-control",
+   "co_investors": [
+    "La Caisse (formerly CDPQ)"
+   ],
+   "revenue_at_entry_eur_m": null,
+   "ebitda_at_entry_eur_m": null,
+   "headcount_at_entry": null,
+   "founder_or_family_involved_at_entry": "no",
+   "lead_office": "London",
+   "outlier": true,
+   "outlier_reason": "Strategic Fund 2 deal (fourth SF2 investment) and joint acquisition with La Caisse",
+   "exit": {
+    "year": null,
+    "buyer": "",
+    "type": ""
+   },
+   "sources": [
+    "https://www.cinven.com/news-insights/optio-acquisition/",
+    "https://www.cinven.com/news-insights/cinven-closes-second-strategic-fund/",
+    "https://www.insurancetimes.co.uk/news/460m-gwp-mga-secures-new-majority-shareholders/1459226.article",
+    "https://www.reinsurancene.ws/cinven-and-la-caisse-acquire-majority-stake-in-optio-from-pcp/"
+   ],
+   "notes": "Announced 27 Jul 2026; not yet on the portfolio page as of 9 Nov 2026 (closing pending). Fourth SF2 investment per Cinven's SF2 close release. Insurance Times: ~GBP 460M GWP. Seller Preservation Capital Partners (exit). Founded 2018, 18 offices in 15 countries. No EV disclosed (methods tried: Cinven, NKP, Insurance Times, Reinsurance News)."
+  },
+  {
+   "name": "Theramex",
+   "sector_cinven": "Healthcare",
+   "sub_sector": "Specialty pharma (women's health)",
+   "hq_country": "United Kingdom",
+   "hq_city": "London",
+   "announced": "2026-11",
+   "closed": null,
+   "fund": "Eighth",
+   "deal_type": "secondary buyout",
+   "seller": "Carlyle and PAI Partners",
+   "ev_eur_m": 2600,
+   "ev_source_currency_amount": "GBP ~2.2B / EUR ~2.6B (pharmaphorum, Dealroom; ~EUR 1.5B debt per Bloomberg)",
+   "equity_eur_m": 1100,
+   "cinven_stake": "majority",
+   "co_investors": [],
+   "revenue_at_entry_eur_m": 430,
+   "ebitda_at_entry_eur_m": null,
+   "headcount_at_entry": 500,
+   "founder_or_family_involved_at_entry": "no",
+   "lead_office": "London",
+   "outlier": false,
+   "outlier_reason": "",
+   "exit": {
+    "year": null,
+    "buyer": "",
+    "type": ""
+   },
+   "sources": [
+    "https://www.cinven.com/news-insights/cinven-to-acquire-theramex/",
+    "https://pharmaphorum.com/news/uk-womens-health-firm-theramex-sold-around-ps22bn",
+    "https://dealroom.co/news/169313-cinven-buys-womens-health-drugmaker-theramex-in-2-6bn-buyout/",
+    "https://www.lw.com/en/news/2026/11/latham-advises-carlyle-and-pai-partners-on-sale-of-theramex-to-cinven"
+   ],
+   "notes": "Announced 3 Nov 2026; closing pending. 500+ employees, 80+ countries. Press: ~GBP 2.2B / EUR 2.6B EV (~), ~EUR 1.5B debt (Bloomberg) so ~EUR 1.1B equity including any rollover (method: EV less debt package, low confidence); Carlyle and PAI paid ~EUR 1.4B in 2022 and 'more than doubled' operating profit; analysts put revenue at USD 500M+ (~EUR 430M, low confidence). Fund assumed Eighth (flagship healthcare team), unverified."
+  },
+  {
+   "name": "Grant Thornton Germany",
+   "sector_cinven": "Financial Services",
+   "sub_sector": "Audit and advisory",
+   "hq_country": "Germany",
+   "hq_city": "Düsseldorf",
+   "announced": "2025-09",
+   "closed": "2026-03",
+   "fund": "Eighth",
+   "deal_type": "primary (founder or family)",
+   "seller": "Equity partners of Grant Thornton AG (remain significant shareholders)",
+   "ev_eur_m": null,
+   "ev_source_currency_amount": "",
+   "equity_eur_m": null,
+   "cinven_stake": "unknown",
+   "co_investors": [
+    "Partner base"
+   ],
+   "revenue_at_entry_eur_m": null,
+   "ebitda_at_entry_eur_m": null,
+   "headcount_at_entry": 2000,
+   "founder_or_family_involved_at_entry": "no",
+   "lead_office": "Frankfurt",
+   "outlier": true,
+   "outlier_reason": "Structured as a strategic partnership closely tied to the Grant Thornton UK investment; stake not disclosed; likely managed as a sister platform to Grant Thornton UK",
+   "exit": {
+    "year": null,
+    "buyer": "",
+    "type": ""
+   },
+   "sources": [
+    "https://www.cinven.com/news-insights/cinven-enters-into-a-strategic-partnership-with-grant-thornton-germany/",
+    "https://www.cinven.com/news-insights/grant-thornton-germany-and-cinven-enter-into-strategic-partnership/"
+   ],
+   "notes": "Signed 10 Sep 2025; partner approval 13 Oct 2025; expected close Q1 2026 (closing date to verify). ~2,000 employees, ten offices. Not listed as a separate portfolio page on cinven.com."
+  }
+ ],
+ "add_ons": [
+  {
+   "platform": "Drake Software / Taxwell",
+   "target": "TaxAct",
+   "announced": "2022-11",
+   "seller": "Blucora",
+   "ev_source_currency_amount": "USD ~720M",
+   "ev_eur_m": 690,
+   "sources": [
+    "https://www.cinven.com/news-insights/cinven-to-acquire-taxact/"
+   ],
+   "notes": "Cinven bought TaxAct directly and combined with Drake under a new holding company (Taxwell). Recorded as an add-on."
+  },
+  {
+   "platform": "Arxada",
+   "target": "Troy Corporation",
+   "announced": "2021-11",
+   "seller": "Troy shareholders",
+   "ev_source_currency_amount": "",
+   "ev_eur_m": null,
+   "sources": [
+    "https://www.cinven.com/news-insights/arxada-and-troy-to-combine-creating-a-global-comprehensive-and-innovative-offering-in-microbial-control/"
+   ],
+   "notes": "Combination announced Nov 2021."
+  },
+  {
+   "platform": "Netceed (ETC Group)",
+   "target": "Amadys",
+   "announced": "2023-03",
+   "seller": "",
+   "ev_source_currency_amount": "",
+   "ev_eur_m": null,
+   "sources": [
+    "https://www.cinven.com/news-insights/etc-group-to-acquire-amadys/"
+   ],
+   "notes": ""
+  },
+  {
+   "platform": "Nitel",
+   "target": "Hypercore Networks",
+   "announced": "2022-06",
+   "seller": "",
+   "ev_source_currency_amount": "",
+   "ev_eur_m": null,
+   "sources": [
+    "https://www.cinven.com/news-insights/nitel-to-acquire-hypercore-networks/"
+   ],
+   "notes": ""
+  },
+  {
+   "platform": "Nitel",
+   "target": "WAN Dynamics",
+   "announced": "2024-03",
+   "seller": "",
+   "ev_source_currency_amount": "",
+   "ev_eur_m": null,
+   "sources": [
+    "https://www.cinven.com/news-insights/nitel-acquires-wan-dynamics/"
+   ],
+   "notes": ""
+  },
+  {
+   "platform": "Vitamin Well",
+   "target": "EMPWR",
+   "announced": "2026-07",
+   "seller": "",
+   "ev_source_currency_amount": "",
+   "ev_eur_m": null,
+   "sources": [
+    "https://www.cinven.com/news-insights/vitamin-well-group-empwr/"
+   ],
+   "notes": "Combination announced 2 Jul 2026."
+  },
+  {
+   "platform": "Viridium (2014 platform)",
+   "target": "Zurich Germany life portfolio",
+   "announced": "2022-06",
+   "seller": "Zurich",
+   "ev_source_currency_amount": "",
+   "ev_eur_m": null,
+   "sources": [
+    "https://www.cinven.com/news-insights/viridium-group-to-acquire-life-insurance-portfolio-from-zurich/"
+   ],
+   "notes": "Add-on to a pre-2021 platform; listed for completeness."
+  },
+  {
+   "platform": "Partner in Pet Food (2018 platform)",
+   "target": "Mispol; Werblinski",
+   "announced": "2021-07; 2021-10",
+   "seller": "",
+   "ev_source_currency_amount": "",
+   "ev_eur_m": null,
+   "sources": [
+    "https://www.cinven.com/news-insights/acquisition-of-polish-pet-food-manufacturer-mispol-by-partner-in-pet-food/",
+    "https://www.cinven.com/news-insights/acquisition-of-polish-pet-food-manufacturer-werblinski-by-partner-in-pet-food/"
+   ],
+   "notes": "Add-ons to a pre-2021 platform."
+  },
+  {
+   "platform": "RTB House (2019 platform)",
+   "target": "WhitePress",
+   "announced": "2021-02",
+   "seller": "",
+   "ev_source_currency_amount": "",
+   "ev_eur_m": null,
+   "sources": [
+    "https://www.cinven.com/news-insights/rtb-house-to-acquire-whitepress/"
+   ],
+   "notes": "Add-on to a pre-2021 platform."
+  },
+  {
+   "platform": "Barentz (2019 platform)",
+   "target": "Pestell Nutrition",
+   "announced": "2021-06",
+   "seller": "",
+   "ev_source_currency_amount": "",
+   "ev_eur_m": null,
+   "sources": [
+    "https://www.cinven.com/news-insights/barentz-acquires-pestell-nutrition-inc-in-north-america/"
+   ],
+   "notes": "Add-on to a pre-2021 platform."
+  }
+ ]
+}

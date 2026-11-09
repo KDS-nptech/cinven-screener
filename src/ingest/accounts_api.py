@@ -360,10 +360,10 @@ def pdf_rows(number: str, filing: dict, pdf_path: Path, fetched_at: str, text: s
 
 def scanned_rows(number: str, filing: dict, pdf_path: Path, fetched_at: str) -> tuple[list[dict], dict]:
     """Image-only PDF: targeted OCR plus the vision read of the P&L page (src.ingest.pdf_ocr)."""
-    from src.ingest.pdf_ocr import read_report, vision_to_pounds
+    from src.ingest.pdf_ocr import read_report, read_report_vision, vision_to_pounds
 
     made_up = (filing.get("description_values") or {}).get("made_up_date") or filing.get("date")
-    r = read_report(pdf_path)
+    r = read_report_vision(pdf_path) if os.environ.get("PDF_READER", "vision") == "vision" else read_report(pdf_path)
     vals: dict = {}
     parser = "ocr_none"
     if r.get("vision"):

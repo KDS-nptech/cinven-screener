@@ -1,0 +1,27 @@
+{
+  "computed_at": "2026-11-09T19:30:27+00:00",
+  "rows": 14539,
+  "llm": 60,
+  "keyword_prefilter_other": 0,
+  "no_website": 14479,
+  "pending_batch": 0,
+  "provider": "anthropic_haiku45+anthropic_haiku55",
+  "model": "claude-haiku-4-5+claude-haiku-5-5",
+  "vertical_counts": {
+    "null": 14479,
+    "business_services": 9,
+    "consumer": 8,
+    "financial_services": 3,
+    "healthcare": 4,
+    "industrials": 18,
+    "other": 15,
+    "tmt": 3
+  },
+  "confidence_counts": {
+    "null": 14479,
+    "high": 45,
+    "low": 14,
+    "medium": 1
+  },
+  "classifier_failed": 12
+}

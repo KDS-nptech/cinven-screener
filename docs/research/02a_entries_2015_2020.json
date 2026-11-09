@@ -1,0 +1,1405 @@
+{
+ "meta": {
+  "status": "v3 COMPLETE for the brief: 30 platform entries verified against the cinven.com press-release archive; EV sourced for 21 (14 of 18 core), the other 4 core EVs estimated with method and confidence; equity, revenue, EBITDA and headcount filled where published",
+  "written": "2026-11-09",
+  "window": "platform entries announced 2015-01-01 to 2020-12-31",
+  "fx_rates_used": {
+   "2015": {
+    "GBP_EUR": 1.38,
+    "USD_EUR": 0.9
+   },
+   "2016": {
+    "GBP_EUR": 1.22,
+    "USD_EUR": 0.9,
+    "PLN_EUR": 0.229
+   },
+   "2017": {
+    "GBP_EUR": 1.14,
+    "USD_EUR": 0.885,
+    "NOK_EUR": 0.107
+   },
+   "2018": {
+    "GBP_EUR": 1.13,
+    "USD_EUR": 0.847,
+    "SEK_EUR": 0.0975
+   },
+   "2019": {
+    "GBP_EUR": 1.14,
+    "USD_EUR": 0.893
+   },
+   "2020": {
+    "GBP_EUR": 1.125,
+    "USD_EUR": 0.876
+   }
+  },
+  "fund_notes": "Fund attribution from Cinven press releases: Fifth Fund investments numbered 9 (Ufinet, Jun 2014), 10 (NPS), 11 (Premium Credit), 12 (Labco), 13 (Tractel; Labco and Synlab counted together), 14 (ERGO Italia), 16 (Tinsa); Fifth Fund made 17 investments in total, so Kurt Geiger is 15th and Hotelbeds 17th. Sixth Fund: Chryso 4th, JLA 9th, Envirotainer 10th; Jaggaer confirmed Sixth (Cinven 2024 release); Barentz 'last' Sixth Fund deal (unquote); LGC first Seventh Fund deal (PE Insights); TKE and MasMovil Seventh (unquote). SFF: Miller and Compre confirmed by Cinven's SFF close release (Jul 2022, EUR 1.5B).",
+  "method": "Roster built from the cinven.com WP REST archive of every post Jun 2014 to Dec 2021 (raw/02a/wpjson), cross-checked against cinven.com portfolio pages (raw/02a/companies). Each entry's PR gives date, seller, headcount and sometimes EV or revenue; third-party EVs from unquote, CFNews, Reuters (via Yahoo and Inquirer), Bloomberg (via PYMNTS and Insurance Journal), PE Insights, PEI/Buyouts, Iberian Lawyer (Mergermarket), Real Deals. Where no EV is published a ~ estimate is given with method and confidence and excluded from the 'sourced only' statistics. FX at approximate annual averages listed in meta.fx_rates_used."
+ },
+ "entries": [
+  {
+   "name": "Premium Credit",
+   "sector_cinven": "Financial Services",
+   "sub_sector": "Insurance premium finance",
+   "hq_country": "UK",
+   "hq_city": "Epsom, Surrey",
+   "announced": "2015-01",
+   "closed": "2015-02",
+   "fund": "Fifth",
+   "deal_type": "secondary buyout",
+   "seller": "GTCR",
+   "ev_eur_m": 638,
+   "ev_source_currency_amount": "GBP 462M EV (Cinven PR 13 Jan 2015)",
+   "equity_eur_m": null,
+   "cinven_stake": "majority",
+   "co_investors": [],
+   "revenue_at_entry_eur_m": null,
+   "ebitda_at_entry_eur_m": null,
+   "headcount_at_entry": 300,
+   "founder_or_family_involved_at_entry": "no",
+   "lead_office": "London",
+   "outlier": false,
+   "outlier_reason": "",
+   "exit": {
+    "year": 2022,
+    "buyer": "TDR Capital",
+    "type": "secondary buyout"
+   },
+   "sources": [
+    "https://www.cinven.com/portfolio/premium-credit/",
+    "https://www.cinven.com/news-insights/cinven-to-acquire-premium-credit/"
+   ],
+   "notes": "Cinven PR 13 Jan 2015: EV GBP 462M, >300 employees, 2013 gross advances GBP 3.7B, seller GTCR, HQ Epsom. GBP 462M at 1.38 = EUR ~638M. cinven.com holding Feb 2015 to Nov 2022. Fifth Fund.",
+   "ev_estimate_eur_m": null,
+   "ev_estimate_method": "",
+   "ev_confidence": "high (stated by party or Cinven PR)"
+  },
+  {
+   "name": "Labco",
+   "sector_cinven": "Healthcare",
+   "sub_sector": "Clinical laboratory testing",
+   "hq_country": "France",
+   "hq_city": "Paris",
+   "announced": "2015-05",
+   "closed": "2015-08",
+   "fund": "Fifth",
+   "deal_type": "secondary buyout",
+   "seller": "consortium: 3i (17.22%), CIC Finance, TCR Capital, Nixen, Omnes Capital, ICG",
+   "ev_eur_m": 1200,
+   "ev_source_currency_amount": "EUR 1.2B EV (Cinven PR 28 May 2015)",
+   "equity_eur_m": null,
+   "cinven_stake": "majority",
+   "co_investors": [],
+   "revenue_at_entry_eur_m": 650,
+   "ebitda_at_entry_eur_m": 131,
+   "headcount_at_entry": 6000,
+   "founder_or_family_involved_at_entry": "unknown",
+   "lead_office": "London",
+   "outlier": false,
+   "outlier_reason": "",
+   "exit": {
+    "year": null,
+    "buyer": "merged into SYNLAB (2015)",
+    "type": "merger"
+   },
+   "sources": [
+    "https://www.cinven.com/portfolio/synlab/",
+    "https://www.cinven.com/news-insights/cinven-to-invest-in-labco-a-european-leader-in-clinical-diagnostics/",
+    "https://www.unquote.com/france/official-record/69306/3i-exits-labco-to-cinven-in-eur12bn-sbo"
+   ],
+   "notes": "Cinven PR 28 May 2015: EV EUR 1.2B, 2014 pro forma revenue ~EUR 650M, >6,000 employees, 160 labs. Chryso PR (2017) says Labco acquired Aug 2015 and merged with Synlab Oct 2015. Seller consortium per press (unquote), to confirm composition. unquote 28 May 2015: majority stake via Fifth Fund; 2014 EBITDA EUR 131M; EUR 700M of high-yield bonds outstanding; 3i received GBP 41M for 17.22%.",
+   "ev_estimate_eur_m": null,
+   "ev_estimate_method": "",
+   "ev_confidence": "high (stated by party or Cinven PR)"
+  },
+  {
+   "name": "SYNLAB",
+   "sector_cinven": "Healthcare",
+   "sub_sector": "Clinical laboratory testing",
+   "hq_country": "Germany",
+   "hq_city": "Augsburg",
+   "announced": "2015-06",
+   "closed": "2015-08",
+   "fund": "Fifth",
+   "deal_type": "secondary buyout",
+   "seller": "BC Partners",
+   "ev_eur_m": 1800,
+   "ev_source_currency_amount": "EUR 1.8B EV (unquote, estimate EUR 1.7 to 1.8B; Cinven PR undisclosed)",
+   "equity_eur_m": null,
+   "cinven_stake": "majority",
+   "co_investors": [],
+   "revenue_at_entry_eur_m": 756,
+   "ebitda_at_entry_eur_m": null,
+   "headcount_at_entry": 7000,
+   "founder_or_family_involved_at_entry": "no",
+   "lead_office": "Frankfurt",
+   "outlier": false,
+   "outlier_reason": "",
+   "exit": {
+    "year": 2021,
+    "buyer": "IPO Frankfurt",
+    "type": "IPO"
+   },
+   "sources": [
+    "https://www.cinven.com/portfolio/synlab/",
+    "https://www.cinven.com/news-insights/cinven-to-acquire-the-synlab-group/",
+    "https://www.unquote.com/dach/official-record/75767/cinven-acquires-bc-partners-synlab-to-merge-it-with-labco"
+   ],
+   "notes": "Cinven PR 25 Jun 2015: majority stake, 2014 sales ~EUR 756M, >7,000 employees, 300 locations, 52 acquisitions since 2011, HQ Augsburg; consideration undisclosed. unquote: EV EUR 1.8B (2.7x for BC Partners), 13th Fifth Fund deal. Merged with Labco to form SYNLAB.",
+   "ev_estimate_eur_m": null,
+   "ev_estimate_method": "",
+   "ev_confidence": "high (stated by party or Cinven PR)"
+  },
+  {
+   "name": "Tractel",
+   "sector_cinven": "Industrials",
+   "sub_sector": "Working-at-height equipment",
+   "hq_country": "Luxembourg",
+   "hq_city": "Luxembourg (ops Saint-Hilaire-sous-Romilly, France)",
+   "announced": "2015-07",
+   "closed": "2015-10",
+   "fund": "Fifth",
+   "deal_type": "secondary buyout",
+   "seller": "LBO France (80%) and management",
+   "ev_eur_m": 362,
+   "ev_source_currency_amount": "EUR 350M to 375M (CFNews, 3 Aug 2015; midpoint used)",
+   "equity_eur_m": null,
+   "cinven_stake": "majority",
+   "co_investors": [],
+   "revenue_at_entry_eur_m": 159,
+   "ebitda_at_entry_eur_m": null,
+   "headcount_at_entry": 800,
+   "founder_or_family_involved_at_entry": "no",
+   "lead_office": "Paris",
+   "outlier": false,
+   "outlier_reason": "",
+   "exit": {
+    "year": 2022,
+    "buyer": "Alimak Group",
+    "type": "trade sale"
+   },
+   "sources": [
+    "https://www.cinven.com/portfolio/tractel/",
+    "https://www.cinven.com/news-insights/cinven-to-acquire-tractel/",
+    "https://www.unquote.com/france/official-record/87226/lbo-france-gets-2x-on-tractel-exit-to-cinven",
+    "https://www.cfnews.net/L-actualite/LBO/Operations/LBO-Quinte/Tractel-s-eleve-encore-203615"
+   ],
+   "notes": "Cinven PR 31 Jul 2015: consideration undisclosed, 2015 pro forma revenue EUR 159M, ~800 employees, HQ Luxembourg, 13th Fifth Fund investment. CFNews: 'pour un montant compris entre 350 M€ et 375 M€', revenue ~EUR 170M, fifth LBO, LBO France exits after eight years (unquote: LBO France held 80%, ~2x; its 2007 entry valued ~EUR 310M). Exit Nov 2022 to Alimak for ~EUR 500M (unquote).",
+   "ev_estimate_eur_m": null,
+   "ev_estimate_method": "",
+   "ev_confidence": "medium (CFNews range)"
+  },
+  {
+   "name": "Eurovita (ex ERGO Italia)",
+   "sector_cinven": "Financial Services",
+   "sub_sector": "Life insurance consolidation",
+   "hq_country": "Italy",
+   "hq_city": "Milan",
+   "announced": "2015-11",
+   "closed": "2016-06",
+   "fund": "Fifth",
+   "deal_type": "corporate carve-out",
+   "seller": "Munich Re (ERGO)",
+   "ev_eur_m": null,
+   "ev_source_currency_amount": "",
+   "equity_eur_m": null,
+   "cinven_stake": "majority",
+   "co_investors": [],
+   "revenue_at_entry_eur_m": null,
+   "ebitda_at_entry_eur_m": null,
+   "headcount_at_entry": 280,
+   "founder_or_family_involved_at_entry": "no",
+   "lead_office": "London",
+   "outlier": true,
+   "outlier_reason": "Balance-sheet life insurance consolidation platform (Fifth Fund), structurally the same as the later SFF deals; EV not meaningful",
+   "exit": {
+    "year": 2023,
+    "buyer": "administration (Italian regulator)",
+    "type": "failure"
+   },
+   "sources": [
+    "https://www.cinven.com/",
+    "https://www.cinven.com/news-insights/cinven-to-invest-in-ergo-italia/",
+    "https://www.cinven.com/news-insights/cinven-completes-acquisition-of-ergo-italia/"
+   ],
+   "notes": "Cinven PR 23 Nov 2015: agreed to acquire ERGO Italia from ERGO Group (Munich Re), undisclosed; ERGO Previdenza EUR 5.1B gross reserves, net income EUR 38M; ~280 employees; Fifth Cinven Fund. Completed 30 Jun 2016. Renamed Eurovita after add-ons (Old Mutual Wealth Italy 2017, Eurovita Assicurazioni 2017, Pramerica Life 2019). Placed in administration by IVASS in 2023. Cinven PR: 'the 14th investment from Cinven's Fifth Fund'.",
+   "ev_estimate_eur_m": null,
+   "ev_estimate_method": "not estimated: insurance balance sheet; outlier",
+   "ev_confidence": "n/a"
+  },
+  {
+   "name": "Kurt Geiger",
+   "sector_cinven": "Consumer",
+   "sub_sector": "Footwear retail",
+   "hq_country": "UK",
+   "hq_city": "London",
+   "announced": "2015-12",
+   "closed": "2016-02",
+   "fund": "Fifth",
+   "deal_type": "secondary buyout",
+   "seller": "Sycamore Partners",
+   "ev_eur_m": 338,
+   "ev_source_currency_amount": "GBP 245M including debt, ~8x trailing EBITDA (Reuters, source familiar)",
+   "equity_eur_m": null,
+   "cinven_stake": "majority",
+   "co_investors": [],
+   "revenue_at_entry_eur_m": 359,
+   "ebitda_at_entry_eur_m": null,
+   "headcount_at_entry": 1700,
+   "founder_or_family_involved_at_entry": "no",
+   "lead_office": "London",
+   "outlier": false,
+   "outlier_reason": "",
+   "exit": {
+    "year": 2025,
+    "buyer": "Steve Madden",
+    "type": "trade sale"
+   },
+   "sources": [
+    "https://www.cinven.com/portfolio/kurt-geiger/",
+    "https://www.cinven.com/news-insights/cinven-to-acquire-kurt-geiger/",
+    "https://uk.finance.yahoo.com/news/cinven-buy-british-shoe-company-155515543.html"
+   ],
+   "notes": "Cinven PR 14 Dec 2015: undisclosed sum, FY2014 sales GBP 260M, ~1,700 employees, >80 stores and 240 concessions. Reuters: GBP 245M including debt, ~8x trailing EBITDA (implies EBITDA ~GBP 30M). GBP at 1.38 (2015): EV EUR ~338M, revenue EUR ~359M. Fifth Fund. Fifth Fund (15th investment, inferred: ERGO Italia was 14th and Tinsa 16th per Cinven PRs).",
+   "ev_estimate_eur_m": null,
+   "ev_estimate_method": "",
+   "ev_confidence": "medium (press, sources familiar or Mergermarket)"
+  },
+  {
+   "name": "Tinsa (now Accumin)",
+   "sector_cinven": "Business Services",
+   "sub_sector": "Property valuation and appraisal",
+   "hq_country": "Spain",
+   "hq_city": "Madrid",
+   "announced": "2016-04",
+   "closed": "2016-08",
+   "fund": "Fifth",
+   "deal_type": "secondary buyout",
+   "seller": "Advent International",
+   "ev_eur_m": 350,
+   "ev_source_currency_amount": "EUR 350M (Mergermarket via Iberian Lawyer)",
+   "equity_eur_m": null,
+   "cinven_stake": "majority",
+   "co_investors": [],
+   "revenue_at_entry_eur_m": null,
+   "ebitda_at_entry_eur_m": null,
+   "headcount_at_entry": 580,
+   "founder_or_family_involved_at_entry": "no",
+   "lead_office": "Madrid",
+   "outlier": false,
+   "outlier_reason": "",
+   "exit": {
+    "year": null,
+    "buyer": "",
+    "type": ""
+   },
+   "sources": [
+    "https://www.cinven.com/portfolio/accumin/",
+    "https://www.cinven.com/news-insights/cinven-to-acquire-tinsa/",
+    "https://iberianlawyer.com/uria-and-clifford-chance-advise-on-350m-tinsa-deal/"
+   ],
+   "notes": "Cinven PR 6 Apr 2016: undisclosed, 580 employees plus ~2,000 valuation experts, 300,000 valuations a year, >25 countries. Iberian Lawyer citing Mergermarket: EUR 350M. First Sixth Fund deal (Sixth closed Jun 2016; unquote calls NewDay the second Sixth Fund deal). Cinven PR: 'Tinsa represents the 16th investment from Cinven's Fifth Fund'.",
+   "ev_estimate_eur_m": null,
+   "ev_estimate_method": "",
+   "ev_confidence": "medium (press, sources familiar or Mergermarket)"
+  },
+  {
+   "name": "Hotelbeds (now HBX Group)",
+   "sector_cinven": "Business Services",
+   "sub_sector": "Travel distribution (bedbank)",
+   "hq_country": "Spain",
+   "hq_city": "Palma de Mallorca",
+   "announced": "2016-04",
+   "closed": "2016-09",
+   "fund": "Fifth",
+   "deal_type": "corporate carve-out",
+   "seller": "TUI Group",
+   "ev_eur_m": 1165,
+   "ev_source_currency_amount": "EUR 1.165B EV (Cinven and CPPIB PR 28 Apr 2016)",
+   "equity_eur_m": null,
+   "cinven_stake": "co-control",
+   "co_investors": [
+    "CPP Investments (CPPIB)"
+   ],
+   "revenue_at_entry_eur_m": 1000,
+   "ebitda_at_entry_eur_m": 69,
+   "headcount_at_entry": 6150,
+   "founder_or_family_involved_at_entry": "no",
+   "lead_office": "London",
+   "outlier": false,
+   "outlier_reason": "",
+   "exit": {
+    "year": 2025,
+    "buyer": "IPO Madrid",
+    "type": "IPO"
+   },
+   "sources": [
+    "https://www.cinven.com/portfolio/hbx-group/",
+    "https://www.cinven.com/news-insights/cinven-and-canada-pension-plan-investment-board-to-acquire-hotelbeds-group/",
+    "https://www.unquote.com/southern-europe/official-record/3000041/cinven-buys-hotelbeds-for-eur12bn",
+    "https://www.cppinvestments.com/wp-content/uploads/migrated/documents/896/CPPIB_-_Hotelbeds_-_28_April_2016_0yo5Dv7.pdf"
+   ],
+   "notes": "Cinven and CPPIB PR 28 Apr 2016: 100% with management from TUI Group, EV EUR 1.165B, 6,150 employees, 75,000 hotels. Carve-out from TUI. Cinven and CPPIB joint; Cinven led the process (capital-riesgo.es reported Cinven bid ~EUR 1.3B vs EQT). Fund inferred as Fifth (17th and last Fifth Fund deal): Tinsa was the 16th Fifth Fund investment (Apr 2016), the Fifth Fund made 17 investments in total (Cinven Jun 2016 and May 2019 releases), and Chryso was the 4th Sixth Fund deal after Bioclinica, NewDay (2nd per unquote) and Allegro. Medium confidence. unquote 28 Apr 2016: EV EUR 1.16B, 2015 turnover reportedly EUR 1B with EUR 69M EBITDA, all-senior debt from HSBC and Morgan Stanley, Cinven co-led alongside CPPIB, management minority; EQT among interested parties. CPPIB release: its direct PE programme typically invests on a 50/50 equity basis.",
+   "ev_estimate_eur_m": null,
+   "ev_estimate_method": "",
+   "ev_confidence": "high (stated by party or Cinven PR)"
+  },
+  {
+   "name": "Bioclinica (now Clario)",
+   "sector_cinven": "Healthcare",
+   "sub_sector": "Clinical trial technology and services",
+   "hq_country": "USA",
+   "hq_city": "Doylestown, Pennsylvania",
+   "announced": "2016-08",
+   "closed": "2016-10",
+   "fund": "Sixth",
+   "deal_type": "secondary buyout",
+   "seller": "JLL Partners and Water Street Healthcare Partners",
+   "ev_eur_m": 1260,
+   "ev_source_currency_amount": "USD 1.4B including debt (Reuters, sources, via Philadelphia Inquirer)",
+   "equity_eur_m": null,
+   "cinven_stake": "majority",
+   "co_investors": [],
+   "revenue_at_entry_eur_m": null,
+   "ebitda_at_entry_eur_m": null,
+   "headcount_at_entry": null,
+   "founder_or_family_involved_at_entry": "no",
+   "lead_office": "New York",
+   "outlier": true,
+   "outlier_reason": "US-headquartered company led from Cinven New York office",
+   "exit": {
+    "year": null,
+    "buyer": "",
+    "type": ""
+   },
+   "sources": [
+    "https://www.cinven.com/portfolio/clario/",
+    "https://www.cinven.com/news-insights/cinven-to-acquire-bioclinica/",
+    "https://www.inquirer.com/philly/business/pharma/20160824_Private_equity_firm_buys_Bioclinical_in_Doylestown_for_a_reported__1_4b.html"
+   ],
+   "notes": "Cinven PR 23 Aug 2016: consideration undisclosed, >400 clients, HQ Pennsylvania, sellers Water Street and JLL Partners. Reuters (via Inquirer): ~USD 1.4B including debt. USD at 0.90 (2016): EUR ~1,260M. US deal sourced via Cinven healthcare team and US presence; merged with ERT in Dec 2020 to form Clario (Nordic Capital, Novo). Sixth Fund. First Sixth Cinven Fund investment (inferred from the Fifth Fund count of 17 and NewDay being the second Sixth Fund deal).",
+   "ev_estimate_eur_m": null,
+   "ev_estimate_method": "",
+   "ev_confidence": "medium (press, sources familiar or Mergermarket)"
+  },
+  {
+   "name": "NewDay",
+   "sector_cinven": "Financial Services",
+   "sub_sector": "Consumer credit cards",
+   "hq_country": "UK",
+   "hq_city": "London",
+   "announced": "2016-10",
+   "closed": "2017-01",
+   "fund": "Sixth",
+   "deal_type": "secondary buyout",
+   "seller": "Varde Partners",
+   "ev_eur_m": 1220,
+   "ev_source_currency_amount": "~GBP 1B (unquote, 'in the region of GBP 1bn'); GBP 500M debt facility",
+   "equity_eur_m": null,
+   "cinven_stake": "co-control",
+   "co_investors": [
+    "CVC Capital Partners"
+   ],
+   "revenue_at_entry_eur_m": null,
+   "ebitda_at_entry_eur_m": null,
+   "headcount_at_entry": 800,
+   "founder_or_family_involved_at_entry": "no",
+   "lead_office": "London",
+   "outlier": false,
+   "outlier_reason": "",
+   "exit": {
+    "year": null,
+    "buyer": "",
+    "type": ""
+   },
+   "sources": [
+    "https://www.cinven.com/portfolio/newday/",
+    "https://www.cinven.com/news-insights/cinven-and-cvc-to-acquire-newday/",
+    "https://www.unquote.com/uk/official-record/3002226/cinven-and-cvc-acquire-newday-in-gbp1bn-deal"
+   ],
+   "notes": "Cinven and CVC PR 11 Oct 2016: consideration undisclosed, >5M customers, GBP 1.6B receivables, >800 employees, HQ London. unquote: values business ~GBP 1B, GBP 500M debt facility, second Sixth Fund deal. GBP at 1.22 (2016): EUR ~1,220M. Stake split not disclosed (understood 50:50).",
+   "ev_estimate_eur_m": null,
+   "ev_estimate_method": "",
+   "ev_confidence": "medium (press, sources familiar or Mergermarket)"
+  },
+  {
+   "name": "Allegro",
+   "sector_cinven": "Consumer",
+   "sub_sector": "Online marketplace",
+   "hq_country": "Poland",
+   "hq_city": "Poznan",
+   "announced": "2016-10",
+   "closed": "2017-01",
+   "fund": "Sixth",
+   "deal_type": "corporate carve-out",
+   "seller": "Naspers",
+   "ev_eur_m": 2928,
+   "ev_source_currency_amount": "USD 3.253B (Cinven, Permira, Mid Europa PR 14 Oct 2016)",
+   "equity_eur_m": null,
+   "cinven_stake": "co-control",
+   "co_investors": [
+    "Permira",
+    "Mid Europa Partners"
+   ],
+   "revenue_at_entry_eur_m": null,
+   "ebitda_at_entry_eur_m": null,
+   "headcount_at_entry": 1275,
+   "founder_or_family_involved_at_entry": "no",
+   "lead_office": "London",
+   "outlier": false,
+   "outlier_reason": "",
+   "exit": {
+    "year": 2020,
+    "buyer": "IPO Warsaw",
+    "type": "IPO"
+   },
+   "sources": [
+    "https://www.cinven.com/portfolio/allegro/",
+    "https://www.cinven.com/news-insights/cinven-permira-and-mid-europa-to-acquire-allegro/",
+    "https://www.unquote.com/cee/official-record/3002275/cinven-permira-and-mid-europa-in-usd325bn-allegro-buyout"
+   ],
+   "notes": "PR 14 Oct 2016: USD 3.253B from Naspers, 1,275 employees, 20M registered users. USD at 0.90 (2016): EUR ~2,928M. Three-party consortium with equal-ish stakes; Cinven named first. Flagged below as club deal check: Cinven was a co-lead (not minority), so kept in core. Sixth Fund. unquote 17 Oct 2016: Cinven and Permira each hold a larger stake than Mid Europa; senior and junior debt tranches. Treated as co-control (co-lead), kept in core.",
+   "ev_estimate_eur_m": null,
+   "ev_estimate_method": "",
+   "ev_confidence": "high (stated by party or Cinven PR)"
+  },
+  {
+   "name": "Chryso",
+   "sector_cinven": "Industrials",
+   "sub_sector": "Construction chemicals",
+   "hq_country": "France",
+   "hq_city": "Issy-les-Moulineaux",
+   "announced": "2017-03",
+   "closed": "2017-06",
+   "fund": "Sixth",
+   "deal_type": "secondary buyout",
+   "seller": "LBO France",
+   "ev_eur_m": null,
+   "ev_source_currency_amount": "",
+   "equity_eur_m": null,
+   "cinven_stake": "majority",
+   "co_investors": [],
+   "revenue_at_entry_eur_m": 300,
+   "ebitda_at_entry_eur_m": 50,
+   "headcount_at_entry": 1130,
+   "founder_or_family_involved_at_entry": "no",
+   "lead_office": "Paris",
+   "outlier": false,
+   "outlier_reason": "",
+   "exit": {
+    "year": 2021,
+    "buyer": "Saint-Gobain",
+    "type": "trade sale"
+   },
+   "sources": [
+    "https://www.cinven.com/portfolio/chryso/",
+    "https://www.cinven.com/news-insights/cinven-enters-into-exclusive-negotiations-to-acquire-chryso/",
+    "https://www.unquote.com/france/official-record/3004266/cinven-to-acquire-chryso-from-lbo-france"
+   ],
+   "notes": "Cinven PR 24 Mar 2017 (exclusive negotiations): undisclosed, ~1,130 employees, 29 plants. unquote: 2016 sales EUR 300M, EBITDA EUR 50M, EUR 270M TLB plus EUR 50M RCF at 5.25x; LBO France paid EUR 285M in 2014. EV not disclosed; estimate ~EUR 500M (medium confidence) from 5.25x leverage at ~50% LTV typical for 2017 and press talk of ~EUR 500M; not used in stats. Exit Sep 2021 to Saint-Gobain. Sixth Fund.",
+   "ev_estimate_eur_m": 500,
+   "ev_estimate_method": "~EUR 500M: unquote reports EUR 270M TLB at 5.25x EBITDA of EUR 50M (debt ~EUR 262M); assuming the ~50% debt share typical of 2017 French mid-cap LBOs gives EV ~EUR 500M to 550M (~10x to 11x EBITDA); LBO France paid EUR 285M in 2014 and reported strong EBITDA growth",
+   "ev_confidence": "medium (derived from reported leverage)"
+  },
+  {
+   "name": "STADA Arzneimittel",
+   "sector_cinven": "Healthcare",
+   "sub_sector": "Generics and consumer health pharma",
+   "hq_country": "Germany",
+   "hq_city": "Bad Vilbel",
+   "announced": "2017-04",
+   "closed": "2017-08",
+   "fund": "Sixth",
+   "deal_type": "public-to-private",
+   "seller": "public shareholders",
+   "ev_eur_m": 5600,
+   "ev_source_currency_amount": "EUR 5.6B EV, EUR 4.1B equity at EUR 66.25 per share (unquote)",
+   "equity_eur_m": 4100,
+   "cinven_stake": "co-control",
+   "co_investors": [
+    "Bain Capital"
+   ],
+   "revenue_at_entry_eur_m": 2280,
+   "ebitda_at_entry_eur_m": 405,
+   "headcount_at_entry": 10000,
+   "founder_or_family_involved_at_entry": "no",
+   "lead_office": "Frankfurt",
+   "outlier": true,
+   "outlier_reason": "EV above EUR 5B and 50:50 club deal",
+   "exit": {
+    "year": null,
+    "buyer": "",
+    "type": ""
+   },
+   "sources": [
+    "https://www.cinven.com/portfolio/stada/",
+    "https://www.cinven.com/news-insights/successful-takeover-of-stada-by-bain-and-cinven/",
+    "https://www.unquote.com/dach/official-record/3006238/bain-and-cinven-takeover-of-stada-gets-over-the-line"
+   ],
+   "notes": "Second offer EUR 66.25 per share (EUR 65.53 plus EUR 0.72 dividend); equity EUR 4.1B, EV EUR 5.6B, debt EUR 2.8B (unquote 18 Aug 2017); Nidda Healthcare holding reached >63% acceptance on 16 Aug 2017. H1 2017 sales EUR 1.14B and adj. EBITDA EUR 202.3M, annualised here to ~EUR 2.28B and ~EUR 405M (2016 reported sales EUR 2.14B). 10,000 employees. First offer announced 10 Apr 2017 (failed Jun 2017), relaunched Jul 2017. Sixth Fund, 50:50 with Bain.",
+   "ev_estimate_eur_m": null,
+   "ev_estimate_method": "",
+   "ev_confidence": "medium (press, sources familiar or Mergermarket)"
+  },
+  {
+   "name": "Planasa",
+   "sector_cinven": "Consumer",
+   "sub_sector": "Berry genetics and fresh produce",
+   "hq_country": "Spain",
+   "hq_city": "Valtierra, Navarra",
+   "announced": "2017-10",
+   "closed": "2018-01",
+   "fund": "Sixth",
+   "deal_type": "primary (founder or family)",
+   "seller": "Darbonne family",
+   "ev_eur_m": 450,
+   "ev_source_currency_amount": "~EUR 450M consideration (Cinven PR 30 Oct 2017)",
+   "equity_eur_m": null,
+   "cinven_stake": "majority",
+   "co_investors": [],
+   "revenue_at_entry_eur_m": null,
+   "ebitda_at_entry_eur_m": null,
+   "headcount_at_entry": 2080,
+   "founder_or_family_involved_at_entry": "yes",
+   "lead_office": "Madrid",
+   "outlier": false,
+   "outlier_reason": "",
+   "exit": {
+    "year": 2024,
+    "buyer": "EW Group",
+    "type": "trade sale"
+   },
+   "sources": [
+    "https://www.cinven.com/portfolio/planasa/",
+    "https://www.cinven.com/news-insights/cinven-to-acquire-a-majority-stake-in-planasa/"
+   ],
+   "notes": "Cinven PR 30 Oct 2017: majority stake for ~EUR 450M; CEO and owner Alexandre Darbonne keeps a significant shareholding (five generations of family ownership); 2,080 employees, 12 production sites. Primary deal originated by Iberia and Consumer teams. Sixth Fund.",
+   "ev_estimate_eur_m": null,
+   "ev_estimate_method": "",
+   "ev_confidence": "high (stated by party or Cinven PR)"
+  },
+  {
+   "name": "Partner in Pet Food (PPF)",
+   "sector_cinven": "Consumer",
+   "sub_sector": "Private-label pet food",
+   "hq_country": "Hungary",
+   "hq_city": "Budapest",
+   "announced": "2018-04",
+   "closed": "2018-07",
+   "fund": "Sixth",
+   "deal_type": "secondary buyout",
+   "seller": "Pamplona Capital Management",
+   "ev_eur_m": null,
+   "ev_source_currency_amount": "",
+   "equity_eur_m": null,
+   "cinven_stake": "majority",
+   "co_investors": [],
+   "revenue_at_entry_eur_m": null,
+   "ebitda_at_entry_eur_m": null,
+   "headcount_at_entry": 1400,
+   "founder_or_family_involved_at_entry": "no",
+   "lead_office": "London",
+   "outlier": false,
+   "outlier_reason": "",
+   "exit": {
+    "year": null,
+    "buyer": "",
+    "type": ""
+   },
+   "sources": [
+    "https://www.cinven.com/portfolio/ppf/",
+    "https://www.cinven.com/news-insights/cinven-to-acquire-partner-in-pet-food/",
+    "https://www.unquote.com/cee/official-record/3009662/cinven-acquires-partner-in-pet-food-from-pamplona"
+   ],
+   "notes": "Cinven PR 26 Apr 2018: undisclosed, >1,400 employees, nine plants, 450,000 tonnes, 38 countries. unquote: Sixth Fund; Pamplona paid EUR 315M EV in Apr 2015 (Advent paid EUR 188M in 2011). Cinven EV undisclosed; estimate ~EUR 450M to 500M (low confidence) from Pamplona 2015 EV plus growth; not used in stats.",
+   "ev_estimate_eur_m": 475,
+   "ev_estimate_method": "~EUR 450M to 500M: Pamplona paid EUR 315M EV in Apr 2015 (unquote); PPF reported 'dynamic revenue growth over the past five years' (Cinven PR) and the 2018 process drew multiple PE bidders; 1.4x to 1.6x uplift on the 2015 EV over three years",
+   "ev_confidence": "low (proxy from prior transaction)"
+  },
+  {
+   "name": "JLA",
+   "sector_cinven": "Business Services",
+   "sub_sector": "Critical asset supply and service (laundry, catering, HVAC)",
+   "hq_country": "UK",
+   "hq_city": "Ripponden, West Yorkshire",
+   "announced": "2018-05",
+   "closed": "2018-08",
+   "fund": "Sixth",
+   "deal_type": "secondary buyout",
+   "seller": "Hg",
+   "ev_eur_m": 680,
+   "ev_source_currency_amount": ">GBP 600M (unquote understands); marketed on ~GBP 47M EBITDA",
+   "equity_eur_m": null,
+   "cinven_stake": "majority",
+   "co_investors": [],
+   "revenue_at_entry_eur_m": null,
+   "ebitda_at_entry_eur_m": 53,
+   "headcount_at_entry": 900,
+   "founder_or_family_involved_at_entry": "no",
+   "lead_office": "London",
+   "outlier": false,
+   "outlier_reason": "",
+   "exit": {
+    "year": null,
+    "buyer": "",
+    "type": ""
+   },
+   "sources": [
+    "https://www.cinven.com/portfolio/jla/",
+    "https://www.cinven.com/news-insights/cinven-to-acquire-jla/",
+    "https://www.unquote.com/uk/official-record/3009903/hg-reaps-49x-on-sale-of-jla-to-cinven"
+   ],
+   "notes": "Cinven PR 14 May 2018: undisclosed, ~900 employees, >25,000 SME customers, 16 acquisitions in five years. unquote: valued at more than GBP 600M, marketed on ~GBP 47M EBITDA (~13x), Hg 4.9x and 26% IRR, Hg stake 62% at exit. GBP at 1.13 (2018): EV EUR ~680M (floor), EBITDA EUR ~53M. Sixth Fund.",
+   "ev_estimate_eur_m": null,
+   "ev_estimate_method": "",
+   "ev_confidence": "medium (press, sources familiar or Mergermarket)"
+  },
+  {
+   "name": "Ufinet International I",
+   "sector_cinven": "TMT",
+   "sub_sector": "Fibre infrastructure (Latin America)",
+   "hq_country": "Spain",
+   "hq_city": "Madrid",
+   "announced": "2018-05",
+   "closed": "2018-07",
+   "fund": "Sixth",
+   "deal_type": "other",
+   "seller": "Fifth Cinven Fund (Ufinet Group split)",
+   "ev_eur_m": null,
+   "ev_source_currency_amount": "",
+   "equity_eur_m": null,
+   "cinven_stake": "majority",
+   "co_investors": [
+    "Enel (21% minority, EUR 150M, Jun 2018)"
+   ],
+   "revenue_at_entry_eur_m": null,
+   "ebitda_at_entry_eur_m": null,
+   "headcount_at_entry": 900,
+   "founder_or_family_involved_at_entry": "no",
+   "lead_office": "Madrid",
+   "outlier": true,
+   "outlier_reason": "Fund-to-fund continuation: Sixth Fund bought the LatAm business while Fifth Fund sold Ufinet Spain to Antin",
+   "exit": {
+    "year": 2022,
+    "buyer": "Seventh Cinven Fund (Ufinet International II)",
+    "type": "continuation"
+   },
+   "sources": [
+    "https://www.cinven.com/portfolio/ufinet-international-i/",
+    "https://www.cinven.com/portfolio/ufinet-international/",
+    "https://www.cinven.com/news-insights/cinven-to-acquire-ufinet-international/",
+    "https://www.cinven.com/news-insights/cinven-fund-5-to-sell-ufinet-group/",
+    "https://www.cinven.com/news-insights/ufinet-international-agrees-strategic-partnership-with-minority-investor-enel/",
+    "https://www.privsource.com/acquisitions/deal/gaSNZW",
+    "https://www.unquote.com/southern-europe/official-record/3009906/cinven-exits-ufinet-spain-retains-ufinet-international"
+   ],
+   "notes": "Cinven PRs 14 May 2018: Fifth Fund sells Ufinet Group (Spain to Antin, International to Sixth Fund), undisclosed, group sale generates >EUR 1.1B capital gain; Ufinet International >900 employees, 14 countries, 49,200 km fibre; HQ Madrid, LatAm operations. Enel took a minority (Jun 2018). Fund-to-fund continuation, so flagged. Enel PR (Jun 2018, cinven.com): post-completion Cinven retains 79%, Enel 21%; privsource reports Enel paid EUR 150M for 21%, implying ~EUR 715M equity value (derived, medium confidence). 8th Sixth Fund investment (JLA was 9th). unquote 14 May 2018: Ufinet Spain sale to Antin understood at ~EUR 2B; Fifth Fund capital gain EUR 1.1B, IRR 61%; Fifth Fund bought the whole group for EUR 510M in Jun 2014.",
+   "ev_estimate_eur_m": 900,
+   "ev_estimate_method": "~EUR 900M: Enel paid EUR 150M for 21% (privsource), implying ~EUR 715M equity; with modest infrastructure leverage (~2x to 3x on EBITDA of ~EUR 60M to 80M) EV ~EUR 850M to 950M",
+   "ev_confidence": "low (derived from minority stake price)"
+  },
+  {
+   "name": "Envirotainer",
+   "sector_cinven": "Business Services",
+   "sub_sector": "Cold-chain container leasing for pharma",
+   "hq_country": "Sweden",
+   "hq_city": "Stockholm",
+   "announced": "2018-07",
+   "closed": "2018-09",
+   "fund": "Sixth",
+   "deal_type": "secondary buyout",
+   "seller": "AAC Capital Partners (with Armada Mezzanine)",
+   "ev_eur_m": 1000,
+   "ev_source_currency_amount": ">EUR 1B ('said to be worth more than EUR 1bn', Real Deals 12 Jul 2018; floor used); JP Morgan marketed at ~20x SEK 725M 2018 EBITDA (unquote)",
+   "equity_eur_m": null,
+   "cinven_stake": "majority",
+   "co_investors": [
+    "Novo Holdings (24.9%, later in 2018)"
+   ],
+   "revenue_at_entry_eur_m": null,
+   "ebitda_at_entry_eur_m": 71,
+   "headcount_at_entry": 300,
+   "founder_or_family_involved_at_entry": "no",
+   "lead_office": "London",
+   "outlier": false,
+   "outlier_reason": "",
+   "exit": {
+    "year": 2022,
+    "buyer": "EQT and Mubadala",
+    "type": "secondary buyout"
+   },
+   "sources": [
+    "https://www.cinven.com/portfolio/envirotainer/",
+    "https://www.cinven.com/news-insights/cinven-to-acquire-envirotainer/",
+    "https://www.unquote.com/nordics/official-record/3010852/cinven-buys-envirotainer",
+    "https://www.unquote.com/nordics/official-record/3011815/novo-takes-249-of-cinvens-envirotainer",
+    "https://realdeals.eu.com/article/cinven-aquires-air-freighting-firm-envirotainer-for-over-e1bn"
+   ],
+   "notes": "Cinven PR 12 Jul 2018: undisclosed, ~300 employees, ~600 customers, >5,500 containers, 10th Sixth Fund investment. unquote: seller AAC Capital after eight years; marketed on 2018 EBITDA SEK 725M with JP Morgan targeting ~20x (would imply ~SEK 14.5B, ~EUR 1.4B, unconfirmed); Novo Holdings later took 24.9%. SEK at 0.0975 (2018): EBITDA EUR ~71M. EV estimate ~EUR 1.0B to 1.4B (low confidence); not used in stats. Exit 2022 to EQT and Mubadala. Real Deals: deal 'said to be worth more than EUR 1bn'; EUR 1,000M used as a floor. Exit Jun 2022 to EQT and Mubadala at EUR 2.8B (unquote).",
+   "ev_estimate_eur_m": null,
+   "ev_estimate_method": "",
+   "ev_confidence": "medium-low (press, unattributed; floor value)"
+  },
+  {
+   "name": "Viridium Group (Sixth Fund re-acquisition with Generali Leben)",
+   "sector_cinven": "Financial Services",
+   "sub_sector": "Life insurance consolidation (closed books)",
+   "hq_country": "Germany",
+   "hq_city": "Neu-Isenburg",
+   "announced": "2018-07",
+   "closed": "2019-04",
+   "fund": "Sixth",
+   "deal_type": "other",
+   "seller": "Fifth Cinven Fund (plus Generali Deutschland for Generali Leben)",
+   "ev_eur_m": null,
+   "ev_source_currency_amount": "undisclosed; Generali Leben add-on priced at EUR 1.9B for 89.9% (Generali)",
+   "equity_eur_m": null,
+   "cinven_stake": "majority",
+   "co_investors": [
+    "Hannover Re (minority)"
+   ],
+   "revenue_at_entry_eur_m": null,
+   "ebitda_at_entry_eur_m": null,
+   "headcount_at_entry": null,
+   "founder_or_family_involved_at_entry": "no",
+   "lead_office": "Frankfurt",
+   "outlier": true,
+   "outlier_reason": "Fund-to-fund continuation (Fifth to Sixth) combined with a EUR 1.9B insurance add-on; balance-sheet financial, like the SFF deals",
+   "exit": {
+    "year": 2025,
+    "buyer": "Allianz, BlackRock, T&D consortium",
+    "type": "trade sale"
+   },
+   "sources": [
+    "https://www.cinven.com/news-insights/cinven-to-acquire-and-combine-viridium-group-and-generali-lebensversicherung-ag/",
+    "https://www.cinven.com/news-insights/cinven-fund-5-to-sell-specialist-life-insurance-provider-viridium-group/",
+    "https://www.cinven.com/portfolio/viridium-gruppe/"
+   ],
+   "notes": "PRs 13 Jul 2018: Sixth Fund buys Viridium from Fifth Fund (Fifth entered Mar 2014 at ~EUR 300M EV) and funds Viridium's acquisition of Generali Leben (c. 4M policies, EUR 40B AuM); combined c. 5M policies, EUR 55B AuM; Generali Leben completed 30 Apr 2019. Hannover Re co-invested (to source). cinven.com lists Viridium as realised (date Mar 2014).",
+   "ev_estimate_eur_m": null,
+   "ev_estimate_method": "not estimated: insurance balance sheet; Generali Leben add-on alone EUR 1.9B; outlier",
+   "ev_confidence": "n/a"
+  },
+  {
+   "name": "One.com (now group.One)",
+   "sector_cinven": "TMT",
+   "sub_sector": "Web hosting and domains",
+   "hq_country": "Denmark",
+   "hq_city": "Copenhagen",
+   "announced": "2018-12",
+   "closed": "2019-02",
+   "fund": "Sixth",
+   "deal_type": "secondary buyout",
+   "seller": "Accel-KKR",
+   "ev_eur_m": null,
+   "ev_source_currency_amount": "",
+   "equity_eur_m": null,
+   "cinven_stake": "majority",
+   "co_investors": [],
+   "revenue_at_entry_eur_m": 60,
+   "ebitda_at_entry_eur_m": null,
+   "headcount_at_entry": 270,
+   "founder_or_family_involved_at_entry": "yes",
+   "lead_office": "London",
+   "outlier": false,
+   "outlier_reason": "",
+   "exit": {
+    "year": 2023,
+    "buyer": "Eighth Cinven Fund (group.One)",
+    "type": "continuation"
+   },
+   "sources": [
+    "https://www.cinven.com/portfolio/one-com/",
+    "https://www.cinven.com/news-insights/cinven-to-acquire-european-web-hosting-provider-one-com/",
+    "https://www.unquote.com/nordics/official-record/3013122/cinven-buys-onecom-from-accel-kkr"
+   ],
+   "notes": "Cinven PR 20 Dec 2018: Sixth Fund, undisclosed, 270 employees, >1M customers; founder and CEO Jacob Jensen quoted as partner ('invest alongside Jacob'). unquote: revenue grew EUR 30M to EUR 60M under Accel-KKR; terms undisclosed. Founder involvement: yes (founder CEO continued).",
+   "ev_estimate_eur_m": 600,
+   "ev_estimate_method": "~EUR 500M to 700M: revenue EUR 60M (unquote) with mass-hosting EBITDA margins of ~40% to 50% (HEG and GoDaddy peers) gives EBITDA ~EUR 25M to 30M; 2018 hosting buyouts priced at ~18x to 22x EBITDA (GoDaddy paid ~EUR 1.7B for HEG at ~15x to 18x)",
+   "ev_confidence": "low (margin and multiple proxy)"
+  },
+  {
+   "name": "RTB House",
+   "sector_cinven": "TMT",
+   "sub_sector": "Ad tech (retargeting)",
+   "hq_country": "Poland",
+   "hq_city": "Warsaw",
+   "announced": "2019-01",
+   "closed": "2019-04",
+   "fund": "Sixth",
+   "deal_type": "minority",
+   "seller": "founders",
+   "ev_eur_m": 268,
+   "ev_source_currency_amount": "~USD 300M implied by vendors' 10x expectation on projected 2018 EBITDA USD 30M (Mergermarket via unquote); not a confirmed price",
+   "equity_eur_m": null,
+   "cinven_stake": "minority",
+   "co_investors": [],
+   "revenue_at_entry_eur_m": null,
+   "ebitda_at_entry_eur_m": 27,
+   "headcount_at_entry": 400,
+   "founder_or_family_involved_at_entry": "yes",
+   "lead_office": "London",
+   "outlier": true,
+   "outlier_reason": "Minority stake (Clifford Chance: 'acquisition of a minority stake in RTB House'); founders remain controlling shareholders; EV only a seller expectation",
+   "exit": {
+    "year": null,
+    "buyer": "",
+    "type": ""
+   },
+   "sources": [
+    "https://www.cinven.com/portfolio/rtb-house/",
+    "https://www.cinven.com/news-insights/cinven-invests-in-rtb-house/",
+    "https://www.unquote.com/cee/official-record/3013295/cinven-invests-in-rtb-house",
+    "https://www.ceelegalmatters.com/poland/9984-clifford-chance-and-weil-advise-on-cinven-investment-in-rtb-house"
+   ],
+   "notes": "Cinven PR 14 Jan 2019: undisclosed, 'primary investment', >400 employees, ~1,500 clients, 20 offices; founders Dyczkowski, Romanski, Surmacz remain as management. unquote: sold by founders, vendors expected 10x projected 2018 EBITDA of USD 30M (~USD 300M), Sixth Fund (~70% deployed). USD at 0.893 (2019): ~EUR 268M, EBITDA ~EUR 27M. Stake: majority per later Cinven materials to verify. CEE Legal Matters (Clifford Chance): Cinven acquired a minority stake; terms undisclosed. Sixth Fund.",
+   "ev_estimate_eur_m": null,
+   "ev_estimate_method": "",
+   "ev_confidence": "low (seller expectation only)"
+  },
+  {
+   "name": "INSEEC U (now OMNES Education)",
+   "sector_cinven": "Business Services",
+   "sub_sector": "Private higher education",
+   "hq_country": "France",
+   "hq_city": "Paris",
+   "announced": "2019-03",
+   "closed": "2019-04",
+   "fund": "Sixth",
+   "deal_type": "secondary buyout",
+   "seller": "Apax Partners (France)",
+   "ev_eur_m": 800,
+   "ev_source_currency_amount": "EUR 800M to 825M (press reports confirmed to unquote)",
+   "equity_eur_m": null,
+   "cinven_stake": "majority",
+   "co_investors": [
+    "Bpifrance (minority since 2016)"
+   ],
+   "revenue_at_entry_eur_m": 220,
+   "ebitda_at_entry_eur_m": 63,
+   "headcount_at_entry": null,
+   "founder_or_family_involved_at_entry": "no",
+   "lead_office": "Paris",
+   "outlier": false,
+   "outlier_reason": "",
+   "exit": {
+    "year": null,
+    "buyer": "",
+    "type": ""
+   },
+   "sources": [
+    "https://www.cinven.com/portfolio/omnes-education/",
+    "https://www.cinven.com/news-insights/cinven-to-acquire-inseec-u/",
+    "https://www.unquote.com/france/official-record/3013998/cinven-buys-inseec-u-in-eur800m-deal"
+   ],
+   "notes": "Cinven PR 5 Mar 2019: undisclosed, 16 schools, ~25,000 students, Bpifrance stays as minority. unquote: valued EUR 800M to 825M, 2018 turnover EUR 220M, marketed EBITDA EUR 63M, leverage ~7x via Goldman Sachs; Apax France paid EUR 200M in 2013. Fund: Seventh Fund closed May 2019; unquote does not name the fund; treated as Sixth (deal signed Mar 2019 before Seventh close) with medium confidence. Sixth Fund confirmed by elimination: LGC (Nov 2019) was the first Seventh Fund deal and Barentz (Nov 2019) the last Sixth Fund deal (unquote).",
+   "ev_estimate_eur_m": null,
+   "ev_estimate_method": "",
+   "ev_confidence": "medium (press, sources familiar or Mergermarket)"
+  },
+  {
+   "name": "JAGGAER",
+   "sector_cinven": "TMT",
+   "sub_sector": "Procurement software",
+   "hq_country": "USA",
+   "hq_city": "Morrisville, North Carolina",
+   "announced": "2019-07",
+   "closed": "2019-08",
+   "fund": "Sixth",
+   "deal_type": "secondary buyout",
+   "seller": "Accel-KKR",
+   "ev_eur_m": 1340,
+   "ev_source_currency_amount": "USD 1.5B including debt (Bloomberg, sources, via PYMNTS); Accel-KKR took SciQuest private in 2016 at ~USD 500M",
+   "equity_eur_m": null,
+   "cinven_stake": "majority",
+   "co_investors": [
+    "Accel-KKR (retained interest)"
+   ],
+   "revenue_at_entry_eur_m": null,
+   "ebitda_at_entry_eur_m": null,
+   "headcount_at_entry": null,
+   "founder_or_family_involved_at_entry": "no",
+   "lead_office": "New York",
+   "outlier": true,
+   "outlier_reason": "US-headquartered company led from New York",
+   "exit": {
+    "year": 2024,
+    "buyer": "Vista Equity Partners",
+    "type": "secondary buyout"
+   },
+   "sources": [
+    "https://www.cinven.com/portfolio/jaggaer/",
+    "https://www.cinven.com/news-insights/cinven-to-invest-in-jaggaer/",
+    "https://www.pymnts.com/news/b2b-payments/2019/jaggaer-valuation-stake-cinven",
+    "https://www.accel-kkr.com/news/accel-kkr-completes-sale-of-majority-stake-in-jaggaer/",
+    "https://www.cinven.com/news-insights/cinven-to-sell-jaggaer/"
+   ],
+   "notes": "Cinven PR 8 Jul 2019: 'significant investment', Accel-KKR keeps an interest, >2,000 customers, HQ Research Triangle Park NC; sourced by TMT team with US regional team. EV undisclosed; press reported ~USD 1.5B (to verify). Bloomberg (via PYMNTS): values Jaggaer at USD 1.5B including debt; USD at 0.893 (2019) = EUR ~1,340M. Accel-KKR completion release 15 Aug 2019: Cinven became controlling shareholder, Accel-KKR kept a minority. Cinven 2024 sale release: 'Sixth Cinven Fund's investment in the company in 2019'. Sold to Vista Equity Partners (announced Aug 2024).",
+   "ev_estimate_eur_m": null,
+   "ev_estimate_method": "",
+   "ev_confidence": "medium (press, sources familiar or Mergermarket)"
+  },
+  {
+   "name": "National Seating & Mobility",
+   "sector_cinven": "Healthcare",
+   "sub_sector": "Complex rehab mobility equipment",
+   "hq_country": "USA",
+   "hq_city": "Nashville, Tennessee",
+   "announced": "2019-10",
+   "closed": "2019-11",
+   "fund": "Sixth",
+   "deal_type": "secondary buyout",
+   "seller": "Court Square Capital Partners",
+   "ev_eur_m": 759,
+   "ev_source_currency_amount": "~USD 850M total enterprise value (PEI / Buyouts, people familiar)",
+   "equity_eur_m": null,
+   "cinven_stake": "majority",
+   "co_investors": [],
+   "revenue_at_entry_eur_m": null,
+   "ebitda_at_entry_eur_m": null,
+   "headcount_at_entry": 1850,
+   "founder_or_family_involved_at_entry": "no",
+   "lead_office": "New York",
+   "outlier": true,
+   "outlier_reason": "US-headquartered company led from New York",
+   "exit": {
+    "year": null,
+    "buyer": "",
+    "type": ""
+   },
+   "sources": [
+    "https://www.cinven.com/portfolio/national-seating-mobility/",
+    "https://www.cinven.com/news-insights/cinven-to-invest-in-national-seating-mobility/",
+    "https://www.privateequityinternational.com/cinven-buys-national-seating-mobility-in-850-mln-transaction/",
+    "https://peprofessional.com/2019/10/court-square-exits-national-seating-mobility/"
+   ],
+   "notes": "Cinven PR 4 Oct 2019: undisclosed, >1,850 employees, 149 branches, >100,000 clients a year, HQ Nashville. Seller Court Square per press (to verify). Seventh Fund. PEI (Buyouts) 4 Oct 2019: total EV ~USD 850M, Cinven's third US healthcare investment; USD at 0.893 (2019) = EUR ~759M. Seller Court Square (PE Professional). Fund: Sixth, inferred because LGC (Nov 2019) was the first Seventh Fund deal (PE Insights) and Jaggaer (Jul 2019) is confirmed Sixth.",
+   "ev_estimate_eur_m": null,
+   "ev_estimate_method": "",
+   "ev_confidence": "medium (press, sources familiar or Mergermarket)"
+  },
+  {
+   "name": "Barentz",
+   "sector_cinven": "Business Services",
+   "sub_sector": "Speciality ingredients distribution",
+   "hq_country": "Netherlands",
+   "hq_city": "Hoofddorp (near Amsterdam)",
+   "announced": "2019-11",
+   "closed": "2019-12",
+   "fund": "Sixth",
+   "deal_type": "primary (founder or family)",
+   "seller": "family shareholders (primary)",
+   "ev_eur_m": null,
+   "ev_source_currency_amount": "",
+   "equity_eur_m": null,
+   "cinven_stake": "majority",
+   "co_investors": [],
+   "revenue_at_entry_eur_m": 1000,
+   "ebitda_at_entry_eur_m": null,
+   "headcount_at_entry": 1100,
+   "founder_or_family_involved_at_entry": "yes",
+   "lead_office": "London",
+   "outlier": false,
+   "outlier_reason": "",
+   "exit": {
+    "year": null,
+    "buyer": "",
+    "type": ""
+   },
+   "sources": [
+    "https://www.cinven.com/portfolio/barentz-2019/",
+    "https://www.cinven.com/portfolio/barentz/",
+    "https://www.cinven.com/news-insights/cinven-to-invest-in-barentz/",
+    "https://www.unquote.com/benelux/official-record/3017404/cinven-buys-barentz"
+   ],
+   "notes": "Cinven PR 26 Nov 2019: 'become a shareholder', terms undisclosed, ~1,100 employees, >15,000 customers, >60 countries; described as a 'primary opportunity' sourced via Business Services and Benelux teams; CEO Hidde van der Wal. cinven.com shows Barentz I (realised) and Barentz II (current, EV not disclosed), i.e. a later continuation. Family involvement inferred from primary nature (to verify). unquote 26 Nov 2019: majority stake, Sixth Fund ('the last investment made by Cinven via its sixth fund'), revenues ~EUR 1B (unquote estimate), 1,100 staff, TLB plus RCF debt package; EV not disclosed. EV estimate ~EUR 1.0B to 1.2B (low confidence): specialty chemical distributors traded at ~10x to 12x EBITDA in 2019 and distributor EBITDA margins run ~8% to 10% on EUR 1B revenue; not used in stats.",
+   "ev_estimate_eur_m": 1100,
+   "ev_estimate_method": "~EUR 1.0B to 1.2B: unquote revenue ~EUR 1B; specialty ingredient distributors (IMCD, Azelis, Brenntag speciality) ran ~8% to 10% EBITDA margins and 2019 distributor buyouts priced at ~11x to 13x EBITDA",
+   "ev_confidence": "low (margin and multiple proxy)"
+  },
+  {
+   "name": "LGC",
+   "sector_cinven": "Healthcare",
+   "sub_sector": "Life science tools, standards and genomics",
+   "hq_country": "UK",
+   "hq_city": "Teddington",
+   "announced": "2019-11",
+   "closed": "2020-04",
+   "fund": "Seventh",
+   "deal_type": "secondary buyout",
+   "seller": "KKR",
+   "ev_eur_m": 3420,
+   "ev_source_currency_amount": "~GBP 3B EV (PE Insights, person familiar; ~20x EBITDA per Reuters source)",
+   "equity_eur_m": null,
+   "cinven_stake": "co-control",
+   "co_investors": [
+    "Astorg (joint lead)",
+    "Abu Dhabi Investment Authority (co-investor, per unquote)"
+   ],
+   "revenue_at_entry_eur_m": 511,
+   "ebitda_at_entry_eur_m": 171,
+   "headcount_at_entry": 3200,
+   "founder_or_family_involved_at_entry": "no",
+   "lead_office": "London",
+   "outlier": false,
+   "outlier_reason": "",
+   "exit": {
+    "year": null,
+    "buyer": "",
+    "type": ""
+   },
+   "sources": [
+    "https://www.cinven.com/portfolio/lgc/",
+    "https://www.cinven.com/news-insights/cinven-and-astorg-to-acquire-lgc/",
+    "https://pe-insights.com/kkr-scores-3x-return-on-sale-of-lgc-to-cinven-astorg/page/97",
+    "https://www.thetrustedinsight.com/investment-news/kkr-to-make-3x-its-money-on-sale-of-lgc-20191121242"
+   ],
+   "notes": "PR 21 Nov 2019: consortium jointly led by Astorg and Cinven, >3,200 employees, 22 countries, HQ UK (Teddington). Seller KKR. EV undisclosed; press reported ~GBP 3B (to verify). Seventh Fund. PE Insights: EV ~GBP 3B, first Seventh Fund deal, 2019 revenue GBP 448M, >3,200 employees, KKR ~3x since 2015 purchase from Bridgepoint. Reuters source: ~20x EBITDA, which implies EBITDA ~GBP 150M (~EUR 171M, derived). GBP at 1.14 (2019): EV EUR ~3,420M, revenue EUR ~511M. ADIA named as partner by unquote in the Barentz article.",
+   "ev_estimate_eur_m": null,
+   "ev_estimate_method": "",
+   "ev_confidence": "medium (press, sources familiar or Mergermarket)"
+  },
+  {
+   "name": "TK Elevator",
+   "sector_cinven": "Industrials",
+   "sub_sector": "Elevators and escalators",
+   "hq_country": "Germany",
+   "hq_city": "Dusseldorf",
+   "announced": "2020-02",
+   "closed": "2020-07",
+   "fund": "Seventh",
+   "deal_type": "corporate carve-out",
+   "seller": "thyssenkrupp AG",
+   "ev_eur_m": 17200,
+   "ev_source_currency_amount": "EUR 17.2B EV (thyssenkrupp announcement 27 Feb 2020)",
+   "equity_eur_m": null,
+   "cinven_stake": "co-control",
+   "co_investors": [
+    "Advent International",
+    "RAG-Stiftung",
+    "thyssenkrupp AG (substantial minority reinvestment)"
+   ],
+   "revenue_at_entry_eur_m": 8000,
+   "ebitda_at_entry_eur_m": 1000,
+   "headcount_at_entry": 50000,
+   "founder_or_family_involved_at_entry": "no",
+   "lead_office": "Frankfurt",
+   "outlier": true,
+   "outlier_reason": "EV EUR 17.2B, far above EUR 5B; consortium",
+   "exit": {
+    "year": null,
+    "buyer": "",
+    "type": ""
+   },
+   "sources": [
+    "https://www.cinven.com/portfolio/tke/",
+    "https://www.cinven.com/news-insights/advent-international-cinven-and-rag-stiftung-to-acquire-thyssenkrupps-elevator-technology-business/",
+    "https://www.cinven.com/news-insights/advent-international-and-cinven-complete-acquisition-of-thyssenkrupps-elevator-technology-business/",
+    "https://www.unquote.com/dach/official-record/3018455/advent-cinven-and-rag-stiftung-buy-thyssenkrupp-elevator",
+    "https://www.thyssenkrupp.com/en/newsroom/press-releases/thyssenkrupp-sells-elevator-technology-business-for--17-2-billion-to-consortium-of-bidders-led-by-advent--cinven-and-rag-foundation-19840.html"
+   ],
+   "notes": "PR 28 Feb 2020: FY2018/19 revenue EUR 8.0B, >1,000 locations, thyssenkrupp reinvests for a substantial minority; completion 31 Jul 2020. EV EUR 17.2B per thyssenkrupp (to add source). >50,000 employees (cinven.com). Seventh Fund. thyssenkrupp release 27 Feb 2020: sold for EUR 17.2B. unquote: revenue EUR 8B, EBITDA reportedly EUR 1B, thyssenkrupp reinvests EUR 1.25B for a minority, leverage ~7x reported during bidding, Seventh Fund equity. Equity split not disclosed.",
+   "ev_estimate_eur_m": null,
+   "ev_estimate_method": "",
+   "ev_confidence": "high (stated by party or Cinven PR)"
+  },
+  {
+   "name": "MasMovil (now MasOrange)",
+   "sector_cinven": "TMT",
+   "sub_sector": "Telecoms operator",
+   "hq_country": "Spain",
+   "hq_city": "Madrid",
+   "announced": "2020-06",
+   "closed": "2020-09",
+   "fund": "Seventh",
+   "deal_type": "public-to-private",
+   "seller": "public shareholders",
+   "ev_eur_m": 5300,
+   "ev_source_currency_amount": "valued at ~EUR 5.3B at the tender offer price (consortium PR 17 Nov 2020); equity ~EUR 2.96B at EUR 22.50 per share",
+   "equity_eur_m": 2960,
+   "cinven_stake": "co-control",
+   "co_investors": [
+    "KKR",
+    "Providence Equity Partners"
+   ],
+   "revenue_at_entry_eur_m": 1700,
+   "ebitda_at_entry_eur_m": 468,
+   "headcount_at_entry": null,
+   "founder_or_family_involved_at_entry": "no",
+   "lead_office": "Madrid",
+   "outlier": true,
+   "outlier_reason": "EV ~EUR 5B, three-way club",
+   "exit": {
+    "year": 2025,
+    "buyer": "Orange (MasOrange combination)",
+    "type": "merger"
+   },
+   "sources": [
+    "https://www.cinven.com/portfolio/masorange/",
+    "https://www.cinven.com/news-insights/cinven-kkr-and-providence-complete-the-acquisition-of-spanish-telecommunications-operator-masmovil/",
+    "https://www.unquote.com/southern-europe/news/3019588/cinven-kkr-and-providence-aim-for-eur3bn-masmovil-deal"
+   ],
+   "notes": "Consortium (Lorca Telecom Bidco) completion PR 17 Nov 2020: 99.3% acquired, valued ~EUR 5.3B at offer price, >11M customers, HQ Madrid; offer announced 1 Jun 2020 at EUR 22.50 per share (~EUR 2.96B equity, to add source). cinven.com date Sep 2020. Seventh Fund. unquote 1 Jun 2020: offer EUR 22.5 per share for 131.7M shares = EUR 2.96B equity via Lorca Telecom (equally owned by Cinven, KKR, Providence); 2019 revenue EUR 1.7B, EBITDA EUR 468M, net income EUR 93M; funds: Seventh Cinven Fund, KKR Europe V, PEP VII and VIII. Completion PR: valued ~EUR 5.3B at the offer price.",
+   "ev_estimate_eur_m": null,
+   "ev_estimate_method": "",
+   "ev_confidence": "high (stated by party or Cinven PR)"
+  },
+  {
+   "name": "Miller",
+   "sector_cinven": "Financial Services",
+   "sub_sector": "Specialist insurance broking",
+   "hq_country": "UK",
+   "hq_city": "London",
+   "announced": "2020-11",
+   "closed": "2021-03",
+   "fund": "SFF",
+   "deal_type": "corporate carve-out",
+   "seller": "Willis Towers Watson",
+   "ev_eur_m": 765,
+   "ev_source_currency_amount": "~GBP 680M (Bloomberg, people familiar, via Insurance Journal); WTW had bought 85% in 2015",
+   "equity_eur_m": null,
+   "cinven_stake": "co-control",
+   "co_investors": [
+    "GIC"
+   ],
+   "revenue_at_entry_eur_m": null,
+   "ebitda_at_entry_eur_m": null,
+   "headcount_at_entry": 640,
+   "founder_or_family_involved_at_entry": "no",
+   "lead_office": "London",
+   "outlier": true,
+   "outlier_reason": "Strategic Financials Fund deal (first investment of Cinven's financial services strategy); 2021 close",
+   "exit": {
+    "year": 2024,
+    "buyer": "GIC",
+    "type": "sale to co-investor"
+   },
+   "sources": [
+    "https://www.cinven.com/portfolio/miller/",
+    "https://www.cinven.com/news-insights/cinven-and-gic-to-acquire-specialist-insurance-broker-miller/",
+    "https://www.insurancejournal.com/news/international/2021/03/01/603179.htm",
+    "https://www.cinven.com/news-insights/cinven-announces-final-close-of-its-inaugural-strategic-financials-fund/"
+   ],
+   "notes": "PR 9 Nov 2020: Cinven and GIC acquire Miller from its partners and WTW; undisclosed; >640 employees; ~GBP 2B premiums placed; 'first investment from Cinven's new financial services sector-focused strategy' (SFF). Completed Mar 2021; sold to GIC Mar 2024. Insurance Journal 1 Mar 2021 citing Bloomberg: values Miller at ~GBP 680M (USD 947M); completed Mar 2021; >640 employees; ~GBP 2B premiums. GBP at 1.125 (2020): EUR ~765M. Cinven SFF close release (Jul 2022) confirms Miller (Mar 2021) as an SFF investment.",
+   "ev_estimate_eur_m": null,
+   "ev_estimate_method": "",
+   "ev_confidence": "medium (press, sources familiar or Mergermarket)"
+  },
+  {
+   "name": "Compre",
+   "sector_cinven": "Financial Services",
+   "sub_sector": "Legacy (run-off) insurance",
+   "hq_country": "UK",
+   "hq_city": "London",
+   "announced": "2020-11",
+   "closed": "2021-04",
+   "fund": "SFF",
+   "deal_type": "secondary buyout",
+   "seller": "CBPE Capital",
+   "ev_eur_m": null,
+   "ev_source_currency_amount": "",
+   "equity_eur_m": null,
+   "cinven_stake": "co-control",
+   "co_investors": [
+    "British Columbia Investment Management Corporation (BCI)"
+   ],
+   "revenue_at_entry_eur_m": null,
+   "ebitda_at_entry_eur_m": null,
+   "headcount_at_entry": 80,
+   "founder_or_family_involved_at_entry": "no",
+   "lead_office": "London",
+   "outlier": true,
+   "outlier_reason": "Strategic Financials Fund deal; 2021 close",
+   "exit": {
+    "year": null,
+    "buyer": "",
+    "type": ""
+   },
+   "sources": [
+    "https://www.cinven.com/portfolio/compre/",
+    "https://www.cinven.com/news-insights/cinven-and-bci-to-acquire-compre/",
+    "https://www.unquote.com/uk/official-record/3021995/cinven-bci-to-acquire-compre-from-cbpe",
+    "https://www.cinven.com/news-insights/cinven-announces-final-close-of-its-inaugural-strategic-financials-fund/"
+   ],
+   "notes": "PR 30 Nov 2020: Cinven and BCI acquire Compre from CBPE; undisclosed; ~80 employees; 'second investment from Cinven's new financial services sector-focused strategy' (SFF). Completed Apr 2021. unquote 1 Dec 2020: price undisclosed, ~80 employees, CBPE bought majority from Milestone in 2015. Cinven SFF close release (Jul 2022, EUR 1.5B fund) confirms Compre (Apr 2021) as an SFF investment, with BCI.",
+   "ev_estimate_eur_m": null,
+   "ev_estimate_method": "not estimated: run-off consolidator, value is balance-sheet driven; SFF outlier",
+   "ev_confidence": "n/a"
+  }
+ ],
+ "add_ons": [
+  {
+   "acquirer": "Hotelbeds",
+   "target": "Tourico Holidays (US)",
+   "announced": "2017-02",
+   "price": "undisclosed",
+   "source": "https://www.cinven.com/news-insights/tourico-holidays-joins-hotelbeds-group/"
+  },
+  {
+   "acquirer": "Hotelbeds",
+   "target": "GTA (Kuoni's Global Travel Distribution)",
+   "announced": "2017-04",
+   "price": "undisclosed",
+   "source": "https://www.cinven.com/news-insights/gta-to-join-hotelbeds-group/"
+  },
+  {
+   "acquirer": "Tinsa",
+   "target": "Troostwijk Groep (NL)",
+   "announced": "2017-05",
+   "price": "undisclosed",
+   "source": "https://www.cinven.com/news-insights/tinsa-continues-expansion-in-europe-with-the-acquisition-of-troostwijk-groep/"
+  },
+  {
+   "acquirer": "Tractel",
+   "target": "SPG (US)",
+   "announced": "2016-06",
+   "price": "undisclosed",
+   "source": "https://www.cinven.com/news-insights/tractel-acquires-spg-to-expand-us-presence-and-product-range/"
+  },
+  {
+   "acquirer": "Tractel",
+   "target": "Scanclimber (Finland)",
+   "announced": "2018-01",
+   "price": "undisclosed",
+   "source": "https://www.cinven.com/news-insights/tractel-announces-strategic-acquisition-of-scanclimber/"
+  },
+  {
+   "acquirer": "ERGO Italia / Eurovita",
+   "target": "Old Mutual Wealth Italy",
+   "announced": "2016-08",
+   "price": "EUR 278M (Old Mutual)",
+   "source": "https://www.cinven.com/news-insights/ergo-italia-to-acquire-old-mutual-wealth-italy/"
+  },
+  {
+   "acquirer": "ERGO Italia / Eurovita",
+   "target": "Eurovita Assicurazioni (from JC Flowers)",
+   "announced": "2017",
+   "price": "undisclosed",
+   "source": "https://www.cinven.com/news-insights/phlavia-investimenti-receives-regulatory-approval-for-the-acquisition-of-eurovita/"
+  },
+  {
+   "acquirer": "Eurovita",
+   "target": "Pramerica Life (Italy)",
+   "announced": "2019-08",
+   "price": "undisclosed",
+   "source": "https://www.cinven.com/news-insights/eurovita-announces-the-acquisition-of-pramerica-life/"
+  },
+  {
+   "acquirer": "Viridium",
+   "target": "Protektor life insurance business (Entis)",
+   "announced": "2017-04",
+   "price": "undisclosed",
+   "source": "https://www.cinven.com/news-insights/viridium-group-acquires-insurance-business-from-protektor/"
+  },
+  {
+   "acquirer": "Viridium",
+   "target": "Generali Lebensversicherung (89.9%)",
+   "announced": "2018-07",
+   "price": "EUR 1.9B (Generali)",
+   "source": "https://www.cinven.com/news-insights/cinven-to-acquire-and-combine-viridium-group-and-generali-lebensversicherung-ag/"
+  },
+  {
+   "acquirer": "Chryso",
+   "target": "Ruredil assets (Italy)",
+   "announced": "2018-06",
+   "price": "undisclosed",
+   "source": "https://www.cinven.com/news-insights/chryso-to-acquire-certain-ruredil-assets-and-enlarges-its-offering-for-construction-materials-in-italy/"
+  },
+  {
+   "acquirer": "Chryso",
+   "target": "Euromodal (Portugal)",
+   "announced": "2018-10",
+   "price": "undisclosed",
+   "source": "https://www.cinven.com/news-insights/chryso-acquires-euromodal-and-enlarges-its-offering-for-construction-materials-in-portugal/"
+  },
+  {
+   "acquirer": "STADA",
+   "target": "Walmark (Czech consumer health)",
+   "announced": "2019-11",
+   "price": "undisclosed",
+   "source": "https://www.cinven.com/news-insights/stada-to-acquire-walmark-a-leading-consumer-healthcare-company-in-central-europe/"
+  },
+  {
+   "acquirer": "STADA",
+   "target": "Biopharma Rx and consumer health business (Ukraine)",
+   "announced": "2019-12",
+   "price": "undisclosed",
+   "source": "https://www.cinven.com/news-insights/stada-acquire-biopharmas-pharmaceutical-prescription-and-consumer-health-business/"
+  },
+  {
+   "acquirer": "Bioclinica",
+   "target": "ERT (merger, Nordic Capital and Novo)",
+   "announced": "2020-12",
+   "price": "undisclosed; merger to form Clario",
+   "source": "https://www.cinven.com/news-insights/cinven-portfolio-company-bioclinica-to-merge-with-ert/"
+  },
+  {
+   "acquirer": "Visma (Cinven minority holding)",
+   "target": "c. 25 Nordic software add-ons 2015 to 2017 (PBJ, Aditro Public, Abalon, Trimma, Numeron, StarSoft, EasyCruit, Dinero, Davilex, NYCE and others)",
+   "announced": "2015 to 2017",
+   "price": "undisclosed",
+   "source": "https://www.cinven.com/news-insights/ (posts tagged Visma)"
+  },
+  {
+   "acquirer": "AMCo",
+   "target": "Focus Pharmaceuticals, Primegen, Boucher and Muir",
+   "announced": "2014-10 to 2015-07",
+   "price": "undisclosed",
+   "source": "https://www.cinven.com/news-insights/amco-acquires-australian-company-boucher-and-muir/"
+  },
+  {
+   "acquirer": "CPA Global",
+   "target": "Innography (US), Markpro (Korea)",
+   "announced": "2015-11, 2017-07",
+   "price": "undisclosed",
+   "source": "https://www.cinven.com/news-insights/cpa-global-acquires-premier-ip-search-and-analytics-software-provider-innography/"
+  },
+  {
+   "acquirer": "CeramTec",
+   "target": "DAI Ceramics (US)",
+   "announced": "2015-05",
+   "price": "undisclosed",
+   "source": "https://www.cinven.com/news-insights/ceramtec-acquires-dai-ceramics-inc/"
+  },
+  {
+   "acquirer": "HEG",
+   "target": "intergenia (Germany)",
+   "announced": "2014-12",
+   "price": "undisclosed",
+   "source": "https://www.cinven.com/news-insights/heg-acquires-intergenia-accelerating-growth-in-managed-hosting/"
+  }
+ ],
+ "excluded_or_unverified": [
+  {
+   "name": "Pronovias (2017)",
+   "reason": "Not a Cinven deal. BC Partners bought ~90% from founder Alberto Palatchi for ~EUR 495M (EV ~EUR 550M) in Jul 2017; unquote names KKR, Permira and Bain as the rival bidders and does not mention Cinven. Source: https://www.unquote.com/southern-europe/official-record/3005704/bc-partners-buys-bridal-wear-manufacturer-pronovias"
+  },
+  {
+   "name": "Theramex (2017 to 2018)",
+   "reason": "Not a Cinven deal. Teva sold its global women's health business (Theramex) to CVC Capital Partners for USD 703M, completed Jan 2018. Cinven announced an acquisition of Theramex only in 2026 (cinven.com post 'cinven-to-acquire-theramex'), outside this window. Source: https://www.pharmaceutical-technology.com/news/teva-concludes-703m-womens-health-products-deal-cvc-capital/"
+  },
+  {
+   "name": "Visma (2017)",
+   "reason": "Not a new entry. Jun 2017 Cinven sold 40% of its stake to an Hg-led group (NOK 45B, EUR 4.7B valuation) and kept a significant minority; original entry Apr 2014 at NOK 21B EV (EUR 2.5B) with KKR and Hg at 31.3% each. Final exit agreed Apr 2019. Source: https://www.cinven.com/news-insights/cinven-generates-successful-partial-realisation-of-visma/"
+  },
+  {
+   "name": "Drake Software / Taxwell",
+   "reason": "Announced 5 Feb 2021, outside the window (completed Mar 2021). US-headquartered (Franklin, NC), founder Phil Drake, >600 employees; would be a New York-led outlier if the window were extended. Source: https://www.cinven.com/news-insights/cinven-to-invest-in-drake-software/"
+  },
+  {
+   "name": "Arcaplanet",
+   "reason": "Announced 25 Jun 2021, outside the window. Cinven bought a majority from Permira and Winch Capital and combined it with Fressnapf's Maxi Zoo Italia (Fressnapf minority). Source: https://www.cinven.com/news-insights/cinven-to-create-a-leading-pet-care-platform-in-italy-through-the-combination-of-arcaplanet-and-maxi-zoo-italia/"
+  },
+  {
+   "name": "Premium Credit announcement date",
+   "reason": "Brief suggested Dec 2014; Cinven PR is dated 13 Jan 2015, so it is inside the window and kept as a core entry."
+  },
+  {
+   "name": "Guardian Financial Services, AMCo, Host Europe Group, Partnership Assurance, Ahlsell, Amadeus",
+   "reason": "Entries before 2015 (exits only in window: Guardian to Admin Re Jan 2016; AMCo to Concordia Oct 2015; HEG to GoDaddy Apr 2017; Just Group placing 2017). Not platform entries in this window."
+  },
+  {
+   "name": "Lonza Specialty Ingredients (Arxada)",
+   "reason": "Announced 8 Feb 2021 with Bain Capital, outside the window."
+  }
+ ]
+}

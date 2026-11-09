@@ -1,11 +1,11 @@
 {
-  "computed_at": "2026-11-09T14:49:07+00:00",
+  "computed_at": "2026-11-09T19:23:35+00:00",
   "thresholds": {
     "universe_turnover_min_gbp": 50000000.0,
     "universe_employees_min": 150,
     "universe_employees_max": 500000,
-    "rank_turnover_min_gbp": 150000000.0,
-    "ebitda_early_floor_gbp": 15000000.0,
+    "rank_turnover_min_gbp": 60000000.0,
+    "ebitda_early_floor_gbp": 8000000.0,
     "exclude_account_categories": [
       "MICRO ENTITY",
       "DORMANT",
@@ -64,7 +64,7 @@
     "passes_all": 66324,
     "passes_all_verified": 5412,
     "passes_all_provisional": 60912,
-    "at_scale": 264
+    "at_scale": 937
   },
   "exclusion_reasons": {
     "below_size_floor": 23999,

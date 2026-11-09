@@ -1,4 +1,4 @@
-"""Stage 9: AI-durability rubric, adapted from Mark Dzialga (Brighton Park Capital, Feb 2026).
+"""Stage 9: investment quality rubric, adapted from Cinven's published Investment Approach (cinven.com, 2026).
 
 One LLM call per company returns ten dimension scores with a verbatim quote each. Quotes
 are validated against the fetched website text or the structured FACT lines; dimensions
@@ -26,7 +26,7 @@ RUBRIC = cfg()["rubric"]
 PROMPT_VERSION = RUBRIC["prompt_version"]
 SYSTEM = (REPO / "src" / "score" / "prompts" / f"{PROMPT_VERSION.replace('rubric-', 'rubric_')}.md").read_text()
 TEXT_BUDGET = 7500
-FACT_URLS = {"companies_house", "fca_register", "ats_jobs", "none"}
+FACT_URLS = {"companies_house", "psc_register", "fca_register", "ats_jobs", "none"}
 
 
 def _fmt_money(v) -> str:
@@ -35,54 +35,58 @@ def _fmt_money(v) -> str:
     return f"GBP {v / 1e6:.1f}M" if abs(v) >= 1e6 else f"GBP {v:,.0f}"
 
 
+def _pct(v) -> str:
+    return "n/a" if v is None else f"{v * 100:+.0f}%"
+
+
 def structured_facts(n: str, ctx: dict) -> list[str]:
     """Plain-language FACT lines the model may quote verbatim."""
     facts = ["FACT: no evidence found"]
     cls = ctx["classification"].get(n)
     if cls:
-        facts.append(f"FACT: classifier label {cls['vertical']} ({cls.get('sub_vertical') or 'n/a'}), confidence {cls.get('confidence')}")
+        facts.append(f"FACT: classifier label {cls['vertical']} ({cls.get('sub_vertical') or 'n/a'}), business model {cls.get('business_model') or 'n/a'}, confidence {cls.get('confidence')}")
+    u = ctx["universe"].get(n) or {}
+    if u.get("latest_period_end"):
+        emp = u.get("latest_employees")
+        facts.append(f"FACT: latest accounts {u.get('latest_accounts_type') or 'n/a'} for the period ending {u.get('latest_period_end')}, consolidated {bool(u.get('latest_consolidated'))}: "
+                     f"turnover {_fmt_money(u.get('latest_turnover'))}, operating profit {_fmt_money(u.get('latest_operating_profit'))}, "
+                     f"EBITDA proxy {_fmt_money(u.get('ebitda_proxy'))} ({u.get('ebitda_basis') or 'n/a'}), profit before tax {_fmt_money(u.get('latest_pbt'))}, "
+                     f"average employees {int(emp) if emp is not None else 'n/a'}")
+        facts.append(f"FACT: operating margin {_pct(u.get('operating_margin'))}, gross margin {_pct(u.get('gross_margin'))}, net cash from operations {_fmt_money(u.get('latest_net_cash_from_ops'))}, "
+                     f"dividends paid {_fmt_money(u.get('latest_dividends'))}, bank borrowings {_fmt_money(u.get('latest_bank_borrowings'))}, creditors after one year {_fmt_money(u.get('latest_creditors_after_one_year'))}")
+        facts.append(f"FACT: turnover growth {_pct(u.get('turnover_growth'))} and head count growth {_pct(u.get('employees_growth'))} against the prior period ending {u.get('prior_period_end') or 'n/a'} "
+                     f"(prior turnover {_fmt_money(u.get('prior_turnover'))}, prior employees {u.get('prior_employees') if u.get('prior_employees') is not None else 'n/a'})")
+    else:
+        facts.append("FACT: no parsed accounts on file; size unverified")
     hc = ctx["headcount"].get(n) or []
-    if hc:
+    if len(hc) >= 2:
         series = ", ".join(f"{p}: {int(e)}" for p, e in hc)
         facts.append(f"FACT: average employees by period end {series}")
-        if len(hc) >= 2 and hc[0][1] and hc[-1][1]:
-            try:
-                years = max(0.5, (hc[-1][0] - hc[0][0]).days / 365.25)
-                cagr = (hc[-1][1] / hc[0][1]) ** (1 / years) - 1
-                facts.append(f"FACT: headcount CAGR {cagr * 100:+.0f}% a year over {years:.1f} years")
-            except Exception:
-                pass
-    acc = ctx["accounts"].get(n)
-    if acc:
-        facts.append(f"FACT: latest accounts {acc.get('accounts_type') or 'n/a'} for period ending {acc.get('period_end')}, turnover {_fmt_money(acc.get('turnover'))}, "
-                     f"accruals and deferred income {_fmt_money(acc.get('accrued_deferred_income'))}, consolidated {acc.get('consolidated')}")
-    ch = ctx["charges"].get(n) or []
-    if ch:
-        outstanding = [c for c in ch if (c.get("status") or "").lower().startswith("outstanding") or not c.get("satisfied_on")]
-        recent = [c for c in outstanding if c.get("created_on") and str(c["created_on"]) >= ctx["recent_cutoff"]]
-        holders = sorted({p for c in outstanding for p in (c.get("persons_entitled") or [])})[:4]
-        facts.append(f"FACT: {len(outstanding)} outstanding charges, {len(recent)} created in the last 18 months, held by {', '.join(holders) or 'n/a'}")
-    else:
-        facts.append("FACT: no outstanding charges on the Companies House register")
-    own = ctx["universe"].get(n)
-    if own:
-        facts.append(f"FACT: ownership {own.get('founder_flag')} ({own.get('founder_confidence') or 'n/a'}), {own.get('n_individual_pscs') or 0} individual PSCs, "
-                     f"{own.get('n_corporate_pscs') or 0} corporate PSCs, walk-up path {own.get('walkup_path') or 'none'}, flags {', '.join(own.get('flags') or []) or 'none'}")
+    if u:
+        route = u.get("route")
+        owners = ", ".join((u.get("owner_names") or [])[:4]) or "n/a"
+        line = f"FACT: ownership route {route} ({u.get('route_confidence') or 'n/a'}): owners {owners}"
+        if route == "sponsor" and u.get("sponsor_names"):
+            line += f"; sponsor {', '.join(u['sponsor_names'][:3])}, held {u.get('hold_years') if u.get('hold_years') is not None else 'n/a'} years since {u.get('hold_start') or 'n/a'}"
+        if route == "founder_family":
+            line += f"; {u.get('n_individuals') or 0} individual owners holding ~{u.get('individuals_pct_mid') or 0:.0f}%, oldest owner age {u.get('oldest_owner_age') or 'n/a'}, shared surname {bool(u.get('family_surname_shared'))}"
+        if u.get("founder_rollover"):
+            line += "; founders retain a stake alongside the sponsor"
+        if u.get("walkup_path"):
+            line += f"; holding chain {u['walkup_path']}"
+        facts.append(line)
+        facts.append(f"FACT: Companies House: incorporated {u.get('inc_date')}, category {u.get('category')}, SIC {u.get('sic1')} {u.get('sic_text1') or ''}, "
+                     f"{u.get('charges_outstanding') or 0} outstanding charges ({u.get('charges_total') or 0} ever registered, {u.get('charges_satisfied') or 0} satisfied), "
+                     f"registered in {u.get('post_town') or 'n/a'}")
     reg = ctx["registers"].get(n)
     if reg and reg.get("fca_status"):
         facts.append(f"FACT: FCA register status {reg['fca_status']} (FRN {reg.get('fca_frn')}), {reg.get('fca_permissions_count') or 0} permissions")
-    elif reg:
-        facts.append("FACT: not found on the FCA register under this company name")
-    else:
-        facts.append("FACT: FCA register not checked")
     jobs = ctx["jobs"].get(n)
     if jobs:
-        facts.append(f"FACT: {jobs.get('open_roles') or 0} open roles, engineering share {round((jobs.get('engineering_share') or 0) * 100)}%, "
-                     f"{jobs.get('ai_roles') or 0} AI roles, {jobs.get('international_roles') or 0} roles outside the UK, functions {jobs.get('functions_json')}")
+        facts.append(f"FACT: {jobs.get('open_roles') or 0} open roles on the public job board, {jobs.get('international_roles') or 0} roles outside the UK, functions {jobs.get('functions_json')}")
     web = ctx["websites"].get(n)
     if web:
-        facts.append(f"FACT: website signals: api docs {web.get('api_docs_url') or 'none'}, github {web.get('github_org') or 'none'}, "
-                     f"{web.get('integrations_count') or 0} named integrations, pricing page {bool(web.get('pricing_hint'))}, ATS {web.get('ats') or 'none'}")
+        facts.append(f"FACT: website {web.get('domain')}: {web.get('pages_fetched') or 0} pages read, name match {web.get('name_match')}, careers page {bool(web.get('careers_url'))}, ATS {web.get('ats') or 'none'}")
     return facts
 
 
@@ -209,51 +213,54 @@ def durability(scores: pl.DataFrame) -> pl.DataFrame:
 
 
 def adjust_scores(scores: pl.DataFrame, ctx: dict) -> pl.DataFrame:
-    """Rule-based corrections applied after the model, both measured in the blind check:
-    - Dimension 4 (leading indicators) is scored from the filed headcount trend and open roles,
-      which the model ignored (it gave 3 to every company).
-    - Dimension 3 (metrics that matter) is capped at 3 when a charge was created in the last
-      18 months by a non-bank lender, the leverage signal the model missed."""
-    import datetime as dt
-
+    """Rule-based scores for the two dimensions the filings answer directly, applied after the model:
+    dimension 4 (cash generation and margin quality) from the operating margin, dimension 5 (growth
+    momentum) from turnover growth, with head count growth as the fallback. The model's reading is kept
+    only when no accounts are on file."""
     rows = scores.to_dicts()
-    cutoff = ctx["recent_cutoff"]
-    banks = ("bank", "hsbc", "barclays", "lloyds", "natwest", "santander", "royal bank", "clydesdale", "virgin money", "metro bank",
-             "starling", "handelsbanken", "allied irish", "danske", "ulster", "bank of scotland", "tsb", "nationwide", "close brothers")
     for r in rows:
         n = r["company_number"]
-        if r["dimension"] == 4:
-            hc = ctx["headcount"].get(n) or []
-            jobs = ctx["jobs"].get(n) or {}
-            cagr = None
-            if len(hc) >= 2 and hc[0][1] and hc[-1][1]:
-                years = max(0.5, (hc[-1][0] - hc[0][0]).days / 365.25)
-                cagr = (hc[-1][1] / hc[0][1]) ** (1 / years) - 1
-            eng_open = (jobs.get("open_roles") or 0) * (jobs.get("engineering_share") or 0)
-            if cagr is None:
-                score, conf, why = 3, "low", "no headcount trend on file"
-            elif cagr >= 0.20:
-                score, conf, why = 5 if eng_open >= 1 else 4, "high", f"headcount CAGR {cagr * 100:+.0f}% a year" + (", engineering roles open" if eng_open >= 1 else "")
-            elif cagr >= 0.08:
-                score, conf, why = 4, "high", f"headcount CAGR {cagr * 100:+.0f}% a year"
-            elif cagr >= -0.03:
-                score, conf, why = 3, "high", f"headcount flat ({cagr * 100:+.0f}% a year)"
-            elif cagr >= -0.12:
-                score, conf, why = 2, "high", f"headcount shrinking ({cagr * 100:+.0f}% a year)"
+        u = ctx["universe"].get(n) or {}
+        if r["dimension"] == 4 and u.get("latest_period_end"):
+            m = u.get("operating_margin")
+            ncfo = u.get("latest_net_cash_from_ops")
+            if m is None:
+                continue
+            if m >= 0.15:
+                score, why = (5 if (ncfo is None or ncfo > 0) else 4), f"operating margin {m * 100:.0f}%"
+            elif m >= 0.10:
+                score, why = 4, f"operating margin {m * 100:.0f}%"
+            elif m >= 0.05:
+                score, why = 3, f"operating margin {m * 100:.0f}%"
+            elif m >= 0:
+                score, why = 2, f"operating margin {m * 100:.0f}%"
             else:
-                score, conf, why = 1, "high", f"headcount shrinking fast ({cagr * 100:+.0f}% a year)"
-            fact = next((f for f in structured_facts(n, ctx) if f.startswith("FACT: headcount CAGR") or f.startswith("FACT: average employees")), "FACT: no evidence found")
-            r.update(score=score, confidence=conf, status="scored", rationale=f"Rule-scored from filings: {why}.", evidence_quote=fact,
-                     evidence_url="companies_house", model="rule:headcount-trend", problems=[])
-        if r["dimension"] == 3 and r.get("score") and r["score"] > 3:
-            ch = ctx["charges"].get(n) or []
-            recent = [c for c in ch if not c.get("satisfied_on") and c.get("created_on") and str(c["created_on"])[:10] >= cutoff]
-            lenders = [p for c in recent for p in (c.get("persons_entitled") or [])]
-            nonbank = [p for p in lenders if not any(b in p.lower() for b in banks)]
-            if nonbank:
-                r["score"] = 3
-                r["rationale"] = (r.get("rationale") or "") + f" Capped at 3: charge created in the last 18 months in favour of {nonbank[0]}."
-                r["model"] = (r.get("model") or "") + "+rule:leverage-cap"
+                score, why = 1, f"operating loss, margin {m * 100:.0f}%"
+            fact = next((f for f in structured_facts(n, ctx) if f.startswith("FACT: operating margin")), "FACT: no evidence found")
+            r.update(score=score, confidence="high", status="scored", rationale=f"Rule-scored from the filed accounts: {why}.", evidence_quote=fact,
+                     evidence_url="companies_house", model="rule:margin", problems=[])
+        if r["dimension"] == 5 and u.get("latest_period_end"):
+            g = u.get("turnover_growth")
+            basis = "turnover"
+            if g is None:
+                g = u.get("employees_growth")
+                basis = "head count"
+            if g is None:
+                continue
+            if g >= 0.15:
+                score = 5
+            elif g >= 0.08:
+                score = 4
+            elif g >= 0:
+                score = 3
+            elif g >= -0.10:
+                score = 2
+            else:
+                score = 1
+            fact = next((f for f in structured_facts(n, ctx) if f.startswith("FACT: turnover growth")), "FACT: no evidence found")
+            r.update(score=score, confidence="high" if basis == "turnover" else "medium", status="scored",
+                     rationale=f"Rule-scored from the filed accounts: {basis} growth {g * 100:+.0f}% against the prior period.", evidence_quote=fact,
+                     evidence_url="companies_house", model=f"rule:growth-{basis.replace(' ', '')}", problems=[])
     return pl.DataFrame(rows, schema=scores.schema)
 
 
@@ -262,12 +269,12 @@ def load_context(numbers: set[str]) -> dict:
 
     ctx = {"classification": {}, "headcount": {}, "accounts": {}, "charges": {}, "universe": {}, "registers": {}, "jobs": {}, "websites": {}}
 
-    ctx["recent_cutoff"] = (dt.date.fromisoformat(cfg()["build"]["as_of_date"]) - dt.timedelta(days=int(30.44 * cfg()["investability"]["leverage_recent_charge_months"]))).isoformat()
+    ctx["recent_cutoff"] = (dt.date.fromisoformat(cfg()["build"]["as_of_date"]) - dt.timedelta(days=int(30.44 * 18))).isoformat()
     if parquet_exists("classification"):
         for r in read_parquet("classification").filter(pl.col("company_number").is_in(list(numbers))).to_dicts():
             ctx["classification"][r["company_number"]] = r
     if parquet_exists("accounts_wide"):
-        aw = read_parquet("accounts_wide").filter(pl.col("company_number").is_in(list(numbers)) & pl.col("employees").is_not_null())
+        aw = read_parquet("accounts_wide").filter(pl.col("company_number").is_in(list(numbers)) & pl.col("employees").is_not_null() & (pl.col("employees") < 50000))
         # prior-year comparatives inside a filing are real headcount figures; keep them for the trend
         for n, g in aw.sort("period_end").group_by("company_number"):
             n = n[0] if isinstance(n, tuple) else n
@@ -293,15 +300,16 @@ def load_context(numbers: set[str]) -> dict:
 
 
 def shortlist(include_excluded: bool) -> pl.DataFrame:
-    cls = read_parquet("classification").filter(pl.col("vertical").is_in(cfg()["target"]["verticals"]))
-    ucols = ["company_number", "name", "founder_flag", "founder_confidence"] + (["founder_led"] if "founder_led" in read_parquet("universe").columns else [])
-    uni = read_parquet("universe").select(ucols)
-    df = cls.join(uni, on="company_number", how="inner")
-    if not include_excluded:
-        keep = pl.col("founder_flag") != "excluded"
-        if "founder_led" in df.columns:
-            keep = keep | pl.col("founder_led").fill_null(False)
-        df = df.filter(keep)
+    """Companies to score: classified into one of the six sectors, on an actionable route, group heads only."""
+    cls = read_parquet("classification").filter(pl.col("vertical").is_in(cfg()["target"]["sectors"]))
+    uni = read_parquet("universe")
+    ucols = [c for c in ("company_number", "name", "route", "route_confidence", "is_group_head", "at_scale", "provisional") if c in uni.columns]
+    df = cls.join(uni.select(ucols), on="company_number", how="inner")
+    if not include_excluded and "route" in df.columns:
+        routes = cfg()["classifier"].get("routes", [])
+        df = df.filter(pl.col("route").is_in(routes) & pl.col("is_group_head").fill_null(True))
+    if "at_scale" in df.columns:
+        df = df.sort(["at_scale", "provisional"], descending=[True, False], nulls_last=True)
     return df
 
 

@@ -63,7 +63,7 @@ DECOY_CHECK_ENGINES = {"bing"}
 SEARCH_GAP_SECONDS = 1.5
 SEARCH_JITTER = 0.6
 BLOCK_DISABLE_AFTER = 5
-PROBE_TIMEOUT = 6
+PROBE_TIMEOUT = 4
 FETCH_TIMEOUT = 10
 PER_DOMAIN_DELAY = 1.0
 MAX_HTML_BYTES = 2_000_000
@@ -507,8 +507,8 @@ def probe_domains(name: str, session: requests.Session | None = None, timeout: i
     final page title carries a distinctive token. Returns (homepage_url, title, tried)."""
     session = session or requests.Session()
     tried = []
-    for slug in slugs(name)[:4]:
-        for host in (f"{slug}.co.uk", f"www.{slug}.co.uk", f"{slug}.com", f"{slug}.io", f"{slug}.ai", f"{slug}.uk", f"{slug}.net"):
+    for slug in slugs(name)[:3]:
+        for host in (f"{slug}.co.uk", f"{slug}.com", f"www.{slug}.co.uk", f"{slug}.uk"):
             url = f"https://{host}/"
             try:
                 r = session.get(url, headers={"User-Agent": DESKTOP_UA, "Accept-Language": "en-GB,en;q=0.9"},
@@ -610,9 +610,13 @@ def load_existing() -> dict[str, dict]:
 
 
 def discover(companies: list[dict], engines: list[str] | None = None, probe: bool = True,
-             write: bool = True, redo: bool = False, write_every: int = 200) -> list[dict]:
-    """Discover domains for [{company_number, name, post_town}] and merge into websites.parquet."""
+             write: bool = True, redo: bool = False, write_every: int = 40, out_table: str | None = None) -> list[dict]:
+    """Discover domains for [{company_number, name, post_town}] and merge into websites.parquet (or out_table
+    for a sharded worker; `python -m src.enrich.websites merge` folds shard tables into websites.parquet)."""
+    table = out_table or WEBSITES_TABLE
     existing = load_existing() if write else {}
+    if out_table and parquet_path(out_table).exists():
+        existing = {**existing, **{r["company_number"]: r for r in read_parquet(out_table).to_dicts()}}
     searcher = Searcher(engines)
     session = requests.Session()
     out_rows: list[dict] = []
@@ -624,7 +628,11 @@ def discover(companies: list[dict], engines: list[str] | None = None, probe: boo
             merged = dict(existing)
             for r in out_rows:
                 merged[r["company_number"]] = {**merged.get(r["company_number"], {}), **r}
-            write_parquet(websites_frame(list(merged.values())), WEBSITES_TABLE)
+            if out_table:
+                mine = {r["company_number"] for r in out_rows}
+                write_parquet(websites_frame([merged[k] for k in mine if k in merged]), table)
+            else:
+                write_parquet(websites_frame(list(merged.values())), table)
 
     for i, c in enumerate(companies, 1):
         n = normalise_company_number(c["company_number"])
@@ -1062,6 +1070,18 @@ def universe_companies(limit: int | None = None) -> list[dict]:
         log.error("data/parquet/universe.parquet not found; pass --companies")
         return []
     df = read_parquet("universe")
+    import polars as pl
+
+    # Scope: group heads on a route a buyout fund can act on; largest verified companies first, then
+    # GROUP filers whose size is still unverified (their accounts are being read), then the rest.
+    routes = cfg().get("websites", {}).get("discover_routes", ["founder_family", "sponsor", "sponsor_offshore", "plc_dispersed", "employee_owned"])
+    if "route" in df.columns:
+        df = df.filter(pl.col("passes_all") & pl.col("route").is_in(routes) & pl.col("is_group_head").fill_null(True))
+        df = df.with_columns([
+            pl.col("at_scale").fill_null(False).cast(pl.Int8).alias("_p1"),
+            pl.coalesce([pl.col("latest_turnover"), pl.col("latest_employees") * 150000.0, pl.lit(0.0)]).alias("_size"),
+            (pl.col("account_category") == "GROUP").cast(pl.Int8).alias("_p2"),
+        ]).sort(["_p1", "_p2", "_size"], descending=[True, True, True])
     cols = [c for c in ("company_number", "name", "post_town") if c in df.columns]
     rows = df.select(cols).to_dicts()
     for r in rows:
@@ -1092,6 +1112,8 @@ def main(argv: list[str] | None = None) -> int:
     d.add_argument("--limit", type=int)
     d.add_argument("--reverse", action="store_true", help="process companies in reverse order (second worker)")
     d.add_argument("--skip-file", help="parquet whose company_numbers with a method are skipped (the other worker's output)")
+    d.add_argument("--shard", help="i/n: take every n-th company starting at i and write to websites_shard_i.parquet")
+    m = sub.add_parser("merge", help="fold websites_shard_*.parquet into websites.parquet")
     f = sub.add_parser("fetch")
     f.add_argument("--numbers", help="comma-separated company numbers (default: every row with a domain)")
     f.add_argument("--concurrency", type=int)
@@ -1114,8 +1136,24 @@ def main(argv: list[str] | None = None) -> int:
             companies = [c for c in companies if normalise_company_number(c["company_number"]) not in done]
         if args.reverse:
             companies = list(reversed(companies))
+        out_table = None
+        if args.shard:
+            i, k = (int(x) for x in args.shard.split("/"))
+            companies = companies[i::k]
+            out_table = f"websites_shard_{i}"
         discover(companies, engines=[e for e in args.engines.split(",") if e], probe=not args.no_probe,
-                 redo=args.redo)
+                 redo=args.redo, out_table=out_table)
+        return 0
+    if args.cmd == "merge":
+        merged = load_existing()
+        for f in sorted(path("parquet").glob("websites_shard_*.parquet")):
+            for r in read_parquet(f.stem).to_dicts():
+                prev = merged.get(r["company_number"], {})
+                if prev.get("discovery_method") not in (None, "none") and r.get("discovery_method") in (None, "none"):
+                    continue
+                merged[r["company_number"]] = {**prev, **{k: v for k, v in r.items() if v is not None or k not in prev}}
+        write_parquet(websites_frame(list(merged.values())), WEBSITES_TABLE)
+        log.info("merged %d rows into websites.parquet", len(merged))
         return 0
     if args.cmd == "fetch":
         nums = [x for x in args.numbers.split(",")] if args.numbers else None

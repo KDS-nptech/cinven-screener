@@ -45,39 +45,80 @@ target:
   exclude_sic: ["64110", "64191", "64192", "64205", "64301", "64302", "64303", "64304", "64305", "64306", "65110", "65120", "65201", "65202", "65300", "84110", "84120", "84130", "84210", "84220", "84230", "84240", "84250", "84300", "94110", "94120", "94200", "94910", "94920", "94990", "97000", "98000", "98100", "98200", "99000", "99999"]
   sectors: ["business_services", "consumer", "financial_services", "healthcare", "industrials", "tmt"]
   force_include: []    # back-test companies carried as comparables; filled from docs/research/03 once it lands
-  # Size band, provisional until the measured entry profile (docs/research/02) lands. Cinven's
-  # flagship fund writes equity cheques of roughly EUR 200M to 1B into companies with EV of
-  # roughly EUR 500M to 5B; at 8x to 14x EBITDA that is EBITDA of ~GBP 30M to 350M and turnover
-  # of ~GBP 150M upwards. Universe floor is set lower so smaller platforms stay as comparables.
+  # Size bands, calibrated to the measured entry profile (docs/research/02a, 02b, 01 section 6). Cinven deploys two
+  # vehicles side by side: the EUR 13.2B Eighth Cinven Fund (core entries 2015 to 2020 at EV EUR ~540M to 1.2B, median
+  # ~800M, EBITDA ~EUR 50M to 170M; 2024 to 2026 flagship deals at EUR 1B to 3B) and the EUR 2.3B Strategic Fund 2
+  # (control positions in founder-owned European mid-market businesses in Financial Services, Business Services and TMT,
+  # EV ~EUR 100M to 500M). The screener shows both bands on every card; the universe floor sits below them so smaller
+  # platforms stay as comparables.
   universe_turnover_min_gbp: 50000000
   universe_employees_min: 150
   universe_employees_max: 500000
-  rank_turnover_min_gbp: 150000000
-  ebitda_target_min_gbp: 30000000
-  ebitda_target_max_gbp: 400000000
-  ebitda_early_floor_gbp: 15000000
+  rank_turnover_min_gbp: 60000000          # at-scale gate when no profit line is on file
+  ebitda_early_floor_gbp: 8000000          # at-scale gate: Strategic Fund band starts here
+  ebitda_target_min_gbp: 40000000          # flagship band starts here
+  ebitda_target_max_gbp: 300000000         # above this the deal is a mega-cap club deal (TK Elevator, STADA): outliers
+  strategic_fund_sectors: ["financial_services", "business_services", "tmt"]
 
-# Theme maps: every company in the universe whose site uses a theme's vocabulary, founder-owned or
-# not, so a sourcing team that works by end market can see all the players at once. Keyword scan on
-# the fetched site text, no model call; the matching sentence is shown as the evidence. Themes chosen
-# to match Brighton Park's published portfolio (Canary: hospitality; HITRUST: GRC) and the London
-# team's stated sourcing interests.
+# Theme maps: every company in scope whose site uses a theme's vocabulary, whatever its route, so a sourcing team
+# that works by sub-sector can see all the players at once. Keyword scan on the fetched site text, no model call;
+# the matching sentence is shown as the evidence. Themes follow Cinven's own portfolio: insurance distribution
+# (Miller, Säkra, Finaxy, Policy Expert), wealth and fund administration (True Potential, Alter Domus, Objectway),
+# professional services (Grant Thornton, Flint Global), diagnostics and pharma services (SYNLAB, LGC, BioAgilytix),
+# specialty distribution (Barentz), laundry and textile services (JLA), pet (Fressnapf, Arcaplanet), education (OMNES,
+# UAX), fibre and hosting (Ufinet, group.One), building chemicals (Master Builders Solutions, Chryso).
 themes:
   min_distinct: 3
   min_total: 5
   list:
-    property_management:
-      label: "Property management"
-      keywords: [property management, lettings, letting agent, landlord, tenant, tenancy, block management, estate agent, residential property, commercial property, housing association, social housing, facilities management, rent collection, property portfolio, leasehold, service charge, building safety, real estate software, proptech, deposit protection, right to rent, inventory inspection, maintenance requests]
-    contractor_compliance:
-      label: "Contractor compliance and payroll"
-      keywords: [contractor, ir35, umbrella company, umbrella payroll, construction industry scheme, right to work, worker compliance, agency worker, temporary workers, timesheet, timesheets, payroll, payroll software, workforce compliance, pay and bill, recruitment agency software, back office for recruitment, supplier compliance, subcontractor, off-payroll, employment status, auto-enrolment, hmrc recognised]
-    tax_accounting:
-      label: "Tax and accounting software"
-      keywords: [tax software, making tax digital, corporation tax, vat return, vat returns, self assessment, tax return, tax returns, accounting software, accountancy practice, practice management for accountants, bookkeeping, bookkeeping software, year-end accounts, ixbrl, hmrc, tax compliance, r&d tax, capital allowances, tax relief, payroll year end, cloud accounting, audit software, trust accounting]
-    hospitality:
-      label: "Hospitality software"
-      keywords: [hotel, hotels, hospitality, guest experience, property management system, channel manager, booking engine, restaurant, epos, table management, hotel management, guest messaging, contactless check-in, front desk, housekeeping, revenue management for hotels, holiday park, pub, bar management]
+    insurance_distribution:
+      label: "Insurance distribution and MGAs"
+      keywords: [insurance broker, insurance brokers, brokerage, managing general agent, MGA, underwriting agency, delegated authority, commercial insurance, personal lines, specialty insurance, claims management, loss adjust, reinsurance broker, lloyd's, lloyds of london, insurance distribution, premium finance, protection insurance, run-off, legacy insurance]
+    wealth_and_advice:
+      label: "Wealth management and financial advice"
+      keywords: [wealth management, financial advice, financial adviser, financial advisers, financial planning, independent financial, IFA, discretionary fund management, investment platform, SIPP, pension administration, retirement planning, private clients, assets under management, assets under advice, model portfolios, financial planners]
+    fund_and_corporate_services:
+      label: "Fund administration and corporate services"
+      keywords: [fund administration, fund administrator, corporate services, trust and company services, depositary, transfer agency, fund accounting, private capital, alternative investment funds, SPV administration, company secretarial, registered office, escrow, employee share plans, share registration]
+    professional_services:
+      label: "Professional services consolidation"
+      keywords: [accountancy firm, accountancy practice, chartered accountants, audit and assurance, tax advisory, corporate finance advisory, law firm, solicitors, legal services, consulting firm, management consultancy, actuarial, pension consulting, insolvency, restructuring advisory, public affairs, communications consultancy]
+    tic:
+      label: "Testing, inspection and certification"
+      keywords: [testing and inspection, inspection services, certification body, UKAS, accredited laboratory, calibration, non-destructive testing, product testing, compliance testing, type approval, conformity assessment, asset integrity, lifting equipment inspection, fire safety inspection, electrical testing]
+    diagnostics_and_pharma_services:
+      label: "Diagnostics, laboratories and pharma services"
+      keywords: [laboratory services, laboratories, pathology, diagnostic testing, diagnostics, clinical trials, contract research, CRO, CDMO, contract manufacturing, bioanalytical, GMP, pharmaceutical manufacturing, generic medicines, specialty pharma, medical devices, life sciences, reference materials, proficiency testing]
+    healthcare_services:
+      label: "Healthcare services"
+      keywords: [care homes, residential care, nursing homes, domiciliary care, home care, supported living, specialist care, mental health services, private hospital, hospitals, clinics, dental practices, dentistry, veterinary practices, veterinary group, fertility, ophthalmology, diagnostic imaging, healthcare staffing]
+    specialty_distribution:
+      label: "Specialty distribution"
+      keywords: [distributor, distribution business, value-added distribution, specialty chemicals distribution, ingredients distribution, technical distribution, components distributor, electrical wholesaler, builders merchant, plumbing and heating merchant, industrial supplies, MRO, fasteners, bearings, packaging distribution, foodservice distribution, pharmaceutical wholesaler]
+    education:
+      label: "Education and training"
+      keywords: [independent schools, independent school, schools group, international schools, university, higher education, degree programmes, students, nurseries, early years, childcare, training provider, apprenticeships, vocational training, professional qualifications, tuition, online learning, awarding organisation]
+    textile_and_facilities_services:
+      label: "Laundry, textile and facilities services"
+      keywords: [laundry, linen, workwear rental, textile services, washroom services, hygiene services, facilities management, cleaning services, catering services, security services, pest control, waste management, grounds maintenance, mechanical and electrical maintenance, commercial laundry]
+    pet:
+      label: "Pet"
+      keywords: [pet food, pet nutrition, pet retail, pet stores, pet products, pet care, veterinary, dog food, cat food, pet treats, pet insurance, animal health, petcare]
+    consumer_health_and_nutrition:
+      label: "Consumer health and nutrition"
+      keywords: [vitamins, supplements, sports nutrition, protein, functional drinks, functional beverages, energy drinks, clinical nutrition, enteral nutrition, infant formula, healthy snacking, plant-based, wellness brand, over-the-counter, consumer healthcare, personal care brand]
+    fibre_hosting_and_connectivity:
+      label: "Fibre, hosting and connectivity"
+      keywords: [fibre network, full fibre, FTTP, broadband network, wholesale connectivity, dark fibre, data centre, data centres, colocation, web hosting, domain names, managed hosting, cloud infrastructure, telecoms infrastructure, business connectivity, ISP, internet service provider, fixed wireless]
+    regulated_software:
+      label: "Software for regulated industries"
+      keywords: [software for insurers, insurance software, policy administration, claims software, wealth management software, fund accounting software, portfolio management software, banking software, regulatory reporting, compliance software, regtech, pensions software, payroll software, tax software, practice management software, case management software, clinical software]
+    building_and_specialty_chemicals:
+      label: "Building products and specialty chemicals"
+      keywords: [construction chemicals, admixtures, concrete admixtures, coatings, sealants, adhesives, specialty chemicals, performance chemicals, building products, insulation, roofing, cladding, mortars, grouts, waterproofing, flooring systems, resins, polymers]
+    outsourced_business_services:
+      label: "Outsourced business services"
+      keywords: [business process outsourcing, BPO, contact centre, customer management, outsourced services, shared services, managed services, payroll services, HR services, employee benefits, background screening, document management, print management, fleet management, parking management, revenue assurance]
 
 ownership:
   # Stage 3 rules, applied in order. See docs/methodology.md.
@@ -462,8 +503,8 @@ ownership_routes:
 
 api:
   companies_house_base: "https://api.company-information.service.gov.uk"
-  companies_house_per_window: 190
-  companies_house_doc_per_window: 190
+  companies_house_per_window: 140
+  companies_house_doc_per_window: 140
   companies_house_window_seconds: 300
   companies_house_key_env: "CH_API_KEY"
   fca_base: "https://register.fca.org.uk/services/V0.1"
@@ -474,57 +515,38 @@ api:
   # LLM: a pool of OpenAI-compatible chat endpoints used round-robin; a provider that returns
   # 429 is cooled down and the next one takes the call. Keys live in .env under key_env.
   llm_providers:
+    # Anthropic through its OpenAI-compatible endpoint; the key is user-scoped so the workspace header is required.
+    - name: anthropic_haiku45
+      base_url: "https://api.anthropic.com/v1"
+      model: "claude-haiku-4-5"
+      key_env: "ANTHROPIC_API_KEY"
+      requests_per_second: 2.0
+      headers:
+        anthropic-workspace-id: "env:ANTHROPIC_WORKSPACE_ID"
+    - name: anthropic_haiku55
+      base_url: "https://api.anthropic.com/v1"
+      model: "claude-haiku-5-5"
+      key_env: "ANTHROPIC_API_KEY"
+      requests_per_second: 2.0
+      headers:
+        anthropic-workspace-id: "env:ANTHROPIC_WORKSPACE_ID"
+    # Gemini is blocked from this session's network (googleapis.com not on the allowlist); kept for a rebuild elsewhere.
     - name: gemini
       base_url: "https://generativelanguage.googleapis.com/v1beta/openai"
-      model: "gemini-3.5-flash-lite"
-      key_env: "GEMINI_API_KEY"
+      model: "gemini-2.5-flash-lite"
+      key_env: "GEMINI_API_KEY_DISABLED"
       requests_per_second: 0.25
-    - name: gemini31lite
-      base_url: "https://generativelanguage.googleapis.com/v1beta/openai"
-      model: "gemini-3.1-flash-lite"
-      key_env: "GEMINI_API_KEY"
-      requests_per_second: 0.2
-    - name: gemini35flash
-      base_url: "https://generativelanguage.googleapis.com/v1beta/openai"
-      model: "gemini-3.5-flash"
-      key_env: "GEMINI_API_KEY"
-      requests_per_second: 0.15
-    - name: gemini_k2
-      base_url: "https://generativelanguage.googleapis.com/v1beta/openai"
-      model: "gemini-3.5-flash-lite"
-      key_env: "GEMINI_API_KEY_2"
-      requests_per_second: 0.25
-    - name: gemini31lite_k2
-      base_url: "https://generativelanguage.googleapis.com/v1beta/openai"
-      model: "gemini-3.1-flash-lite"
-      key_env: "GEMINI_API_KEY_2"
-      requests_per_second: 0.2
-    - name: gemini_k3
-      base_url: "https://generativelanguage.googleapis.com/v1beta/openai"
-      model: "gemini-3.5-flash-lite"
-      key_env: "GEMINI_API_KEY_3"
-      requests_per_second: 0.25
-    - name: gemini31lite_k3
-      base_url: "https://generativelanguage.googleapis.com/v1beta/openai"
-      model: "gemini-3.1-flash-lite"
-      key_env: "GEMINI_API_KEY_3"
-      requests_per_second: 0.2
     - name: mistral
       base_url: "https://api.mistral.ai/v1"
       model: "mistral-small-latest"
-      key_env: "MISTRAL_API_KEY"
+      key_env: "MISTRAL_API_KEY_DISABLED"
       requests_per_second: 0.9
-    - name: groq
-      base_url: "https://api.groq.com/openai/v1"
-      model: "llama-3.3-70b-versatile"
-      key_env: "GROQ_API_KEY"
-      requests_per_second: 0.4
   llm_key_env: "LLM_API_KEY"              # legacy single-provider fallback
   llm_temperature: 0
-  llm_max_tokens: 1500
+  llm_max_tokens: 2500
 
 websites:
-  user_agent: "UKSoftwareScreener/0.1 (research; contact via Companies House filings)"
+  user_agent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15 CinvenScreener/0.1 (research)"
   max_pages: 5
   max_chars: 12000
   page_tokens: [product, platform, solutions, features, integrations, customers, pricing, about, careers, api, developers]
@@ -585,53 +607,157 @@ jobs:
   senior_commercial_regex: "\\b(VP Sales|Vice President Sales|Chief Revenue|CRO|CFO|Chief Financial|Head of Partnerships|Chief Commercial)\\b"
 
 rubric:
-  # Adapted from Mark Dzialga, "Software Moats are Eroding: A Framework for Stress
-  # Testing Your Software Portfolio", bpc.com, 19 Feb 2026. Weights are ours.
-  source_url: "https://www.bpc.com/insights/a-framework-for-evaluating-software-exposure-to-ai"
-  source_label: "Adapted from Mark Dzialga, Brighton Park Capital, Feb 2026. Weights are ours."
-  prompt_version: "rubric-v1"
+  # Adapted from Cinven's published Investment Approach (cinven.com/investment-approach, read 9 Nov 2026) and the
+  # attributes that recur across its 2024 to 2026 deal announcements (docs/research/01, Rubric candidates): a market-leading
+  # or scarce platform in a large, structurally growing market, recurring revenue and retention, resilience, organic growth
+  # with margin expansion, cash generation, buy and build in a fragmented market, international expansion, management and
+  # founder reinvestment, and since 2026 "well positioned to drive value from AI". Weights are ours. The pages describe the
+  # firm's approach and deal rationales, not investment criteria, and the site says so.
+  source_url: "https://www.cinven.com/approach/"
+  source_label: "Adapted from Cinven's published Investment Approach and 2024 to 2026 deal announcements, cinven.com. Weights are ours."
+  prompt_version: "rubric-cv-v1"
   min_unscored_for_grey: 2
   weights:
-    1: 0.10   # Control plane
-    2: 0.10   # AI-ready architecture
-    3: 0.10   # Metrics that matter
-    4: 0.05   # Leading indicators
-    5: 0.05   # Category creating vs feature defending
-    6: 0.20   # Stickiness from value
-    7: 0.05   # Roll-up exposure
-    8: 0.15   # Cost of workflow failure
-    9: 0.05   # Cyber, trust and governance
-    10: 0.15  # Vertical and regulatory depth
+    1: 0.15   # Market leadership and scale
+    2: 0.15   # Structural growth trends
+    3: 0.15   # Resilience and revenue visibility
+    4: 0.10   # Cash generation and margin quality (rule-scored from accounts)
+    5: 0.15   # Growth momentum (rule-scored from accounts)
+    6: 0.10   # Buy and build potential
+    7: 0.05   # Internationalisation potential
+    8: 0.05   # Pricing power and commercial levers
+    9: 0.05   # Transformation headroom (digital, data and AI)
+    10: 0.05  # Management, governance and ESG readiness
   dimension_names:
-    1: "Control plane"
-    2: "AI-ready architecture"
-    3: "Metrics that matter"
-    4: "Leading indicators"
-    5: "Category creating vs feature defending"
-    6: "Stickiness from value"
-    7: "Roll-up exposure"
-    8: "Cost of workflow failure"
-    9: "Cyber, trust and governance"
-    10: "Vertical and regulatory depth"
+    1: "Market leadership and scale"
+    2: "Structural growth trends"
+    3: "Resilience and revenue visibility"
+    4: "Cash generation and margin quality"
+    5: "Growth momentum"
+    6: "Buy and build potential"
+    7: "Internationalisation potential"
+    8: "Pricing power and commercial levers"
+    9: "Transformation headroom"
+    10: "Management, governance and ESG readiness"
 
-investability:
+# Entry fit (0 to 100), deterministic, never blended with the rubric. Bands from the measured entry profile (docs/cv_pattern.json).
+fit:
   size_points: 30
-  growth_points: 25
-  hiring_points: 15
-  leverage_points: 15
-  data_quality_points: 15
-  growth_full_cagr: 0.20
-  hiring_full_share: 0.10
-  leverage_recent_charge_months: 18
-  size_falloff_factor: 3    # score hits zero at band edge / factor below or edge * factor above
+  route_points: 25
+  growth_points: 15
+  margin_points: 10
+  sector_points: 10
+  data_quality_points: 10
+  # size: full points inside either measured band (Strategic Fund GBP 8M to 40M EBITDA, flagship GBP 40M to 300M);
+  # outside, the score falls to zero at band edge / factor below or edge * factor above. Turnover is the fallback when
+  # no profit line is on file (Strategic Fund GBP 60M to 300M, flagship GBP 300M to 3B).
+  ebitda_core_min_gbp: 8000000
+  ebitda_core_max_gbp: 300000000
+  turnover_core_min_gbp: 60000000
+  turnover_core_max_gbp: 3000000000
+  size_falloff_factor: 3
+  # route points: Fund 8 is "eight out of ten primary or founder-led" (Cinven, Oct 2025) and SF2 targets founder-owned
+  # businesses, so founder and family lead; secondaries were 78% of 2015 to 2020 core entries and still recur (UAX, Theramex,
+  # Nutrisens), so sponsor-owned scores high and rises with hold years; carve-outs are a published theme (TKE, Arxada, Envu,
+  # MBS); take-privates are rare (STADA 2017).
+  route_scores:
+    founder_family: 25
+    sponsor: 22
+    sponsor_offshore: 16
+    plc_dispersed: 14
+    foreign_parent: 14
+    uk_group: 12
+    employee_owned: 6
+    uncertain: 0
+    public_sector: 0
+  sponsor_hold_full_years: 4
+  sponsor_hold_min_years: 2
+  growth_full: 0.10
+  margin_full: 0.15
+  rank_min_fit: 40
 
 classifier:
-  prompt_version: "classify-v1"
+  prompt_version: "classify-cv-v1"
   prefilter_min_hits: 1
+  routes: ["founder_family", "sponsor", "sponsor_offshore", "plc_dispersed", "employee_owned"]
+  # Primary SIC division (first two digits) or code to a sector hint; a hint sends the company to the model even
+  # when the keyword pre-filter finds nothing. Divisions not listed carry no hint.
+  sic_hints:
+    "10": consumer
+    "11": consumer
+    "13": industrials
+    "14": consumer
+    "15": consumer
+    "16": industrials
+    "17": industrials
+    "18": business_services
+    "20": industrials
+    "21": healthcare
+    "22": industrials
+    "23": industrials
+    "24": industrials
+    "25": industrials
+    "26": industrials
+    "27": industrials
+    "28": industrials
+    "29": industrials
+    "30": industrials
+    "31": consumer
+    "32": industrials
+    "33": industrials
+    "38": business_services
+    "39": business_services
+    "41": industrials
+    "42": industrials
+    "43": industrials
+    "45": consumer
+    "46": business_services
+    "47": consumer
+    "49": business_services
+    "50": business_services
+    "51": business_services
+    "52": business_services
+    "53": business_services
+    "55": consumer
+    "56": consumer
+    "58": tmt
+    "59": tmt
+    "60": tmt
+    "61": tmt
+    "62": tmt
+    "63": tmt
+    "64": financial_services
+    "65": financial_services
+    "66": financial_services
+    "69": business_services
+    "70": business_services
+    "71": business_services
+    "72": healthcare
+    "73": business_services
+    "74": business_services
+    "75": healthcare
+    "77": business_services
+    "78": business_services
+    "79": consumer
+    "80": business_services
+    "81": business_services
+    "82": business_services
+    "85": business_services
+    "86": healthcare
+    "87": healthcare
+    "88": healthcare
+    "90": consumer
+    "92": consumer
+    "93": consumer
+    "95": business_services
+    "96": consumer
   keywords:
-    compliance_grc: [compliance, regulatory, regtech, "anti-money laundering", aml, kyc, "know your customer", "financial crime", sanctions, "risk register", grc, governance, audit, "policy management", esg, whistleblow, "due diligence", "regulatory reporting", "fraud prevention", "identity verification", "transaction monitoring", gdpr, "data protection", "information security", iso 27001, cyber, "security awareness", "penetration testing", "vulnerability"]
-    fintech_financial: [payments, payment, lending, loan, credit, mortgage, wealth, "financial adviser", "financial advice", "fund administration", insurance, insurtech, broker, accounting, bookkeeping, tax, treasury, "open banking", banking, fintech, invoice, "expense management", pension, investment platform, trading, "asset management", "capital markets", reconciliation, ledger]
-    healthcare: [nhs, clinical, patient, "care home", "domiciliary care", "social care", pharmacy, medication, gp, "general practice", hospital, "electronic patient record", epr, "practice management", dental, veterinary, "life sciences", "clinical trial", pharmaceutical, "medical device", health, healthcare, "mental health", carers, "care management"]
+    business_services: [testing, inspection, certification, accreditation, consultancy, consulting, advisory, outsourc, "business process", "facilities management", laundry, linen, logistics, "supply chain", freight, haulage, courier, warehouse, distribution, distributor, wholesale, school, schools, university, education, training, apprenticeship, recruitment, staffing, "market research", agency, surveying, valuation, "property management", "estate agen", security services, "waste management", recycling, "environmental services", "professional services", audit, accountancy, "legal services", engineering services, "managed services"]
+    consumer: [brand, brands, consumers, retail, retailer, stores, shop, "e-commerce", ecommerce, online store, restaurant, restaurants, pub, pubs, bar, hotel, hotels, holiday, travel, leisure, gym, fitness, food, drinks, beverage, snacks, bakery, confectionery, pet, pets, fashion, apparel, footwear, beauty, cosmetics, "personal care", household, furniture, bedding, toys, nursery, "quick service", franchise, menu, loyalty, shoppers, customers love]
+    financial_services: [insurance, insurer, broker, brokerage, underwriting, reinsurance, "run-off", wealth, "asset management", "fund administration", "financial advice", "financial planning", pension, pensions, lending, loans, credit, "credit card", mortgage, payments, "payment", fintech, "capital markets", "investment management", "private banking", annuit, "life insurance", "general insurance", "FCA", regulated, "financial services", accountancy network, "audit and tax"]
+    healthcare: [patient, patients, clinical, clinic, clinics, hospital, hospitals, NHS, pharmaceutical, pharma, medicine, medicines, generic, "medical device", devices, diagnostic, diagnostics, laboratory, laboratories, pathology, "life science", "life sciences", CRO, CDMO, biotech, nutrition, "care home", "care homes", "domiciliary care", "social care", dental, dentist, veterinary, vet, pharmacy, pharmacies, therapy, surgical, orthopaedic, "healthcare"]
+    industrials: [manufactur, manufacturing, engineered, engineering, chemicals, chemical, materials, coatings, adhesives, polymers, plastics, packaging, "building products", construction products, aggregates, cement, steel, metal, fabrication, machinery, equipment, components, automotive, aerospace, defence, electrical, electronics, pumps, valves, "industrial", factory, factories, "production facility", "ISO 9001", precision, tooling, "elevator", lifts, HVAC, "crop protection", agrochemical, fertiliser, seeds]
+    tmt: [software, SaaS, platform, cloud, "data centre", "data center", hosting, domains, telecom, telecoms, broadband, fibre, fiber, network, connectivity, "managed IT", cybersecurity, "cyber security", media, broadcast, publishing, publisher, magazine, newspaper, marketplace, classifieds, advertising, adtech, "marketing technology", "video games", games studio, streaming, "digital"]
 
 backtests:
   - name: PortSwigger
