@@ -24,7 +24,7 @@ def main():
     data = data.replace("</", "<\\/")
     body = TEMPLATE.read_text().replace("__DATA__", data)
     (SITE / "artifact.html").write_text(body)
-    full = ("<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, viewport-fit=cover\">\n"
+    full = ("<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n"
             "<meta name=\"color-scheme\" content=\"light dark\">\n<style>html,body{margin:0;min-height:100%}img{max-width:100%}[hidden]{display:none!important}</style>\n</head>\n<body>\n"
             + body + "\n</body>\n</html>\n")
     (SITE / "index.html").write_text(full)

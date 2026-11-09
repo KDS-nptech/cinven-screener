@@ -624,7 +624,7 @@ def main(argv=None):
     client = CHClient(key)
     if args.numbers:
         nums = args.numbers.split(",")
-        cand = read_parquet("companies").filter(pl.col("company_number").is_in(nums)).select(["company_number", "name", "account_category"])
+        cand = read_parquet("candidate_companies").filter(pl.col("company_number").is_in(nums)).select(["company_number", "name", "account_category"])
     else:
         cand = candidates([c.strip() for c in args.categories.split(",")],
                           [r.strip() for r in args.routes.split(",")] if args.routes else None).select(["company_number", "name", "account_category"])

@@ -1,6 +1,6 @@
 # Limitations, mitigations and what Cinven's own data would change
 
-Each limit says what the screener does about it and what the fund's own data (deal log, passes, CRM, portfolio metrics) would change. The site carries the same list on the Methods page.
+Each limit says what the screener does about it and what the fund's own data (deal log, passes, CRM, portfolio metrics) would change. The site carries a shorter version on the Methods page, Limitations tab.
 
 1. **PDF accounts:** Most large UK companies file PDF accounts, and Companies House rasterises them. Only 29k of the 112k FULL, GROUP and MEDIUM filers were in the twelve-month iXBRL bulk product; the rest have no text layer. Mitigation: the document API fetches the latest accounts, the contents page is read for the printed page of the income statement, and a vision model reads that page (revenue, operating profit, profit before tax, EBITDA where stated, period end, unit, consolidated flag); ~74% of documents yield a turnover line; every such figure is flagged "accounts read from a PDF" on the card and in the why-now panel. Figures from a PDF read should be checked against the document before they are quoted. Cinven's data room access or a paid financials feed would replace this step.
 

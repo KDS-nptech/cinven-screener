@@ -1,59 +1,63 @@
 {
-  "computed_at": "2026-11-09T19:41:32+00:00",
-  "rows": 45,
-  "ranked": 22,
-  "comparables": 23,
+  "computed_at": "2026-11-09T21:25:48+00:00",
+  "rows": 528,
+  "ranked": 38,
+  "comparables": 490,
   "by_sector_ranked": {
-    "business_services": 3,
-    "consumer": 2,
-    "financial_services": 2,
-    "healthcare": 3,
-    "industrials": 11,
-    "tmt": 1
+    "business_services": 10,
+    "consumer": 10,
+    "healthcare": 6,
+    "industrials": 10,
+    "tmt": 2
   },
   "by_route_ranked": {
-    "employee_owned": 1,
-    "founder_family": 14,
+    "founder_family": 30,
+    "plc_dispersed": 1,
     "sponsor": 7
   },
   "size_fit_ranked": {
-    "flagship band": 1,
-    "mega-cap": 1,
-    "strategic fund band": 19,
-    "strategic fund band (turnover only)": 1
+    "flagship band": 2,
+    "strategic fund band": 32,
+    "strategic fund band (turnover only)": 4
   },
   "by_sector_all": {
-    "business_services": 9,
-    "consumer": 8,
-    "financial_services": 3,
-    "healthcare": 4,
-    "industrials": 18,
-    "tmt": 3
+    "business_services": 159,
+    "consumer": 130,
+    "financial_services": 17,
+    "healthcare": 56,
+    "industrials": 125,
+    "tmt": 41
   },
   "by_route_all": {
-    "employee_owned": 2,
-    "founder_family": 32,
-    "sponsor": 10,
-    "sponsor_offshore": 1
+    "employee_owned": 12,
+    "founder_family": 469,
+    "plc_dispersed": 13,
+    "sponsor": 28,
+    "sponsor_offshore": 4,
+    "uk_group": 1,
+    "uncertain": 1
   },
   "size_fit_all": {
-    "flagship band": 1,
+    "flagship band": 3,
+    "flagship band (turnover only)": 1,
+    "loss-making": 6,
+    "loss-making (turnover at scale)": 5,
     "mega-cap": 1,
-    "strategic fund band": 20,
-    "strategic fund band (turnover only)": 1,
-    "too small": 13,
-    "unknown": 9
+    "strategic fund band": 44,
+    "strategic fund band (turnover only)": 5,
+    "too small": 70,
+    "unknown": 393
   },
-  "size_unverified_in_scope": 0,
+  "size_unverified_in_scope": 37,
   "fit_quartiles_ranked": [
-    76.5,
-    88.1,
-    92.3
+    80.7,
+    91.0,
+    95.8
   ],
   "rubric_quartiles_ranked": [
     50.0,
-    60.9,
-    71.2
+    60.0,
+    65.8
   ],
   "rank_min_fit": 40
 }

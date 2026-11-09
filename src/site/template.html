@@ -1,5 +1,4 @@
-<title>Cinven Screener</title>
-<meta name="claude:viewport-fit-sides" content="cover">
+<title>UK Buyout Screener Calibrated to Cinven (Independent)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400&family=Inter:wght@400;500&display=swap">
 <style>
@@ -188,7 +187,7 @@ svg text{fill:var(--teal);font-family:var(--body);font-size:11px}
   <header class="top"><div class="hbar">
     <div class="brandrow">
       <a class="wordmark" href="#ranked">Cinven Screener</a>
-      <span class="brand-eyebrow">Independent sourcing screener, public data, built for the London office</span>
+      <span class="brand-eyebrow">Independent screener by Kyle D&#39;Souza on public data. Not affiliated with Cinven.</span>
     </div>
     <nav class="views" id="nav" aria-label="Views">
       <a href="#ranked" data-view="ranked">Ranked</a>
@@ -253,11 +252,11 @@ const growthPhrase = (g, prior, latest, fmt) => { if (!isNum(g)) return null; if
 // ------------------------------------------------------------ labels
 const SECTOR = {business_services:'Business Services', consumer:'Consumer', financial_services:'Financial Services', healthcare:'Healthcare', industrials:'Industrials', tmt:'TMT', other:'Other'};
 const ROUTE = {founder_family:'Founder or family', sponsor:'Sponsor-owned', sponsor_offshore:'Offshore vehicle', plc_dispersed:'Widely held PLC', foreign_parent:'Foreign parent', uk_group:'UK group', employee_owned:'Employee-owned', uncertain:'Uncertain', public_sector:'Public sector'};
-const ROUTE_REASON = {individuals_control:'Individuals control the company directly on the PSC register', individuals_control_via_holdco:'Individuals control the company through a holding company', investor_psc_via_holdco:'An investment fund is the person with significant control through a holding company', investor_psc:'An investment fund is the person with significant control of record', employee_trust_psc:'An employee ownership trust is the person with significant control', offshore_vehicle_parent:'The parent is a vehicle registered offshore', plc_dispersed:'No person holds 25% or more; the shares are widely held', foreign_parent:'A company registered outside the UK is the parent', uk_group:'A UK company is the parent'};
+const ROUTE_REASON = {corporate_unresolved:'A corporate owner on the register could not be traced', foreign_corporate_parent:'A company registered outside the UK controls it', psc_unidentified:'The register says a controlling party exists but has not identified it', no_psc_at_holdco:'A holding company above it has no person of significant control on the register', walkup_limit:'The ownership chain runs deeper than seven holding companies', individuals_lead_25_50:'Individuals hold 25 to 50% and nobody else is on the register; founder-led, stake uncertain', individual_owners_resident_abroad:'Individuals control the company but all live outside the UK', dispersed_statement_private:'The company declares no one above 25%', individuals_below_control:'Individuals are on the register below a controlling stake', mutual_or_charity_psc:'A mutual or charity controls the company', no_psc:'No active person with significant control on the register', no_rule_fired:'The register did not resolve to an owner', offshore_parent_unknown_owner:'An offshore holding company with no named owner', plc_dispersed_statement:'A listed company that declares no one above 25%', plc_no_psc:'A listed company with no person of significant control', public_body_psc:'A public body controls the company', super_secure_psc:'The register entry is protected', uk_parent_dispersed:'A UK parent that declares no one above 25%', individuals_control_with_minority_investor:'Individuals hold the majority; an investor holds a minority stake on the register', plc_with_minority_fund_holder:'A listed company; a fund holds a stake below 50% on the register', individuals_control:'Individuals control the company directly on the PSC register', individuals_control_via_holdco:'Individuals control the company through a holding company', investor_psc_via_holdco:'An investment fund is the person with significant control through a holding company', investor_psc:'An investment fund is the person with significant control of record', employee_trust_psc:'An employee ownership trust is the person with significant control', offshore_vehicle_parent:'The parent is a vehicle registered offshore', plc_dispersed:'No person holds 25% or more; the shares are widely held', foreign_parent:'A company registered outside the UK is the parent', uk_group:'A UK company is the parent'};
 const BAND = {'strategic fund band':'Strategic Fund Band', 'flagship band':'Flagship Band', 'too small':'Below the Floor', 'mega-cap':'Mega-Cap', 'unknown':'Size Unknown', 'strategic fund band (turnover only)':'Strategic Fund Band (Turnover Only)', 'flagship band (turnover only)':'Flagship Band (Turnover Only)', 'loss-making':'Loss-Making'};
 const bandLabel = s => BAND[s] || tc(s||'unknown');
 const DIRN = {approach:'Reason to approach', caution:'Point to ask about', context:'Context'};
-const DISC = {seznam_title_match:'found by search engine title match', domain_probe:'found by name probe', override:'set by hand', search:'found by web search', none:'not found'};
+const DISC = {model_suggested_verified:'suggested by a model, then verified on the site', seznam_title_match:'found by search engine title match', domain_probe:'found by name probe', override:'set by hand', search:'found by web search', none:'not found'};
 const FITL = {size:'Size', route:'Route', growth:'Growth', margin:'Margin', sector:'Sector', data_quality:'Data Quality'};
 const FITMAX = {size:D.config.fit.size_points, route:D.config.fit.route_points, growth:D.config.fit.growth_points, margin:D.config.fit.margin_points, sector:D.config.fit.sector_points, data_quality:D.config.fit.data_quality_points};
 const T = D.config.target;
@@ -265,6 +264,7 @@ const sectorTag = v => `<span class="tag ${esc(v||'other')}">${esc(SECTOR[v]||tc
 const routeTag = v => `<span class="tag route">${esc(ROUTE[v]||tc(v||''))}</span>`;
 const bandTag = v => { const ok = /band/.test(v||''); return `<span class="tag band ${ok?'':'weak'}">${esc(bandLabel(v))}</span>`; };
 const scoreCell = (v, grey, cls='') => `<div class="score"><span class="num">${isNum(v)?Number(v).toFixed(1):DASH}</span>${bar(v,100,grey?'grey':cls)}</div>`;
+const FLAGL = {corrected_after_review:'Corrected after hand review', group_unit:'Largest unit of a group'};
 const WHY_LABEL = {sponsor_hold:'Sponsor hold', rollover:'Founder rollover', owner_age:'Owner age', family:'Family owners', owner_count:'Number of owners', plc:'Listed company', psc_new:'New controlling party', psc_ceased:'Controlling party ceased', new_holdco:'New holding company', growth:'Turnover growth', margin:'Thin margin', dividends:'Dividends against profit', leverage:'Bank debt against EBITDA', cash:'Cash from operations', accounts_source:'Accounts read from a PDF', overdue:'Accounts overdue', renamed:'Name change', charges:'Charges outstanding', senior_roles:'Senior roles open'};
 const whyLine = s => String(s||'').replace(/\d{4}-\d{2}-\d{2}/g, m=>date(m));
 
@@ -482,6 +482,10 @@ function company(n){
   const changeVs = (k) => { const a = val(latest, k), b = val(prior, k); if (!isNum(a) || !isNum(b) || Number(b) === 0) return DASH; if (Number(a) >= 0 && Number(b) < 0) return 'turned positive'; if (Number(a) < 0 && Number(b) >= 0) return 'turned negative'; return pct((a - b) / Math.abs(b)); };
   const accRow = (label, k, fmt=gbp) => `<tr><td>${label}</td><td class="r num">${fmt(val(latest, k))}</td><td class="r num">${prior ? fmt(val(prior, k)) : DASH}</td><td class="r num">${changeVs(k)}</td></tr>`;
   const siteNote = (r.flags||[]).includes('site_says_foreign_hq') ? '<div class="note warn" style="margin-top:.8rem">The company website describes a head office outside the UK. The UK entity may be a regional subsidiary filing group accounts for the UK only.</div>' : '';
+  const chLink = cn => `<a href="https://find-and-update.company-information.service.gov.uk/company/${esc(cn)}" target="_blank" rel="noopener">${esc(cn)}</a>`;
+  const groupNote = r.group_units ? `<div class="note" style="margin-top:.8rem">${r.group_rep === r.company_number
+      ? `One of ${num(r.group_units)} UK companies under the same parent, ${esc(cname(r.group_parent_name||'a holding company'))} (${chLink(r.group_parent)}). This is the largest, so it stands for the group here; the figures cover this company only and the group is larger.`
+      : `A smaller unit of a group: ${D.companies[r.group_rep] ? `<a href="#c-${esc(r.group_rep)}">${esc(cname(NAME_OF(r.group_rep)||r.group_rep))}</a>` : esc(cname(NAME_OF(r.group_rep)||r.group_rep))} is the largest of the ${num(r.group_units)} UK companies under ${esc(cname(r.group_parent_name||'the same parent'))} (${chLink(r.group_parent)}).`}</div>` : '';
   main.innerHTML = `
     <a class="back" href="#ranked">Back to Ranked</a>
     <span class="eyebrow">${r.ranked ? `Rank ${r.rank} of ${nRanked}` : 'Comparable Outside the Ranking'}</span>
@@ -489,7 +493,7 @@ function company(n){
     <div class="meta">${sectorTag(r.vertical)}${routeTag(r.route)}${bandTag(r.size_fit)}<span class="small">${esc(tc(r.post_town||''))}${r.postcode?` ${esc(r.postcode)}`:''} · Incorporated ${year(r.inc_date)} · Company ${esc(r.company_number)} · ${esc(r.sic_text1||r.sic1||'')}</span></div>
     <div class="toolbar"><button class="btn ${shortlist.has(n)?'on':'secondary'}" id="c-star" type="button">${shortlist.has(n)?'★ On Shortlist':'☆ Add to Shortlist'}</button><a class="btn readmore" href="#c-brief">Investment Brief</a>${w.homepage_url?`<a class="btn readmore" href="${esc(w.homepage_url)}" target="_blank" rel="noopener">Visit Website</a>`:''}<a class="btn readmore" href="https://find-and-update.company-information.service.gov.uk/company/${esc(r.company_number)}" target="_blank" rel="noopener">Companies House Record</a></div>
     ${!r.ranked ? `<div class="note">Shown as a comparable: ${esc(sent(r.not_ranked_reason||'excluded by a filter'))}</div>` : ''}
-    ${siteNote}
+    ${siteNote}${groupNote}${r.review_note?`<div class="note" style="margin-top:.8rem"><strong>Corrected after review:</strong> ${esc(r.review_note)}</div>`:''}
     <div class="tiles">
       <div class="tile dark"><div class="k">Investment Quality${customWeights()?' (Custom Weights)':''}</div><div class="v num">${isNum(r.durability_score)?Number(r.durability_score).toFixed(1):DASH}</div><div class="s">0${DASH}100. ${r.grey ? `Grey: ${plural(r.n_unscored,'dimension')} without a score.` : (r.n_unscored ? `${plural(r.n_unscored,'dimension')} without a score.` : 'All ten dimensions scored.')}</div></div>
       <div class="tile mid"><div class="k">Entry Fit</div><div class="v num">${isNum(r.fit_score)?Number(r.fit_score).toFixed(1):DASH}</div><div class="s">${Object.keys(FITMAX).map(k=>`${FITL[k]} ${pts(fit[k])} of ${FITMAX[k]}`).join(' · ')}</div></div>
@@ -824,7 +828,8 @@ const kvRows = rows => `<div class="kv">${rows.filter(r=>r[1]!=null && r[1]!==''
 function qaCard(q){
   return `<div class="card"><h4>Quality Checks</h4>${kvRows([
     ['PDF figures re-read', q.pdf_checked!=null ? `${num(q.pdf_checked)} documents; turnover within 2% on ${pts(q.pdf_turnover_within_2pct)}%` : null, q.pdf_method],
-    ['Operating profit agreement', q.pdf_op_within_2pct!=null ? `${pts(q.pdf_op_within_2pct)}% within 2%` : null],
+    ['Operating profit agreement', q.pdf_op_within_2pct!=null ? `${pts(q.pdf_op_within_2pct)}% within 2%` : null, 'both misses took a neighbouring line on the right page: underlying against statutory, and operating profit before against after a joint-venture share'],
+    ['Unit and period errors', q.pdf_unit_errors!=null ? `${num(q.pdf_unit_errors)} unit errors; period end agrees on ${pts(q.pdf_period_agree)}%` : null],
     ['Sector labels re-checked', q.labels_checked!=null ? `${num(q.labels_checked)} companies; ${pts(q.label_agreement_pct)}% agree` : null, q.label_method],
     ['Rubric sub-scores re-scored', q.subscores_checked!=null ? `${num(q.subscores_checked)} sub-scores; ${pts(q.subscore_within_one_pct)}% within one point, ${pts(q.subscore_exact_pct)}% exact` : null, q.subscore_method],
     ['Investment Quality gap', q.iq_gap_mean!=null ? `${pts(q.iq_gap_mean)} points on average (pipeline minus checker)` : null],

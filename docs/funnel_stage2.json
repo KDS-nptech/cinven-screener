@@ -1,5 +1,5 @@
 {
-  "computed_at": "2026-11-09T20:13:15+00:00",
+  "computed_at": "2026-11-09T21:15:14+00:00",
   "thresholds": {
     "universe_turnover_min_gbp": 50000000.0,
     "universe_employees_min": 150,
@@ -59,19 +59,19 @@
     "passes_legal_form_and_sic": 92035,
     "passes_category": 92034,
     "passes_disclosure": 92034,
-    "with_parsed_accounts": 30412,
-    "passes_size_or_provisional": 66211,
-    "passes_all": 66211,
-    "passes_all_verified": 5448,
-    "passes_all_provisional": 60763,
-    "at_scale": 946
+    "with_parsed_accounts": 31057,
+    "passes_size_or_provisional": 66139,
+    "passes_all": 66139,
+    "passes_all_verified": 5467,
+    "passes_all_provisional": 60672,
+    "at_scale": 948
   },
   "exclusion_reasons": {
     "account_category_excluded": 1,
-    "below_size_floor": 24112,
+    "below_size_floor": 24184,
     "legal_form_excluded": 15655,
     "no_accounts": 1711,
     "sic_excluded": 4741,
-    "none": 66211
+    "none": 66139
   }
 }

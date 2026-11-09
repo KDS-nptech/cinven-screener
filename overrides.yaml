@@ -1,0 +1,27 @@
+# Hand review of the ranked list, 9 November 2026 (docs/qa/top30_review.md). Exclusions keep the company on
+# the site as a comparable with the reason shown; corrections replace a field the register got wrong.
+top30_reviewed: 49
+exclude:
+  - company_number: "06132144"
+    category: uk_arm_of_foreign_group
+    reason: "UK subsidiary of Vantage Data Centers, a US data centre platform; the PSC is DigitalBridge Group, Inc. and the accounts show no UK employees. The UK entity is not for sale on its own."
+  - company_number: "09516131"
+    category: not_a_buyout_business
+    reason: "Proprietary systematic trading firm; turnover is trading income and the partners' capital is the business."
+  - company_number: "00006400"
+    category: charity
+    reason: "The Girls' Day School Trust is a registered charity; the website found (schoolrecruiter.com) is a recruitment portal, not the trust's own site."
+  - company_number: "10238654"
+    category: unit_of_larger_group
+    reason: "Blick Rothenberg is one firm inside Azets (Hg and PAI); its accounts cover the firm only and the group is the asset."
+  - company_number: "06941589"
+    category: unit_of_larger_group
+    reason: "One printing plant of Walstead Group (Rutland Partners); the accounts cover the plant only."
+  - company_number: "04512575"
+    category: wrong_website
+    reason: "Wrong website: seasalt.com is an unrelated US food business. Seasalt Holdings is the Cornish clothing retailer, so the sector label and rubric read the wrong pages."
+corrections:
+  "SC222302":
+    sponsor_names: ["Veritas Capital"]
+    hold_start: "2023-02-01"
+    note: "The register shows Charterhouse Nadia 5 Limited, a holding company that kept its name from Charterhouse's 2009 to 2012 ownership. Verisk sold Wood Mackenzie to Veritas Capital in February 2023 (press), so the sponsor and hold start are corrected by hand."

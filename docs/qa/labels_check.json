@@ -1,0 +1,381 @@
+{
+ "summary": {
+  "computed_at": "2026-11-09T20:47:01+00:00",
+  "checker_model": "claude-sonnet-5-5",
+  "checked": 40,
+  "agreement_pct": 80.0,
+  "disagreements": [
+   "MAP GROUP (UK) LIMITED: industrials vs tmt",
+   "WILSONS AUCTIONS LIMITED: tmt vs financial_services",
+   "SOFINO HOLDINGS LTD: other vs healthcare",
+   "ADS GROUP HOLDINGS LTD: other vs tmt",
+   "PARK SQUARE CAPITAL, LLP: other vs financial_services",
+   "FORD & SLATER LIMITED: other vs business_services",
+   "ROCKET ROSE HOLDINGS LIMITED: other vs business_services",
+   "TRAVCO GROUP LIMITED: other vs consumer"
+  ],
+  "method": "same website extract and prompt, answered blind by the checker model; three quarters of the sample from the six sectors"
+ },
+ "rows": [
+  {
+   "company_number": "15876349",
+   "name": "PRESTIGE FLOWERS GROUP LIMITED",
+   "pipeline": "consumer",
+   "checker": "consumer",
+   "agree": true,
+   "pipeline_operating": true,
+   "checker_operating": true
+  },
+  {
+   "company_number": "14267100",
+   "name": "DANIELI GROUP LIMITED",
+   "pipeline": "consumer",
+   "checker": "consumer",
+   "agree": true,
+   "pipeline_operating": true,
+   "checker_operating": true
+  },
+  {
+   "company_number": "SC301836",
+   "name": "SIGNATURE PUBS LIMITED",
+   "pipeline": "consumer",
+   "checker": "consumer",
+   "agree": true,
+   "pipeline_operating": true,
+   "checker_operating": true
+  },
+  {
+   "company_number": "10138251",
+   "name": "MAGROCK LIMITED",
+   "pipeline": "industrials",
+   "checker": "industrials",
+   "agree": true,
+   "pipeline_operating": true,
+   "checker_operating": true
+  },
+  {
+   "company_number": "03461815",
+   "name": "FIRST TECHNICAL RECRUITMENT LIMITED",
+   "pipeline": "business_services",
+   "checker": "business_services",
+   "agree": true,
+   "pipeline_operating": true,
+   "checker_operating": true
+  },
+  {
+   "company_number": "12578293",
+   "name": "ACUITY CARE HOLDINGS LIMITED",
+   "pipeline": "healthcare",
+   "checker": "healthcare",
+   "agree": true,
+   "pipeline_operating": true,
+   "checker_operating": true
+  },
+  {
+   "company_number": "01223712",
+   "name": "GRAYSON AUTOMOTIVE SERVICES LIMITED",
+   "pipeline": "industrials",
+   "checker": "industrials",
+   "agree": true,
+   "pipeline_operating": true,
+   "checker_operating": true
+  },
+  {
+   "company_number": "02853596",
+   "name": "MAP GROUP (UK) LIMITED",
+   "pipeline": "industrials",
+   "checker": "tmt",
+   "agree": false,
+   "pipeline_operating": true,
+   "checker_operating": true
+  },
+  {
+   "company_number": "13843726",
+   "name": "ENIMED (HOLDINGS) LIMITED",
+   "pipeline": "healthcare",
+   "checker": "healthcare",
+   "agree": true,
+   "pipeline_operating": true,
+   "checker_operating": true
+  },
+  {
+   "company_number": "05848642",
+   "name": "EVOLUTION FOODS LTD",
+   "pipeline": "consumer",
+   "checker": "consumer",
+   "agree": true,
+   "pipeline_operating": true,
+   "checker_operating": true
+  },
+  {
+   "company_number": "11411412",
+   "name": "CAVALRY HEALTHCARE LTD",
+   "pipeline": "healthcare",
+   "checker": "healthcare",
+   "agree": true,
+   "pipeline_operating": true,
+   "checker_operating": true
+  },
+  {
+   "company_number": "05546000",
+   "name": "SAM 99 P LTD",
+   "pipeline": "consumer",
+   "checker": "consumer",
+   "agree": true,
+   "pipeline_operating": true,
+   "checker_operating": true
+  },
+  {
+   "company_number": "04256108",
+   "name": "HUBLE DIGITAL GROUP LIMITED",
+   "pipeline": "business_services",
+   "checker": "business_services",
+   "agree": true,
+   "pipeline_operating": true,
+   "checker_operating": true
+  },
+  {
+   "company_number": "05363841",
+   "name": "CROSSROADS GROUP LIMITED",
+   "pipeline": "business_services",
+   "checker": "business_services",
+   "agree": true,
+   "pipeline_operating": true,
+   "checker_operating": true
+  },
+  {
+   "company_number": "01087941",
+   "name": "A.& J.SCOTT LIMITED",
+   "pipeline": "industrials",
+   "checker": "industrials",
+   "agree": true,
+   "pipeline_operating": true,
+   "checker_operating": true
+  },
+  {
+   "company_number": "14963578",
+   "name": "SIM TRAVA GROUP LIMITED",
+   "pipeline": "consumer",
+   "checker": "consumer",
+   "agree": true,
+   "pipeline_operating": true,
+   "checker_operating": true
+  },
+  {
+   "company_number": "00577587",
+   "name": "J.R. RIX & SONS LIMITED",
+   "pipeline": "business_services",
+   "checker": "business_services",
+   "agree": true,
+   "pipeline_operating": true,
+   "checker_operating": true
+  },
+  {
+   "company_number": "11144498",
+   "name": "RADIANT FINANCIAL GROUP UK HOLDINGS LIMITED",
+   "pipeline": "financial_services",
+   "checker": "financial_services",
+   "agree": true,
+   "pipeline_operating": true,
+   "checker_operating": true
+  },
+  {
+   "company_number": "SC029219",
+   "name": "OGILVIE GROUP LIMITED",
+   "pipeline": "business_services",
+   "checker": "business_services",
+   "agree": true,
+   "pipeline_operating": true,
+   "checker_operating": true
+  },
+  {
+   "company_number": "07045843",
+   "name": "SOUTHPAW LIMITED",
+   "pipeline": "business_services",
+   "checker": "business_services",
+   "agree": true,
+   "pipeline_operating": true,
+   "checker_operating": true
+  },
+  {
+   "company_number": "02830297",
+   "name": "EVELYN PARTNERS INVESTMENT MANAGEMENT SERVICES LIMITED",
+   "pipeline": "financial_services",
+   "checker": "financial_services",
+   "agree": true,
+   "pipeline_operating": true,
+   "checker_operating": true
+  },
+  {
+   "company_number": "07709704",
+   "name": "RH45 LIMITED",
+   "pipeline": "business_services",
+   "checker": "business_services",
+   "agree": true,
+   "pipeline_operating": true,
+   "checker_operating": true
+  },
+  {
+   "company_number": "SC033868",
+   "name": "CRAIG OF CAMPBELTOWN LIMITED",
+   "pipeline": "consumer",
+   "checker": "consumer",
+   "agree": true,
+   "pipeline_operating": true,
+   "checker_operating": true
+  },
+  {
+   "company_number": "14033611",
+   "name": "ROCHE HOMECARE LIMITED",
+   "pipeline": "healthcare",
+   "checker": "healthcare",
+   "agree": true,
+   "pipeline_operating": true,
+   "checker_operating": true
+  },
+  {
+   "company_number": "15974629",
+   "name": "WIZE HOLDINGS LIMITED",
+   "pipeline": "industrials",
+   "checker": "industrials",
+   "agree": true,
+   "pipeline_operating": true,
+   "checker_operating": true
+  },
+  {
+   "company_number": "NI011967",
+   "name": "WILSONS AUCTIONS LIMITED",
+   "pipeline": "tmt",
+   "checker": "financial_services",
+   "agree": false,
+   "pipeline_operating": true,
+   "checker_operating": true
+  },
+  {
+   "company_number": "08335002",
+   "name": "TILE MOUNTAIN LIMITED",
+   "pipeline": "consumer",
+   "checker": "consumer",
+   "agree": true,
+   "pipeline_operating": true,
+   "checker_operating": true
+  },
+  {
+   "company_number": "05035069",
+   "name": "LEXIA SOLUTIONS GROUP LIMITED",
+   "pipeline": "business_services",
+   "checker": "business_services",
+   "agree": true,
+   "pipeline_operating": true,
+   "checker_operating": true
+  },
+  {
+   "company_number": "SC204560",
+   "name": "IOMART GROUP PLC",
+   "pipeline": "tmt",
+   "checker": "tmt",
+   "agree": true,
+   "pipeline_operating": true,
+   "checker_operating": true
+  },
+  {
+   "company_number": "03442268",
+   "name": "EVOLUTION POWER TOOLS LTD",
+   "pipeline": "industrials",
+   "checker": "industrials",
+   "agree": true,
+   "pipeline_operating": true,
+   "checker_operating": true
+  },
+  {
+   "company_number": "15386176",
+   "name": "SOFINO HOLDINGS LTD",
+   "pipeline": "other",
+   "checker": "healthcare",
+   "agree": false,
+   "pipeline_operating": false,
+   "checker_operating": true
+  },
+  {
+   "company_number": "14597345",
+   "name": "ADS GROUP HOLDINGS LTD",
+   "pipeline": "other",
+   "checker": "tmt",
+   "agree": false,
+   "pipeline_operating": false,
+   "checker_operating": false
+  },
+  {
+   "company_number": "OC309394",
+   "name": "PARK SQUARE CAPITAL, LLP",
+   "pipeline": "other",
+   "checker": "financial_services",
+   "agree": false,
+   "pipeline_operating": false,
+   "checker_operating": true
+  },
+  {
+   "company_number": "11243455",
+   "name": "GME HOLDINGS LIMITED",
+   "pipeline": "other",
+   "checker": "other",
+   "agree": true,
+   "pipeline_operating": false,
+   "checker_operating": false
+  },
+  {
+   "company_number": "06673195",
+   "name": "TRIGON GROUP LIMITED",
+   "pipeline": "other",
+   "checker": "other",
+   "agree": true,
+   "pipeline_operating": false,
+   "checker_operating": false
+  },
+  {
+   "company_number": "13397564",
+   "name": "JOHN FREDERICKS PLASTICS GROUP LIMITED",
+   "pipeline": "other",
+   "checker": "other",
+   "agree": true,
+   "pipeline_operating": false,
+   "checker_operating": false
+  },
+  {
+   "company_number": "00118587",
+   "name": "TRANMERE ROVERS FOOTBALL CLUB LIMITED",
+   "pipeline": "other",
+   "checker": "other",
+   "agree": true,
+   "pipeline_operating": false,
+   "checker_operating": false
+  },
+  {
+   "company_number": "02495131",
+   "name": "FORD & SLATER LIMITED",
+   "pipeline": "other",
+   "checker": "business_services",
+   "agree": false,
+   "pipeline_operating": false,
+   "checker_operating": true
+  },
+  {
+   "company_number": "15299153",
+   "name": "ROCKET ROSE HOLDINGS LIMITED",
+   "pipeline": "other",
+   "checker": "business_services",
+   "agree": false,
+   "pipeline_operating": false,
+   "checker_operating": true
+  },
+  {
+   "company_number": "09276335",
+   "name": "TRAVCO GROUP LIMITED",
+   "pipeline": "other",
+   "checker": "consumer",
+   "agree": false,
+   "pipeline_operating": false,
+   "checker_operating": true
+  }
+ ]
+}

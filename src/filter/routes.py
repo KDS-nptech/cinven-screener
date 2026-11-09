@@ -76,8 +76,17 @@ def compile_route_rules(c: dict | None = None) -> RouteRules:
     c = c or cfg()
     base = compile_rules(c)
     r = c.get("ownership_routes", {})
-    extra = [(n, _word_regex(n)) for n in r.get("sponsor_names", [])]
-    base.investor_names = base.investor_names + extra
+    anchored = {a.upper() for a in r.get("sponsor_names_anchored", [])}
+
+    def rx(n):
+        if n.upper() in anchored:
+            return re.compile(r"^\W*" + r"\s+".join(re.escape(w) for w in n.upper().split()) + r"(?![A-Z0-9])")
+        return _word_regex(n)
+
+    extra = [(n, rx(n)) for n in r.get("sponsor_names", [])]
+    base.investor_names = [(l, (rx(l) if l.upper() in anchored else x)) for l, x in base.investor_names] + extra
+    ignored = {t.strip().upper() for t in r.get("sponsor_tokens_ignored", [])}
+    base.investor_tokens = [(l, x) for l, x in base.investor_tokens if l.strip().upper() not in ignored]
     return RouteRules(
         base=base,
         walkup_levels=int(r.get("walkup_levels", 4)),
@@ -128,6 +137,9 @@ def _notified(row) -> str | None:
     return str(v)[:10] if v is not None else None
 
 
+PROJECT_VEHICLE_RE = re.compile(r"^\s*(PROJECT\s+)?[A-Z]+\s+(20\d\d|\d)\s+(BIDCO|TOPCO|MIDCO|HOLDCO|NEWCO)\b", re.I)
+
+
 def _classify_corporate_row(c, rules: RouteRules, level_cn: str, scale: float, w: Walk, name_lookup) -> str:
     """Decide what one corporate PSC row is: sponsor, employee trust, public body, mutual, foreign, uk, unresolved."""
     nm = str(c.get("name") or "")
@@ -146,6 +158,8 @@ def _classify_corporate_row(c, rules: RouteRules, level_cn: str, scale: float, w
         w.mutual.append({"name": nm, "cn_level": level_cn})
         return "mutual"
     hits = [h for h in hits if h != "employee ownership trust"]
+    if hits and PROJECT_VEHICLE_RE.search(nm):
+        hits = ["acquisition vehicle, sponsor unnamed"]   # "Apollo 2024 Bidco": a project name, not the fund
     if hits:
         w.sponsors.append({"labels": hits, "name": nm, "cn_level": level_cn, "notified_on": _notified(c), "scale": scale,
                            "country": _country(c) or None})
@@ -289,6 +303,20 @@ def evaluate(company: dict, psc_index: dict, rules: RouteRules, name_lookup: dic
     if w.employee and not w.sponsors and ind_pct < rules.founder_min_pct:
         out["owner_names"] = [x["name"] for x in w.employee]
         return done("employee_owned", "high", "employee_trust_psc")
+
+    sponsor_max = max((s.get("scale") or 0) for s in w.sponsors) if w.sponsors else 0
+    if w.sponsors and sponsor_max < 50 and ind_pct >= rules.founder_min_pct and not w.supers:
+        # individuals keep the majority beside a minority investor (BGF-style): founder-led, investor noted
+        out["sponsor_names"] = sorted({l for s in w.sponsors for l in s["labels"]})
+        out["owner_names"] = [p.get("name") for p in persons if (p.get("pct_mid") or 0) >= 10][:6]
+        out["flags"].append("minority_investor")
+        return done("founder_family", "medium", "individuals_control_with_minority_investor")
+    if w.sponsors and is_plc and sponsor_max < 50:
+        # a listed company with a fund on the register below 50%: a take-private route
+        out["sponsor_names"] = sorted({l for s in w.sponsors for l in s["labels"]})
+        out["owner_names"] = sorted({s["name"] for s in w.sponsors})
+        out["flags"].append("plc_fund_minority")
+        return done("plc_dispersed", "medium", "plc_with_minority_fund_holder")
 
     if w.sponsors:
         labels = sorted({l for s in w.sponsors for l in s["labels"]})

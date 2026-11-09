@@ -275,6 +275,11 @@ ownership:
 # ownership.investor_names with the large-cap and mid-cap owners whose exits feed Cinven's pipeline.
 ownership_routes:
   walkup_levels: 7
+  # Tokens from the founder screener that do not mean a buyout sponsor: trustee companies usually hold for a
+  # family trust and nominee companies for an unknown beneficiary, so the walk-up looks through them.
+  sponsor_tokens_ignored: ["Nominees", "Trustees"]
+  # Sponsor names that are ordinary words inside other company names: matched only at the start of a name.
+  sponsor_names_anchored: ["Partners Group", "Graphite", "Exponent", "Sovereign Capital", "Palatine", "Octopus", "Puma", "Foresight", "Dalmore"]
   founder_high_pct: 75
   founder_min_pct: 50
   rollover_min_pct: 25
@@ -423,17 +428,9 @@ ownership_routes:
     - "Qatar Investment"
     - "Norges"
     - "Allianz Capital"
-    - "AXA"
-    - "Generali"
-    - "Phoenix Group"
     - "Legal & General Capital"
     - "Octopus"
     - "Puma"
-    - "Nomura"
-    - "Mitsubishi"
-    - "Mitsui"
-    - "Marubeni"
-    - "Sumitomo"
     - "Softbank"
     - "Vision Fund"
     - "Coller"
@@ -689,6 +686,8 @@ classifier:
   prompt_version: "classify-cv-v1"
   prefilter_min_hits: 1
   routes: ["founder_family", "sponsor", "sponsor_offshore", "plc_dispersed", "employee_owned"]
+  # employee-owned companies are classified and shown as comparables; trusts are built to hold, so they never rank
+  rank_routes: ["founder_family", "sponsor", "sponsor_offshore", "plc_dispersed"]
   # Primary SIC division (first two digits) or code to a sector hint; a hint sends the company to the model even
   # when the keyword pre-filter finds nothing. Divisions not listed carry no hint.
   sic_hints:

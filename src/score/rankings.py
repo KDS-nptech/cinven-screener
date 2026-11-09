@@ -18,6 +18,7 @@ Run: python -m src.score.rankings
 """
 from __future__ import annotations
 
+import datetime as dt
 import json
 import sys
 
@@ -30,7 +31,7 @@ log = get_logger("rankings")
 FIT = cfg()["fit"]
 TGT = cfg()["target"]
 SECTORS = set(TGT["sectors"])
-ROUTES = set(cfg()["classifier"].get("routes", []))
+ROUTES = set(cfg()["classifier"].get("rank_routes") or cfg()["classifier"].get("routes", []))
 
 
 def band_points(value, lo, hi, points) -> float:
@@ -103,6 +104,9 @@ def size_fit_label(ebitda, turnover) -> str:
     return "mega-cap (turnover only)"
 
 
+CORRECTIONS: dict = {}
+
+
 def load_overrides() -> tuple[set[str], dict[str, str]]:
     f = REPO / "overrides.yaml"
     if not f.exists():
@@ -116,6 +120,8 @@ def load_overrides() -> tuple[set[str], dict[str, str]]:
             notes[str(item.get("company_number"))] = str(item.get("reason") or "")
         else:
             excl.add(str(item))
+    global CORRECTIONS
+    CORRECTIONS = {str(k): v for k, v in (o.get("corrections") or {}).items()}
     return excl, notes
 
 
@@ -127,6 +133,24 @@ def main(argv=None):
     jobs = read_parquet("jobs_summary") if parquet_exists("jobs_summary") else None
     why = read_parquet("why_now_summary") if parquet_exists("why_now_summary") else None
     excl, excl_notes = load_overrides()
+    # Part of a larger group: the first hop of the walk-up names the immediate UK parent; when that parent
+    # controls two or more universe companies, each one is a unit of a group and the group is the target.
+    # The largest of them (by turnover, then EBITDA proxy) represents the group and can rank; the others
+    # are comparables that point to it.
+    hops = read_parquet("universe").select(["company_number", "name", "walkup_path", "latest_turnover", "ebitda_proxy"]).to_dicts()
+    parent_of, size_of, uname = {}, {}, {}
+    for h in hops:
+        uname[h["company_number"]] = h["name"]
+        size_of[h["company_number"]] = (h.get("latest_turnover") or 0, h.get("ebitda_proxy") or 0)
+        first = str(h.get("walkup_path") or "").split(";")[0].strip()
+        if "->" in first:
+            a, b = [x.strip() for x in first.split("->", 1)]
+            if a == h["company_number"]:
+                parent_of[a] = b
+    kids: dict[str, list] = {}
+    for a, b in parent_of.items():
+        kids.setdefault(b, []).append(a)
+    rep_of = {b: max(v, key=lambda x: size_of.get(x, (0, 0))) for b, v in kids.items()}
 
     cls = cls.drop([c for c in ("computed_at", "flags", "model", "prompt_version", "raw_json", "keyword_hits_json") if c in cls.columns])
     uni = uni.drop([c for c in ("computed_at", "flags") if c in uni.columns])
@@ -149,6 +173,14 @@ def main(argv=None):
     for r in df.to_dicts():
         n = r["company_number"]
         flags = []
+        corr = CORRECTIONS.get(n)
+        if corr:
+            for k, v in corr.items():
+                if k != "note":
+                    r[k] = v
+            if r.get("hold_start"):
+                r["hold_years"] = round((dt.date.today() - dt.date.fromisoformat(str(r["hold_start"]))).days / 365.25, 1)
+            flags.append("corrected_after_review")
         ebitda = r.get("ebitda_proxy")
         turnover = r.get("latest_turnover")
         sp, size_basis = size_points(ebitda, turnover)
@@ -192,6 +224,13 @@ def main(argv=None):
         manual = n in excl
         if manual:
             flags.append("manual_exclusion")
+        par = parent_of.get(n, "")
+        sib = len(kids.get(par, []))
+        rep = rep_of.get(par)
+        part_of_group = sib >= 2 and rep != n          # a smaller unit: the representative carries the group
+        if sib >= 2:
+            flags.append("group_unit" if rep == n else "smaller_group_unit")
+        plc_pdf = r.get("route") == "plc_dispersed" and str(r.get("latest_accounts_type") or "").startswith("PDF")
         cinven_owned = any("cinven" in str(x).lower() for x in list(r.get("owner_names") or []) + list(r.get("sponsor_names") or []) + [r.get("parent_name") or ""])
         if cinven_owned:
             flags.append("cinven_owned")
@@ -199,7 +238,7 @@ def main(argv=None):
         at_scale = (ebitda >= TGT["ebitda_early_floor_gbp"]) if (ebitda is not None and ebitda > 0) else bool(r.get("at_scale")) if ebitda is None else False
         gate = (r.get("vertical") in SECTORS and r.get("is_software_product") is not False and bool(r.get("is_group_head", True))
                 and (r.get("route") in ROUTES) and not r.get("provisional") and at_scale and bool(r.get("domain"))
-                and "website_unverified" not in flags and fit >= FIT["rank_min_fit"] and not manual and not cinven_owned and r.get("durability_score") is not None)
+                and "website_unverified" not in flags and fit >= FIT["rank_min_fit"] and not manual and not cinven_owned and not part_of_group and not plc_pdf and r.get("durability_score") is not None)
         reasons = []
         if r.get("vertical") not in SECTORS:
             reasons.append("sector other")
@@ -223,6 +262,14 @@ def main(argv=None):
             reasons.append("excluded after review: " + (excl_notes.get(n) or ""))
         if cinven_owned:
             reasons.append("already in Cinven's portfolio")
+        if part_of_group:
+            reasons.append(f"a smaller unit of a group: {uname.get(rep) or rep} ({rep}) is the largest of the {sib} UK companies under the same parent")
+        if plc_pdf:
+            reasons.append("listed company whose figures were read from a long annual report PDF and need a manual check")
+        if corr and corr.get("note"):
+            pass
+        if r.get("route") == "employee_owned":
+            reasons.append("employee ownership trust")
         if r.get("durability_score") is None:
             reasons.append("not yet scored")
         keep = ["company_number", "name", "post_town", "postcode", "sic1", "sic_text1", "inc_date", "category", "account_category", "vertical", "sub_vertical",
@@ -235,7 +282,8 @@ def main(argv=None):
                 "open_roles", "international_roles", "why_now_signals", "why_now_approach", "why_now_caution", "why_now_line"]
         out.append({**{k: r.get(k) for k in keep}, "ranked": gate, "not_ranked_reason": "; ".join(reasons) if reasons else None,
                     "size_fit": size_fit_label(ebitda, turnover), "size_basis": size_basis, "fit_score": fit, "fit_components_json": json.dumps(comp),
-                    "flags": sorted(set(flags)), "computed_at": now_iso()})
+                    "flags": sorted(set(flags)), "group_parent": par if sib >= 2 else None, "group_parent_name": uname.get(par) if sib >= 2 else None,
+                    "review_note": (corr or {}).get("note"), "group_units": sib if sib >= 2 else None, "group_rep": rep if sib >= 2 else None, "computed_at": now_iso()})
     res = pl.DataFrame(out, infer_schema_length=None)
     ranked = res.filter(pl.col("ranked")).sort(["durability_score", "fit_score"], descending=[True, True], nulls_last=True).with_row_index("rank", offset=1)
     comparables = res.filter(~pl.col("ranked")).with_columns(pl.lit(None, dtype=pl.UInt32).alias("rank"))
