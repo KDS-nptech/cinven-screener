@@ -637,9 +637,10 @@ def discover(companies: list[dict], engines: list[str] | None = None, probe: boo
     for i, c in enumerate(companies, 1):
         n = normalise_company_number(c["company_number"])
         prev = existing.get(n)
-        if prev and not redo and prev.get("discovery_method") not in (None, "none"):
+        if prev and not redo and (prev.get("discovery_method") not in (None, "none") or prev.get("discovered_at")):
+            # attempted before (found or not): keep the earlier answer; --redo searches again
             out_rows.append({k: prev.get(k) for k in DISCOVERY_COLS})
-            found += 1
+            found += 1 if prev.get("domain") else 0
             continue
         row = discover_one({**c, "company_number": n}, searcher, session, probe=probe)
         if row["domain"]:

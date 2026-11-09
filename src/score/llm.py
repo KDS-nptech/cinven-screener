@@ -104,6 +104,8 @@ class LLM:
         for p in api.get("llm_providers", []):
             if providers and p["name"] not in providers:
                 continue
+            if p.get("qa_only") and not providers:
+                continue  # checker models are only used when asked for by name (src.qa)
             key = _env(p["key_env"])
             if key:
                 extra = {}
@@ -237,6 +239,9 @@ class LLM:
         r = self.client.post(f"{p.base_url}/chat/completions", json=body, headers=headers)
         if r.status_code == 400 and "response_format" in r.text:
             body.pop("response_format")
+            r = self.client.post(f"{p.base_url}/chat/completions", json=body, headers=headers)
+        if r.status_code == 400 and "temperature" in r.text:
+            body.pop("temperature", None)  # newer Anthropic models reject the parameter
             r = self.client.post(f"{p.base_url}/chat/completions", json=body, headers=headers)
         r.raise_for_status()
         j = r.json()

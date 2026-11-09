@@ -75,6 +75,7 @@ prior AS (
     -- the period immediately before the latest one, for growth
     SELECT r.company_number,
            TRY_CAST(r.period_end AS DATE)     AS prior_period_end,
+           r.period_days                      AS prior_period_days,
            TRY_CAST(r.employees_fixed AS BIGINT) AS prior_employees,
            TRY_CAST(r.turnover AS DOUBLE)     AS prior_turnover,
            TRY_CAST(r.operating_profit AS DOUBLE) AS prior_operating_profit
@@ -104,7 +105,7 @@ joined AS (
         c.charges_satisfied,
         c.previous_name,
         l.* EXCLUDE (company_number),
-        p.prior_period_end, p.prior_employees, p.prior_turnover, p.prior_operating_profit,
+        p.prior_period_end, p.prior_period_days, p.prior_employees, p.prior_turnover, p.prior_operating_profit,
         l.company_number IS NOT NULL                 AS has_accounts,
         -- EBITDA proxy: operating profit plus depreciation and amortisation where disclosed; operating
         -- profit alone when neither is disclosed (labelled as such in ebitda_basis).
@@ -116,8 +117,14 @@ joined AS (
              WHEN l.latest_depreciation IS NOT NULL THEN 'operating profit + depreciation'
              WHEN l.latest_amortisation IS NOT NULL THEN 'operating profit + amortisation'
              ELSE 'operating profit only' END       AS ebitda_basis,
+        -- turnover growth is annualised when either period is not a 12-month year (long first periods,
+        -- changes of year end); growth_annualised says so and the site labels it
         CASE WHEN p.prior_turnover > 0 AND l.latest_turnover IS NOT NULL
-             THEN l.latest_turnover / p.prior_turnover - 1 END AS turnover_growth,
+             THEN (l.latest_turnover * 365.0 / COALESCE(NULLIF(l.latest_period_days, 0), 365))
+                  / (p.prior_turnover * 365.0 / COALESCE(NULLIF(p.prior_period_days, 0), 365)) - 1 END AS turnover_growth,
+        CASE WHEN p.prior_turnover > 0 AND l.latest_turnover IS NOT NULL
+             THEN l.latest_turnover / p.prior_turnover - 1 END AS turnover_growth_raw,
+        (ABS(COALESCE(l.latest_period_days, 365) - 365) > 31 OR ABS(COALESCE(p.prior_period_days, 365) - 365) > 31) AS growth_annualised,
         CASE WHEN p.prior_employees > 0 AND l.latest_employees IS NOT NULL
              THEN l.latest_employees * 1.0 / p.prior_employees - 1 END AS employees_growth,
         CASE WHEN l.latest_turnover > 0 AND l.latest_operating_profit IS NOT NULL

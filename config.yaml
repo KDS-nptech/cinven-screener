@@ -530,6 +530,15 @@ api:
       requests_per_second: 2.0
       headers:
         anthropic-workspace-id: "env:ANTHROPIC_WORKSPACE_ID"
+    # Checker model for the blind re-labelling and re-scoring in src.qa; never part of the scoring pool.
+    - name: anthropic_sonnet55
+      base_url: "https://api.anthropic.com/v1"
+      model: "claude-sonnet-5-5"
+      key_env: "ANTHROPIC_API_KEY"
+      requests_per_second: 1.0
+      qa_only: true
+      headers:
+        anthropic-workspace-id: "env:ANTHROPIC_WORKSPACE_ID"
     # Gemini is blocked from this session's network (googleapis.com not on the allowlist); kept for a rebuild elsewhere.
     - name: gemini
       base_url: "https://generativelanguage.googleapis.com/v1beta/openai"

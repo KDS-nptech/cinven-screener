@@ -1,0 +1,15 @@
+duckdb>=1.1
+polars>=1.0
+pyarrow
+anthropic
+httpx
+requests
+pyyaml
+beautifulsoup4
+lxml
+trafilatura
+ixbrlparse
+tldextract
+pytest
+pdf2image
+playwright

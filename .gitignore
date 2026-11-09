@@ -22,3 +22,4 @@ data/parquet/accounts_meta/
 data/raw/
 docs/research/raw/
 docs/brand/*.html
+site/artifact.html

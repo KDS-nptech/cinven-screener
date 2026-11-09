@@ -269,6 +269,9 @@ def _vision_post(png: Path, prompt: str, model: str, max_tokens: int) -> dict | 
             log.warning("vision %s, sleeping %.0fs", r.status_code, wait)
             _t.sleep(min(wait, 60))
             continue
+        if r.status_code == 400 and "temperature" in r.text and "temperature" in body:
+            body.pop("temperature")  # newer models reject the parameter
+            continue
         log.warning("vision %s: %s", r.status_code, r.text[:200])
         return None
     return None

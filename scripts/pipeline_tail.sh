@@ -16,6 +16,9 @@ python3 -m src.score.rubric --workers 4 >> "$LOG" 2>&1
 python3 -m src.score.why_now >> "$LOG" 2>&1
 python3 -m src.score.rankings >> "$LOG" 2>&1
 python3 -m src.cv_pattern >> "$LOG" 2>&1 || true
+python3 -m src.usefulness >> "$LOG" 2>&1 || true
+python3 scripts/coverage.py >> "$LOG" 2>&1 || true
+python3 -m src.qa record >> "$LOG" 2>&1 || true
 python3 -m src.site.export >> "$LOG" 2>&1
 python3 -m src.site.build >> "$LOG" 2>&1 || true
 echo "=== done $(date -u +%FT%TZ) ===" | tee -a "$LOG"

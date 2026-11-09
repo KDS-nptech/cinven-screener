@@ -174,6 +174,8 @@ def main(argv=None):
             flags.append("growth_unknown")
         if r.get("operating_margin") is None:
             flags.append("margin_unknown")
+        if r.get("growth_annualised") and r.get("turnover_growth") is not None:
+            flags.append("growth_annualised")
         if r.get("grey"):
             flags.append("rubric_grey")
         if r.get("is_software_product") is False:
@@ -190,11 +192,14 @@ def main(argv=None):
         manual = n in excl
         if manual:
             flags.append("manual_exclusion")
+        cinven_owned = any("cinven" in str(x).lower() for x in list(r.get("owner_names") or []) + list(r.get("sponsor_names") or []) + [r.get("parent_name") or ""])
+        if cinven_owned:
+            flags.append("cinven_owned")
         # at scale: EBITDA at or above the Strategic Fund floor when a profit line is on file, else turnover at the ranking floor
         at_scale = (ebitda >= TGT["ebitda_early_floor_gbp"]) if (ebitda is not None and ebitda > 0) else bool(r.get("at_scale")) if ebitda is None else False
         gate = (r.get("vertical") in SECTORS and r.get("is_software_product") is not False and bool(r.get("is_group_head", True))
                 and (r.get("route") in ROUTES) and not r.get("provisional") and at_scale and bool(r.get("domain"))
-                and "website_unverified" not in flags and fit >= FIT["rank_min_fit"] and not manual and r.get("durability_score") is not None)
+                and "website_unverified" not in flags and fit >= FIT["rank_min_fit"] and not manual and not cinven_owned and r.get("durability_score") is not None)
         reasons = []
         if r.get("vertical") not in SECTORS:
             reasons.append("sector other")
@@ -216,13 +221,15 @@ def main(argv=None):
             reasons.append(f"fit {fit:.0f} under {FIT['rank_min_fit']}")
         if manual:
             reasons.append("excluded after review: " + (excl_notes.get(n) or ""))
+        if cinven_owned:
+            reasons.append("already in Cinven's portfolio")
         if r.get("durability_score") is None:
             reasons.append("not yet scored")
         keep = ["company_number", "name", "post_town", "postcode", "sic1", "sic_text1", "inc_date", "category", "account_category", "vertical", "sub_vertical",
                 "vertical_confidence", "evidence_quote", "evidence_url", "business_model", "uk_headquartered", "route", "route_confidence", "route_reason", "owner_names",
                 "sponsor_names", "hold_start", "hold_years", "parent_name", "parent_country", "individuals_pct_mid", "n_individuals", "oldest_owner_age",
                 "founder_rollover", "walkup_path", "group_head", "is_group_head", "latest_period_end", "latest_turnover", "latest_operating_profit", "ebitda_proxy", "ebitda_basis",
-                "latest_pbt", "latest_employees", "turnover_growth", "employees_growth", "operating_margin", "gross_margin", "latest_net_cash_from_ops", "latest_dividends",
+                "latest_pbt", "latest_employees", "turnover_growth", "turnover_growth_raw", "growth_annualised", "latest_period_days", "employees_growth", "operating_margin", "gross_margin", "latest_net_cash_from_ops", "latest_dividends",
                 "latest_bank_borrowings", "latest_cash", "latest_net_assets", "latest_consolidated", "latest_accounts_type", "prior_period_end", "prior_turnover",
                 "charges_outstanding", "charges_total", "provisional", "at_scale", "durability_score", "grey", "n_unscored", "domain", "homepage_url", "name_match",
                 "open_roles", "international_roles", "why_now_signals", "why_now_approach", "why_now_caution", "why_now_line"]
