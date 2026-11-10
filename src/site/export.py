@@ -141,10 +141,14 @@ def main():
         cdf = read_parquet_where("companies", "company_number", chain_numbers, ["company_number", "name", "inc_date", "account_category", "status", "category"])
         chain = {r["company_number"]: r for r in dicts(cdf)}
     companies = {}
+    officers: dict = {}
+    if parquet_exists("officers"):
+        for o in read_parquet("officers").drop("fetched_at").to_dicts():
+            officers.setdefault(o.pop("company_number"), []).append(o)
     for r in rankings:
         n = r["company_number"]
         companies[n] = {"scores": scores.get(n, []), "why_now": why.get(n, []), "jobs": jobs.get(n, []), "website": web.get(n, {}),
-                        "accounts": accounts.get(n, []), "psc": psc.get(n, [])}
+                        "accounts": accounts.get(n, []), "psc": psc.get(n, []), "officers": officers.get(n, [])}
 
     themes = []
     if parquet_exists("themes"):

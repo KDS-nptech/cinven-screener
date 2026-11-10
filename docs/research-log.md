@@ -33,3 +33,10 @@ Every data decision with its reason and date. Conclusion first on each entry.
 - **Investment firms and mismatched websites never rank.** A company whose own name matches a sponsor is an investment firm (BlackRock, CVC Advisers, Ares). A found website that does not carry the company's name blocks ranking; a trading-name site can be confirmed by hand in overrides.yaml (British Garden Centres).
 - **Model-suggested websites.** For at-scale companies the search missed, Claude Sonnet proposes the site from the legal name, town, SIC and subsidiaries; kept only when the legal name, a trading name tied to a subsidiary, or the company number is on the fetched pages. 58 verified across three runs; rejections included a correct refusal (Kent Enviropower against FCC Environment's site).
 - **Lost work, low value.** Search results for ~3,000 smaller companies found between 20:18 and 21:58 were overwritten when the shard tables were reused; none were at scale. The search cache makes the re-run cheap.
+
+## 10 Nov 2026
+
+- **Company page split into four tabs:** Executive Summary (scores, brief, ownership at a glance, why now), Leadership Team, Technical Detail (accounts, ownership chain, register, rubric, website), Action Items (generated next steps, diligence questions, outreach draft, notes). The Investment Brief button had pointed at an anchor the router read as a company number; it now opens the summary tab at the brief.
+- **Officers added:** current officers fetched from Companies House for all 677 companies in scope (src/enrich/officers.py), ranked companies first.
+- **Themes view rebuilt:** stacked cards with no tables, matched themes first by count, ranked companies first within each, themes without a match collected at the bottom. Hampden's implausible PDF figure is masked there.
+- **site/ folder documented for Cloudflare Pages** (site/README.md, site/_headers with noindex).
