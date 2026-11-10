@@ -1,5 +1,5 @@
 {
- "computed_at": "2026-11-09T22:36:03+00:00",
+ "computed_at": "2026-11-10T13:32:53+00:00",
  "checker_model": "claude-sonnet-5-5",
  "pdf_checked": 28,
  "pdf_turnover_within_2pct": 100.0,
@@ -15,16 +15,17 @@
  "subscore_exact_pct": 43.9,
  "iq_gap_mean": 9.3,
  "subscore_method": "the eight website-read dimensions re-scored blind by the checker model from the same pages and facts; rule-scored dimensions excluded; IQ gap on the 0 to 100 scale",
- "top30_reviewed": 112,
- "exclusions": 32,
+ "top30_reviewed": 127,
+ "exclusions": 38,
  "exclusion_reasons": {
-  "uk_arm_of_foreign_group": 4,
-  "not_a_buyout_business": 8,
+  "uk_arm_of_foreign_group": 6,
+  "not_a_buyout_business": 9,
   "charity": 1,
   "unit_of_larger_group": 4,
-  "wrong_website": 10,
+  "wrong_website": 12,
   "recently_sold_by_cinven": 1,
   "figures_implausible": 2,
-  "infrastructure_concession": 2
+  "infrastructure_concession": 2,
+  "operations_outside_uk": 1
  }
 }

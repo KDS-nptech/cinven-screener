@@ -1,21 +1,21 @@
 {
- "computed_at": "2026-11-09T22:36:02+00:00",
- "ranked": 91,
- "in_scope": 677,
- "founder_family": 78,
- "founder_60plus": 60,
+ "computed_at": "2026-11-10T13:32:52+00:00",
+ "ranked": 83,
+ "in_scope": 700,
+ "founder_family": 70,
+ "founder_60plus": 51,
  "sponsor": 12,
  "sponsor_past_hold": 5,
- "strategic_band": 75,
+ "strategic_band": 67,
  "flagship_band": 16,
- "pdf_read": 54,
+ "pdf_read": 52,
  "cinven_owned": 1,
  "by_sector": {
-  "healthcare": 7,
-  "tmt": 5,
-  "business_services": 18,
-  "consumer": 29,
-  "industrials": 30,
-  "financial_services": 2
+  "financial_services": 5,
+  "consumer": 26,
+  "tmt": 6,
+  "industrials": 25,
+  "healthcare": 8,
+  "business_services": 13
  }
 }

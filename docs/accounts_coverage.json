@@ -1,25 +1,35 @@
 {
- "computed_at": "2026-11-09T22:36:03+00:00",
- "universe": 64530,
+ "computed_at": "2026-11-10T13:32:53+00:00",
+ "universe": 64367,
  "parsed_accounts_by_source": {
   "iXBRL bulk data": 5436,
-  "document API: PDF read by vision model": 850,
-  "document API: iXBRL": 57
+  "document API: PDF read by vision model": 925,
+  "document API: iXBRL": 63
  },
  "group_heads_by_route": {
+  "sponsor_offshore": {
+   "group_heads": 464,
+   "size_verified": 31,
+   "at_scale": 15
+  },
+  "plc_dispersed": {
+   "group_heads": 845,
+   "size_verified": 103,
+   "at_scale": 99
+  },
+  "uk_group": {
+   "group_heads": 9562,
+   "size_verified": 562,
+   "at_scale": 94
+  },
   "foreign_parent": {
-   "group_heads": 13131,
+   "group_heads": 13128,
    "size_verified": 533,
    "at_scale": 145
   },
-  "plc_dispersed": {
-   "group_heads": 857,
-   "size_verified": 93,
-   "at_scale": 89
-  },
-  "sponsor_offshore": {
-   "group_heads": 437,
-   "size_verified": 29,
+  "employee_owned": {
+   "group_heads": 176,
+   "size_verified": 67,
    "at_scale": 14
   },
   "public_sector": {
@@ -27,66 +37,56 @@
    "size_verified": 40,
    "at_scale": 9
   },
-  "founder_family": {
-   "group_heads": 8905,
-   "size_verified": 2676,
-   "at_scale": 668
-  },
   "sponsor": {
    "group_heads": 3772,
-   "size_verified": 257,
-   "at_scale": 136
-  },
-  "uk_group": {
-   "group_heads": 9558,
-   "size_verified": 562,
-   "at_scale": 94
-  },
-  "employee_owned": {
-   "group_heads": 176,
-   "size_verified": 67,
-   "at_scale": 14
+   "size_verified": 269,
+   "at_scale": 148
   },
   "uncertain": {
-   "group_heads": 7767,
+   "group_heads": 7779,
    "size_verified": 544,
    "at_scale": 121
+  },
+  "founder_family": {
+   "group_heads": 8855,
+   "size_verified": 2722,
+   "at_scale": 705
   }
  },
  "actionable_group_heads": {
-  "total": 14147,
-  "size_verified": 3122,
-  "at_scale": 921,
-  "group_accounts_filers": 6573,
-  "group_accounts_filers_verified": 1936
+  "total": 14112,
+  "size_verified": 3192,
+  "at_scale": 981,
+  "group_accounts_filers": 6420,
+  "group_accounts_filers_verified": 2004
  },
  "document_api": {
-  "done": 4680,
-  "xhtml": 412,
-  "pdf": 4161,
-  "pdf_employees": 10,
-  "pdf_turnover": 2771,
-  "no_filing": 9,
-  "no_doc": 98,
+  "done": 5941,
+  "xhtml": 555,
+  "pdf": 5259,
+  "pdf_employees": 11,
+  "pdf_turnover": 3548,
+  "no_filing": 10,
+  "no_doc": 117,
   "errors": 0,
-  "pdf_scanned": 4161,
-  "ocr_none": 1126,
-  "ocr_vision": 3035
+  "pdf_scanned": 5259,
+  "ocr_none": 1415,
+  "ocr_vision": 3844
  },
  "websites": {
-  "discovery_attempted": 1783,
-  "domain_found": 958,
-  "fetched": 882,
-  "name_match": 754
+  "discovery_attempted": 1813,
+  "domain_found": 986,
+  "fetched": 913,
+  "name_match": 783
  },
  "classification": {
-  "industrials": 160,
-  "consumer": 155,
-  "business_services": 181,
-  "other": 169,
-  "tmt": 56,
-  "financial_services": 71,
-  "healthcare": 59,
-  "null": 13305
+  "industrials": 162,
+  "consumer": 162,
+  "business_services": 184,
+  "other": 176,
+  "tmt": 60,
+  "financial_services": 76,
+  "healthcare": 61,
+  "null": 13241
  }
 }

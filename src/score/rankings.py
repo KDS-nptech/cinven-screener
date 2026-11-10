@@ -20,6 +20,7 @@ from __future__ import annotations
 
 import datetime as dt
 import json
+import re
 import sys
 
 import polars as pl
@@ -237,6 +238,13 @@ def main(argv=None):
         implausible = str(r.get("latest_accounts_type") or "").startswith("PDF") and (turnover or 0) > 5e9
         if implausible:
             flags.append("figures_implausible")
+        off_theme = None
+        for rule in TGT.get("rank_exclude_subsectors", []):
+            if any(str(r.get("sic1") or "").startswith(px) for px in rule.get("sic_prefixes", [])) or (rule.get("pattern") and re.search(rule["pattern"], str(r.get("sub_vertical") or ""), re.I)):
+                off_theme = rule["label"]
+                break
+        if off_theme:
+            flags.append("subsector_not_bought")
         site_mismatch = bool(r.get("domain")) and r.get("name_match") is False
         if site_mismatch:
             flags.append("website_name_mismatch")
@@ -251,7 +259,7 @@ def main(argv=None):
         at_scale = (ebitda >= TGT["ebitda_early_floor_gbp"]) if (ebitda is not None and ebitda > 0) else bool(r.get("at_scale")) if ebitda is None else False
         gate = (r.get("vertical") in SECTORS and r.get("is_software_product") is not False and bool(r.get("is_group_head", True))
                 and (r.get("route") in ROUTES) and not r.get("provisional") and at_scale and bool(r.get("domain"))
-                and "website_unverified" not in flags and fit >= FIT["rank_min_fit"] and not manual and not cinven_owned and not part_of_group and not plc_pdf and not own_fund and not site_mismatch and not implausible and r.get("durability_score") is not None)
+                and "website_unverified" not in flags and fit >= FIT["rank_min_fit"] and not manual and not cinven_owned and not part_of_group and not plc_pdf and not own_fund and not site_mismatch and not implausible and not off_theme and r.get("durability_score") is not None)
         reasons = []
         if r.get("vertical") not in SECTORS:
             reasons.append("sector other")
@@ -277,6 +285,8 @@ def main(argv=None):
             reasons.append("already in Cinven's portfolio")
         if part_of_group:
             reasons.append(f"a smaller unit of a group: {uname.get(rep) or rep} ({rep}) is the largest of the {sib} UK companies under the same parent")
+        if off_theme:
+            reasons.append(f"{off_theme}: a sub-sector Cinven has not bought in any measured entry since 2015")
         if implausible:
             reasons.append("turnover above £5B read from a PDF for a private company; almost certainly a unit error, needs a manual check")
         if site_mismatch:

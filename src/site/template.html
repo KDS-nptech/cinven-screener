@@ -207,6 +207,7 @@ svg text{fill:var(--teal);font-family:var(--body);font-size:11px}
       <span class="brand-eyebrow">Independent screener by Kyle D&#39;Souza on public data. Not affiliated with Cinven.</span>
     </div>
     <nav class="views" id="nav" aria-label="Views">
+      <a href="#overview" data-view="overview">Overview</a>
       <a href="#ranked" data-view="ranked">Ranked</a>
       <a href="#company" data-view="company">Company</a>
       <a href="#funnel" data-view="funnel">Funnel</a>
@@ -290,7 +291,7 @@ const W = Object.fromEntries(Object.entries(D.config.rubric.weights).map(([k,v])
 const DIMS = Object.keys(D.config.rubric.dimension_names).map(Number).sort((a,b)=>a-b);
 const DNAME = k => D.config.rubric.dimension_names[k] || D.config.rubric.dimension_names[String(k)] || ('Dimension '+k);
 const RANK = Object.fromEntries(D.rankings.map(r=>[r.company_number, r]));
-for (const r of D.rankings){ r.iq_base = r.durability_score; r.rank_base = r.rank; try { r.fit = JSON.parse(r.fit_components_json||'{}'); } catch(e){ r.fit = {}; } }
+for (const r of D.rankings){ r.legal = cname(r.name); r.disp = r.trading_name || r.legal; r.iq_base = r.durability_score; r.rank_base = r.rank; try { r.fit = JSON.parse(r.fit_components_json||'{}'); } catch(e){ r.fit = {}; } }
 for (const c of Object.values(D.companies)) for (const s of (c.scores||[])) s.dimension_name = DNAME(s.dimension);
 const NAME_OF = n => (D.chain[n] && D.chain[n].name) || (RANK[n] && RANK[n].name) || null;
 let IDX_LC = null;
@@ -333,14 +334,14 @@ $('#foot').innerHTML = `<div class="fgrid">
 
 // ------------------------------------------------------------ routing
 function route(){
-  const h = (location.hash || '#ranked').slice(1);
+  const h = (location.hash || '#overview').slice(1);
   main.classList.toggle('wide', h === 'ranked');
   $$('#nav a').forEach(a => a.classList.toggle('active', h === a.dataset.view || (a.dataset.view === 'company' && h.startsWith('c-')) || (a.dataset.view === 'methods' && h.startsWith('methods'))));
   if (h.startsWith('c-')) return company(h.slice(2));
   if (h === 'company'){ const n = (lastCompany && D.companies[lastCompany]) ? lastCompany : (rankedList()[0]||{}).company_number; if (n){ location.replace('#c-'+n); return; } }
   if (h === 'methods-limitations') return methods('limitations');
-  const views = {ranked, funnel, themes, calibration, methods, shortlist: shortlistView, lookup};
-  (views[h] || ranked)();
+  const views = {overview, ranked, funnel, themes, calibration, methods, shortlist: shortlistView, lookup};
+  (views[h] || overview)();
   window.scrollTo(0,0);
 }
 window.addEventListener('hashchange', route);
@@ -403,7 +404,7 @@ function filteredRows(){
   if (state.band === 'strategic') rows = rows.filter(r => /strategic fund band/.test(r.size_fit||''));
   if (state.band === 'flagship') rows = rows.filter(r => /^flagship band/.test(r.size_fit||''));
   if (state.band === 'either') rows = rows.filter(r => /band/.test(r.size_fit||''));
-  if (state.q) rows = rows.filter(r => [r.name, r.post_town, r.sub_vertical, r.company_number, r.domain].join(' ').toLowerCase().includes(state.q));
+  if (state.q) rows = rows.filter(r => [r.name, r.trading_name, r.post_town, r.sub_vertical, r.company_number, r.domain].join(' ').toLowerCase().includes(state.q));
   const key = state.sort, dir = state.asc ? 1 : -1;
   rows.sort((a,b) => {
     if (key === 'rank'){ const x = a.rank ?? 1e9, y = b.rank ?? 1e9; return (x - y) * (state.asc ? 1 : -1); }
@@ -431,7 +432,7 @@ function drawTable(){
     <tr class="row" data-n="${esc(r.company_number)}">
       <td><button class="star ${shortlist.has(r.company_number)?'on':''}" data-star="${esc(r.company_number)}" title="Add to shortlist" aria-label="Add to shortlist">${shortlist.has(r.company_number)?'★':'☆'}</button></td>
       <td class="r num">${r.rank ?? DASH}</td>
-      <td class="name"><strong>${esc(cname(r.name))}</strong><span class="sub">${esc(tc(r.post_town||''))}${r.inc_date?` · est. ${year(r.inc_date)}`:''}${r.ranked?'':` · ${esc(r.not_ranked_reason||'comparable')}`}</span></td>
+      <td class="name"><strong>${esc(r.disp)}</strong><span class="sub">${esc(tc(r.post_town||''))}${r.inc_date?` · est. ${year(r.inc_date)}`:''}${r.ranked?'':` · ${esc(r.not_ranked_reason||'comparable')}`}</span></td>
       <td class="tags">${sectorTag(r.vertical)}</td>
       <td class="small">${esc(cap(r.sub_vertical||''))}</td>
       <td class="tags">${routeTag(r.route)}<span class="sub">${r.sponsor_names&&r.sponsor_names.length?esc(r.sponsor_names.join(', ')):(r.hold_years!=null?`${pts(r.hold_years)} years held`:'')}</span></td>
@@ -453,7 +454,7 @@ function bindRows(scope){
 function drawCards(rows){
   $('#r-table').innerHTML = `<div class="cards">${rows.map(r=>`<div class="pcard" data-n="${esc(r.company_number)}" role="link" tabindex="0">
       <div class="top">${sectorTag(r.vertical)}<span class="rk num">${r.rank ? `No. ${r.rank}` : 'Comparable'}</span><button class="star ${shortlist.has(r.company_number)?'on':''}" data-star="${esc(r.company_number)}" aria-label="Add to shortlist">${shortlist.has(r.company_number)?'★':'☆'}</button></div>
-      <h3>${esc(cname(r.name))}</h3>
+      <h3>${esc(r.disp)}</h3>
       <div class="line">${esc(cap(r.sub_vertical||''))}${r.post_town?`, ${esc(tc(r.post_town))}`:''}. ${esc(ROUTE[r.route]||'')}${r.sponsor_names&&r.sponsor_names.length?` (${esc(r.sponsor_names[0])})`:''}.</div>
       <div class="stats"><div><div class="k">EBITDA</div><div class="v num">${gbp(r.ebitda_proxy)}</div></div><div><div class="k">Turnover</div><div class="v num">${gbp(r.latest_turnover)}</div></div><div><div class="k">Quality</div><div class="v num">${isNum(r.durability_score)?Number(r.durability_score).toFixed(1):DASH}</div></div></div>
     </div>`).join('')}</div>`;
@@ -510,6 +511,7 @@ function company(n){
       ${(r.sponsor_names||[]).length ? `<div class="k">Sponsor</div><div>${esc(r.sponsor_names.join(', '))}${isNum(r.hold_years)?`<span class="sub">${pts(r.hold_years)} years into the hold, since ${esc(date(r.hold_start))}</span>`:''}</div>` : ''}
       ${r.oldest_owner_age!=null ? `<div class="k">Oldest owner</div><div>about ${num(r.oldest_owner_age)}</div>` : ''}
       <div class="k">Size band</div><div>${esc(bandLabel(r.size_fit))}</div>
+      ${r.deal ? `<div class="k">Deal history</div><div>${esc(r.deal.summary)}${r.deal.url?` <a href="${esc(r.deal.url)}" target="_blank" rel="noopener">${esc(host(r.deal.url))}</a>`:''}<span class="sub">From press and company announcements, checked 10 Nov 2026</span></div>` : ''}
     </div><p class="hint" style="margin-top:.6rem">Full chain and register rows are on the Technical Detail tab.</p>`;
   const P_tiles = `    <div class="tiles">
       <div class="tile dark"><div class="k">Investment Quality${customWeights()?' (Custom Weights)':''}</div><div class="v num">${isNum(r.durability_score)?Number(r.durability_score).toFixed(1):DASH}</div><div class="s">0${DASH}100. ${r.grey ? `Grey: ${plural(r.n_unscored,'dimension')} without a score.` : (r.n_unscored ? `${plural(r.n_unscored,'dimension')} without a score.` : 'All ten dimensions scored.')}</div></div>
@@ -580,8 +582,8 @@ function company(n){
   main.innerHTML = `
     <a class="back" href="#ranked">Back to Ranked</a>
     <span class="eyebrow">${r.ranked ? `Rank ${r.rank} of ${nRanked}` : 'Comparable Outside the Ranking'}</span>
-    <h1>${esc(cname(r.name))}</h1>
-    <div class="meta">${sectorTag(r.vertical)}${routeTag(r.route)}${bandTag(r.size_fit)}<span class="small">${esc(tc(r.post_town||''))}${r.postcode?` ${esc(r.postcode)}`:''} · Incorporated ${year(r.inc_date)} · Company ${esc(r.company_number)} · ${esc(r.sic_text1||r.sic1||'')}</span></div>
+    <h1>${esc(r.disp)}</h1>
+    <div class="meta">${sectorTag(r.vertical)}${routeTag(r.route)}${bandTag(r.size_fit)}<span class="small">${esc(tc(r.post_town||''))}${r.postcode?` ${esc(r.postcode)}`:''} · Incorporated ${year(r.inc_date)} ${r.disp!==r.legal?` · Legal name ${esc(r.legal)}`:''} · Company ${esc(r.company_number)} · ${esc(r.sic_text1||r.sic1||'')}</span></div>
     <div class="toolbar"><button class="btn ${shortlist.has(n)?'on':'secondary'}" id="c-star" type="button">${shortlist.has(n)?'★ On Shortlist':'☆ Add to Shortlist'}</button><button class="btn readmore" id="c-briefbtn" type="button">Investment Brief</button>${w.homepage_url?`<a class="btn readmore" href="${esc(w.homepage_url)}" target="_blank" rel="noopener">Visit Website</a>`:''}<a class="btn readmore" href="https://find-and-update.company-information.service.gov.uk/company/${esc(r.company_number)}" target="_blank" rel="noopener">Companies House Record</a></div>
     ${!r.ranked ? `<div class="note">Shown as a comparable: ${esc(sent(r.not_ranked_reason||'excluded by a filter'))}</div>` : ''}
     ${siteNote}${groupNote}${r.review_note?`<div class="note" style="margin-top:.8rem"><strong>Corrected after review:</strong> ${esc(r.review_note)}</div>`:''}
@@ -630,8 +632,8 @@ ${B_notes.replace('class="block"','class="block" style="margin-block:0"')}
       </div>
     </section>
     <div class="navrow">
-      <div>${prev ? `<a href="#c-${esc(prev.company_number)}"><span>Previous</span>${esc(cname(prev.name))}</a>` : ''}</div>
-      <div style="text-align:right">${next ? `<a href="#c-${esc(next.company_number)}"><span>Next</span>${esc(cname(next.name))}</a>` : ''}</div>
+      <div>${prev ? `<a href="#c-${esc(prev.company_number)}"><span>Previous</span>${esc(prev.disp)}</a>` : ''}</div>
+      <div style="text-align:right">${next ? `<a href="#c-${esc(next.company_number)}"><span>Next</span>${esc(next.disp)}</a>` : ''}</div>
     </div>`;
   $('#c-star').addEventListener('click', () => { toggleStar(n); company(n); });
   const showTab = (k, scrollTo) => { companyTab = k; $$('main [data-panel]').forEach(p => p.hidden = p.dataset.panel !== k); $$('main .ctabs button').forEach(b => b.classList.toggle('on', b.dataset.tab === k)); if (scrollTo){ const el = $(scrollTo); if (el) el.scrollIntoView({behavior:'smooth', block:'start'}); } };
@@ -663,15 +665,20 @@ function leadershipHtml(n){
   const med = a => { const x = a.slice().sort((p,q)=>p-q); return x.length ? x[Math.floor((x.length-1)/2)] : null; };
   const ownerDirs = people.filter(o=>ownersK.has(personKey(o.name))).length;
   const recent = people.filter(o=>isNum(tenure(o)) && tenure(o) < 2).length;
+  const team = c.team || [], titleOf = {};
+  for (const t of team) titleOf[personKey(t.name)] = t.title;
+  const regK = new Set(all.map(o=>personKey(o.name)));
+  const offBoard = team.filter(t=>!regK.has(personKey(t.name)));
+  const teamUrl = (team[0]||{}).url;
   const gov = (c.scores||[]).find(s=>s.dimension===10);
   const src = gov ? srcOf(gov) : null;
-  const row = o => `<tr><td><strong>${esc(officerName(o.name))}</strong>${ownersK.has(personKey(o.name))?' <span class="tag rule">Owner of record</span>':''}${o.occupation && !/^(none|director|company director)$/i.test(o.occupation)?`<span class="sub">${esc(tc(String(o.occupation).toLowerCase()))}</span>`:''}</td><td class="small">${esc(ROLE[o.role]||cap(String(o.role||'').replace(/-/g,' ')))}</td><td class="num nowrap">${esc(date(o.appointed_on))}</td><td class="r num">${isNum(tenure(o))?tenure(o).toFixed(1):DASH}</td><td class="r num">${o.dob_year?nowY-o.dob_year:DASH}</td><td class="small">${esc(o.nationality||'')}${o.country_of_residence && !/united kingdom|england|scotland|wales/i.test(o.country_of_residence)?`<span class="sub">lives in ${esc(o.country_of_residence)}</span>`:''}</td></tr>`;
+  const row = o => `<tr><td><strong>${esc(officerName(o.name))}</strong>${ownersK.has(personKey(o.name))?' <span class="tag rule">Owner of record</span>':''}${titleOf[personKey(o.name)]?`<span class="sub"><strong>${esc(titleOf[personKey(o.name)])}</strong> on the company website</span>`:''}${o.occupation && !/^(none|director|company director)$/i.test(o.occupation)?`<span class="sub">${esc(tc(String(o.occupation).toLowerCase()))}</span>`:''}</td><td class="small">${esc(ROLE[o.role]||cap(String(o.role||'').replace(/-/g,' ')))}</td><td class="num nowrap">${esc(date(o.appointed_on))}</td><td class="r num">${isNum(tenure(o))?tenure(o).toFixed(1):DASH}</td><td class="r num">${o.dob_year?nowY-o.dob_year:DASH}</td><td class="small">${esc(o.nationality||'')}${o.country_of_residence && !/united kingdom|england|scotland|wales/i.test(o.country_of_residence)?`<span class="sub">lives in ${esc(o.country_of_residence)}</span>`:''}</td></tr>`;
   const qs = [];
   if (r.route === 'founder_family'){ qs.push(r.oldest_owner_age >= 60 ? `Succession: the oldest owner is about ${r.oldest_owner_age}. Who runs the business day to day, and is there a named successor?` : 'How much of the commercial relationships and decisions sit with the owner personally?'); qs.push('Which directors are family members, and which are professional managers hired from outside?'); }
   if (r.route === 'sponsor' || r.route === 'sponsor_offshore') qs.push('Which directors are the sponsor\'s appointees, and what does management own after the last deal?');
   if (recent) qs.push(`${plural(recent,'director')} joined in the last two years. What changed, and who left?`);
   if (people.length && people.length <= 2) qs.push('The board is small. Is there a finance director and a second layer of management below the board?');
-  if (people.length && !people.some(o=>/financ|account|cfo/i.test(o.occupation||''))) qs.push('No director lists a finance occupation on the register. Who leads finance?');
+  if (people.length && !people.some(o=>/financ|account|cfo/i.test(o.occupation||'')) && !team.some(t=>/financ|cfo/i.test(t.title||''))) qs.push('No director lists a finance occupation on the register and the website names no finance lead. Who leads finance?');
   qs.push('Incentives: is there a management equity plan, and who participates?');
   return `<div class="tiles">
       <div class="tile dark"><div class="k">Board</div><div class="v num">${num(people.length)}</div><div class="s">${people.length===1?'current director or member':'current directors or members'}${board.length>people.length?`, plus ${plural(board.length-people.length,'corporate officer')}`:''}</div></div>
@@ -683,8 +690,10 @@ function leadershipHtml(n){
     </div>
     <div class="grid2" style="margin-top:1.2rem">
       <div class="block" style="margin-block:0"><h3>Directors and Officers</h3>
-        <p class="small">Current officers of ${esc(cname(r.name))} on the Companies House register, earliest appointment first. The register gives appointments, birth years and stated occupations. It does not give job titles such as chief executive, so confirm roles on the company website.</p>
+        <p class="small">Current officers of ${esc(r.disp)} on the Companies House register, earliest appointment first. The register gives appointments, birth years and stated occupations. Job titles, where shown, come from the company website.</p>
         ${all.length ? `<div class="tablewrap"><table><thead><tr><th>Name</th><th>Role</th><th>Appointed</th><th class="r">Years</th><th class="r">Age</th><th>Nationality</th></tr></thead><tbody>${board.map(row).join('')}${others.map(row).join('')}</tbody></table></div>` : '<p class="small">Officers were not read for this company in this build.</p>'}
+        ${offBoard.length ? `<h4>Named on the Company Website, Not on This Board</h4><p class="small">Senior people the website names who are not registered directors of this company. They may sit on a subsidiary's board or hold a role below board level.</p><div class="tablewrap"><table><thead><tr><th>Name</th><th>Title on the Website</th></tr></thead><tbody>${offBoard.map(t=>`<tr><td><strong>${esc(t.name)}</strong></td><td class="small">${esc(t.title)}</td></tr>`).join('')}</tbody></table></div>` : ''}
+        ${teamUrl ? `<p class="hint" style="margin-top:.5rem">Titles read by a model from <a href="${esc(teamUrl)}" target="_blank" rel="noopener">${esc(host(teamUrl))}</a> and kept only where the name appears on the page.</p>` : ''}
         <p class="hint" style="margin-top:.5rem"><a href="https://find-and-update.company-information.service.gov.uk/company/${esc(n)}/officers" target="_blank" rel="noopener">Officers on Companies House</a></p>
       </div>
       <div class="stack">
@@ -733,7 +742,7 @@ function briefParts(n){
   const plen = months(prior && prior.period_end, latest.period_end);
   const period = plen && plen !== 12 ? `${plen} months to ${date(r.latest_period_end)}` : `year to ${date(r.latest_period_end)}`;
   const ownerBit = r.route === 'sponsor' || r.route === 'sponsor_offshore' ? `owned by ${listed(r.sponsor_names && r.sponsor_names.length ? r.sponsor_names : (r.owner_names||[]).map(cname))}${r.hold_years!=null?` for ${pts(r.hold_years)} years`:''}` : r.route === 'founder_family' ? `controlled by ${plural(r.n_individuals||0,'individual')} on the PSC register${r.oldest_owner_age!=null?`, the oldest about ${num(r.oldest_owner_age)}`:''}` : r.route === 'employee_owned' ? 'held by an employee ownership trust' : (ROUTE[r.route]||'').toLowerCase();
-  const thesis = `${cname(r.name)} is a ${r.sub_vertical||SECTOR[r.vertical].toLowerCase()} business in ${tc(r.post_town||'the UK')}, ${ownerBit}. Turnover was ${gbp(r.latest_turnover)}${isNum(r.turnover_growth)?` (${turnoverGrowth(r)})`:''} and ${r.ebitda_basis||'EBITDA'} ${gbp(r.ebitda_proxy)} in the ${period}, with ${num(r.latest_employees)} employees. Investment Quality ${pts(r.durability_score)} of 100 and Entry Fit ${pts(r.fit_score)} of 100 place it in the ${bandLabel(r.size_fit).toLowerCase()}${r.ranked?` at rank ${r.rank}`:' as a comparable'}.`;
+  const thesis = `${r.disp} is a ${r.sub_vertical||SECTOR[r.vertical].toLowerCase()} business in ${tc(r.post_town||'the UK')}, ${ownerBit}. Turnover was ${gbp(r.latest_turnover)}${isNum(r.turnover_growth)?` (${turnoverGrowth(r)})`:''} and ${r.ebitda_basis||'EBITDA'} ${gbp(r.ebitda_proxy)} in the ${period}, with ${num(r.latest_employees)} employees. Investment Quality ${pts(r.durability_score)} of 100 and Entry Fit ${pts(r.fit_score)} of 100 place it in the ${bandLabel(r.size_fit).toLowerCase()}${r.ranked?` at rank ${r.rank}`:' as a comparable'}.`;
   return {thesis, strengths, watch, cautions};
 }
 function briefHtml(n){
@@ -745,7 +754,7 @@ function briefHtml(n){
 function briefText(n){
   const r = RANK[n], c = D.companies[n], p = briefParts(n);
   return [
-    `${cname(r.name)} (company ${r.company_number}): Investment Brief`,
+    `${r.disp} (company ${r.company_number}): Investment Brief`,
     ``, `THESIS`, p.thesis,
     ``, `THREE STRENGTHS`, ...(p.strengths.length ? p.strengths.map(s=>`- ${s.dimension_name} (${s.score} of 5): ${sent(s.rationale)}${!noEvidence(s.evidence_quote)?` "${s.evidence_quote}"`:''}`) : ['- No scored dimensions.']),
     ``, `THREE WATCH ITEMS`, ...(p.watch.length ? p.watch.map(x=>`- ${x.head}: ${x.body}`) : ['- None.']),
@@ -831,7 +840,7 @@ function themes(){
   const hit = entries.filter(e=>e.m.length).sort((a,b)=>b.m.length-a.m.length), miss = entries.filter(e=>!e.m.length);
   const size = r => (r.flags||[]).includes('figures_implausible') ? 'Figures need a manual check' : isNum(r.ebitda_proxy) ? `EBITDA ${gbp(r.ebitda_proxy)}` : (isNum(r.latest_turnover) ? `Turnover ${gbp(r.latest_turnover)}` : 'Size not read');
   const item = x => { const r = RANK[x.company_number]||{}; return `<a class="titem" href="#c-${esc(x.company_number)}">
-      <span class="tn"><strong>${esc(cname(r.name||x.name||''))}</strong>${r.ranked?`<span class="tag band">Rank ${r.rank}</span>`:'<span class="tag band weak">Comparable</span>'}</span>
+      <span class="tn"><strong>${esc(r.disp||cname(x.name||''))}</strong>${r.ranked?`<span class="tag band">Rank ${r.rank}</span>`:'<span class="tag band weak">Comparable</span>'}</span>
       <span class="tm">${esc([SECTOR[r.vertical]||'', ROUTE[r.route]||'', size(r), isNum(r.durability_score)?`Investment Quality ${pts(r.durability_score)}`:''].filter(Boolean).join(' · '))}</span>
       ${x.top_keywords?`<span class="tk">Matched on ${esc(String(x.top_keywords).replace(/\s*\(\d+\)/g,''))}</span>`:''}</a>`; };
   main.innerHTML = `<span class="eyebrow">Themes</span><h1>${num(entries.length)} Sourcing Themes</h1>
@@ -842,6 +851,59 @@ function themes(){
     ${miss.length ? `<h2 style="margin-top:2.2rem">Themes Without a Match Yet</h2>
     <p class="small">No company in the six sectors matched these in this build. Most sit in parts of the universe whose websites are not yet read.</p>
     <div class="tmiss">${miss.map(e=>`<details class="tkw"><summary>${esc(e.t.label||tc(e.k))}</summary><p class="hint">${esc((e.t.keywords||[]).join(', '))}</p></details>`).join('')}</div>` : ''}`;
+}
+
+// ------------------------------------------------------------ overview
+function overview(){
+  const R = D.rankings.filter(r=>r.ranked).sort((a,b)=>a.rank-b.rank), P = D.docs.cv_pattern || {}, core = P.core || {}, bt = (D.docs.backtests||{}).summary || {}, qa = D.docs.qa || {}, F = D.config.fit, RW = D.config.rubric.weights;
+  const cnt = f => R.filter(f).length;
+  const fam = cnt(r=>r.route==='founder_family'), spo = cnt(r=>/^sponsor/.test(r.route||'')), plc = cnt(r=>r.route==='plc_dispersed');
+  const strat = cnt(r=>/strategic/.test(r.size_fit||'')), flag = cnt(r=>/^flagship/.test(r.size_fit||''));
+  const reg = (D.funnel||[])[0] ? D.funnel[0][1] : null;
+  const top = R.slice(0,7);
+  const wl = k => `${esc(DNAME(k))} (${Math.round((RW[k]||RW[String(k)]||0)*100)}%)`;
+  const views = [['ranked','Ranked','Filter and compare the ranked candidates.'],['company','Company','Executive summary, leadership team, technical detail and action items for one company.'],['funnel','Funnel','How the register narrows to the ranked list, with the rule behind each drop.'],['themes','Themes','Sub-sectors drawn from Cinven\'s recent deals, with the companies that match.'],['calibration','Calibration','Cinven\'s measured entry profile and the outliers left out of it.'],['methods','Methods','Scoring, accuracy checks and limitations.'],['shortlist','Shortlist','Companies and notes you have saved in this browser.'],['lookup','Look Up',`Search all ${num(D.index.length)} companies in the universe.`]];
+  main.innerHTML = `<span class="eyebrow">Overview</span><h1>A UK Buyout Screener Calibrated to Cinven's Entries</h1>
+    <p class="lead">The screener ranks UK companies as potential Cinven buyouts across its six sectors, using public data only: Companies House accounts, the register of owners and each company's own website. Every score and figure links to its evidence. It is a sourcing tool and does not replace due diligence.</p>
+    <div class="tiles">
+      <div class="tile dark"><div class="k">Ranked</div><div class="v num">${num(R.length)}</div><div class="s">companies that pass every gate and a manual review</div></div>
+      <div class="tile"><div class="k">Scored</div><div class="v num">${num(D.rankings.length)}</div><div class="s">companies in the six sectors, the rest shown as comparables</div></div>
+      <div class="tile"><div class="k">Universe</div><div class="v num">${num(D.index.length)}</div><div class="s">${reg?`from ${num(reg)} companies on the register`:'UK companies after size and filing rules'}</div></div>
+      <div class="tile"><div class="k">Owner Type</div><div class="v num">${num(fam)}</div><div class="s">founder or family owned; ${num(spo)} sponsor-owned; ${num(plc)} listed</div></div>
+      <div class="tile mid"><div class="k">Size</div><div class="v num">${num(strat)}</div><div class="s">in the Strategic Fund band; ${num(flag)} in the flagship band</div></div>
+    </div>
+    <div class="grid2" style="margin-top:1.4rem">
+      <div class="stack">
+        <div class="block" style="margin-block:0"><h3>Two Scores, Never Blended</h3>
+          <p><strong>Investment Quality (0${DASH}100):</strong> ten factors adapted from Cinven's published investment approach. ${[1,2,3,5].map(wl).join(', ')}; ${[4,6].map(wl).join(', ')}; four more at 5% each. Growth and cash generation are set by rule from the accounts; the rest are read from the company website with a quote.</p>
+          <p><strong>Entry Fit (0${DASH}100):</strong> closeness to Cinven's entry profile. Size (${F.size_points}), ownership route (${F.route_points}), growth (${F.growth_points}), margin (${F.margin_points}), sector (${F.sector_points}) and data reliability (${F.data_quality_points}).</p>
+          <p class="small">The list sorts on Investment Quality. Entry Fit gates it at ${F.rank_min_fit} and breaks ties.</p></div>
+        <div class="block" style="margin-block:0"><h3>What a Company Must Pass</h3><ul>
+          <li><strong>Eligibility:</strong> active UK company filing full or group accounts, counted once at group level.</li>
+          <li><strong>Sector:</strong> one of Cinven's six, read from the company's own website.</li>
+          <li><strong>Ownership:</strong> founder or family owned, sponsor-owned or listed. Employee trusts, UK arms of foreign groups and Cinven's own portfolio are set aside.</li>
+          <li><strong>Size:</strong> EBITDA of ${gbp(T.ebitda_early_floor_gbp)} or more, or turnover of ${gbp(T.rank_turnover_min_gbp)} or more where no profit line is filed.</li>
+          <li><strong>Verification:</strong> a website that carries the company's name, a sub-sector Cinven buys, and a manual review.</li></ul></div>
+        <div class="block" style="margin-block:0"><h3>How It Was Checked</h3><ul>
+          <li><strong>Calibration:</strong> ${num(core.n)} flagship entries since 2015 (median enterprise value ${eurM((core.ev_eur_m||{}).p50)}, median EBITDA ${eurM((core.ebitda_eur_m||{}).p50)}), with ${num((P.outliers||{}).n)} outliers measured and left out.</li>
+          ${bt.point_in_time_tested?`<li><strong>Back-test:</strong> ${num(bt.point_in_time_actionable)} of ${num(bt.point_in_time_tested)} testable Cinven UK entries sat on an ownership route the screener acts on, using the register as it stood before each deal.</li>`:''}
+          ${qa.pdf_checked?`<li><strong>Scanned accounts:</strong> a second model re-read ${num(qa.pdf_checked)} of them; turnover matched on ${pts(qa.pdf_turnover_within_2pct)}% and operating profit on ${pts(qa.pdf_op_within_2pct)}%.</li>`:''}
+          ${qa.exclusions!=null?`<li><strong>Manual review:</strong> every ranked company was read against its register entry and website; ${num(qa.exclusions)} were excluded with reasons shown on their pages.</li>`:''}</ul>
+          <p class="small"><a href="#methods-limitations">Limitations</a> are listed in full on the Methods view.</p></div>
+      </div>
+      <div class="stack">
+        <div class="block" style="margin-block:0"><h3>Top of the List</h3>
+          <div class="tlist">${top.map(r=>`<a class="titem" href="#c-${esc(r.company_number)}"><span class="tn"><strong>${esc(r.disp)}</strong><span class="tag band">Rank ${r.rank}</span></span><span class="tm">${esc([SECTOR[r.vertical]||'', r.sub_vertical?cap(r.sub_vertical):'', ROUTE[r.route]||''].filter(Boolean).join(' · '))}</span></a>`).join('')}</div>
+          <div class="toolbar"><a class="btn" href="#ranked">See All ${num(R.length)}</a></div></div>
+        <div class="block" style="margin-block:0"><h3>The Views</h3>
+          <div class="kv">${views.map(([h,l,d])=>`<div class="k"><a href="#${h}">${l}</a></div><div class="small">${esc(d)}</div>`).join('')}</div></div>
+        <div class="block" style="margin-block:0"><h3>Reading the Labels</h3><ul>
+          <li><strong>Strategic Fund band:</strong> EBITDA ${gbp(T.ebitda_early_floor_gbp)}${DASH}${gbp(T.ebitda_target_min_gbp)}, the range of Cinven's mid-market fund.</li>
+          <li><strong>Flagship band:</strong> EBITDA ${gbp(T.ebitda_target_min_gbp)}${DASH}${gbp(T.ebitda_target_max_gbp)}, the range of the main fund.</li>
+          <li><strong>PDF read:</strong> figures a model read from scanned accounts, flagged wherever they appear.</li>
+          <li><strong>Why Now:</strong> dated timing signals such as a sponsor late in its hold or an owner aged 60 or more. They never feed either score.</li></ul></div>
+      </div>
+    </div>`;
 }
 
 // ------------------------------------------------------------ calibration
@@ -909,7 +971,7 @@ function methods(tab){
       ${L(3, 'The PSC Register Shows 25% Bands', 'The register records control in three bands: 25 to 50%, 50 to 75% and 75 to 100%. The individuals’ share on each page is the midpoint of the bands held, so 87.5% is a band midpoint and the true stake sits anywhere inside it.', 'Each band is shown verbatim in the PSC table beside the midpoint.', 'The confirmation statement, which lists shareholdings for private companies.')}
       ${L(4, 'Sponsor Hold Is Measured From the Notification Date', 'Hold years count from the date the sponsor’s vehicle was notified as a person with significant control. A fund that bought through an earlier vehicle, or that filed late, looks younger in the hold than it is.', 'The notification date is shown beside the hold figure, and the ceased PSC rows show earlier owners.', 'Deal announcements matched to each sponsor-owned company.')}
       ${L(5, 'Group Heads Collapse Subsidiaries', 'Acquisition vehicles and subsidiaries collapse onto the top UK company that files group accounts. A trading subsidiary is counted once, under its head, and the UK head of a foreign group appears as a UK company.', 'The holding chain is drawn on every company page, and a warning appears when the website describes a head office outside the UK.', 'A read of the ultimate parent from the group accounts note.')}
-      ${L(6, 'The Rubric Is a Model’s Reading of Marketing Copy', `Eight of the ten dimensions are scored by a language model from the company website. Marketing copy flatters, and the model scores what it is shown. ${pts(mm.subscores_rule_pct)}% of sub-scores are rule-scored from the filed accounts; the rest are read from the website.`, 'Each score carries a quote, a page link, a confidence and a rationale. Rule-scored dimensions carry a badge. Investment Quality turns grey when two or more dimensions have no score.', 'A second model scoring the same pages, with agreement measured, and a human read of the top twenty.')}
+      ${L(6, 'The Rubric Is a Model’s Reading of Marketing Copy', `Eight of the ten dimensions are scored by a language model from the company website. Marketing copy flatters, and the model scores what it is shown. Ranked companies are scored by the stricter of two models (Claude Sonnet); comparables keep the faster model's scores, which ran about nine points higher on a blind sample, so a comparable's score is not on the same scale as a ranked company's. ${pts(mm.subscores_rule_pct)}% of sub-scores are rule-scored from the filed accounts; the rest are read from the website.`, 'Each score carries a quote, a page link, a confidence and a rationale. Rule-scored dimensions carry a badge. Investment Quality turns grey when two or more dimensions have no score.', 'A second model scoring the same pages, with agreement measured, and a human read of the top twenty.')}
       ${L(7, 'Calibration Rests on 35 Entries', `The entry profile comes from ${num((D.docs.cv_pattern||{}).core ? D.docs.cv_pattern.core.n : 35)} flagship platform entries since 2015, with ${num((D.docs.cv_pattern||{}).outliers ? D.docs.cv_pattern.outliers.n : 20)} outliers excluded: US-led deals, club mega-deals, minority stakes and fund-to-fund transfers. Quartiles on a sample this size move with a single deal.`, 'The outliers are listed with the reason for each exclusion, and the distribution with outliers included is shown for contrast.', 'EBITDA at entry for more of the 35, from lender presentations and press.')}
       ${L(8, 'Equity Cheques Are Undisclosed', 'Cinven publishes enterprise values for some deals and equity for almost none. The stated minimum equity ticket is €200M. The bands rest on EBITDA and turnover from the filed accounts and cannot say what a given company would cost.', `Two EBITDA bands, ${gbp(T.ebitda_early_floor_gbp)}${DASH}${gbp(T.ebitda_target_min_gbp)} and ${gbp(T.ebitda_target_min_gbp)}${DASH}${gbp(T.ebitda_target_max_gbp)}, mark the strategic and flagship ranges.`, 'Entry multiples by sector from comparable public deals.')}
       ${L(9, 'Hiring and Theme Passes Have Not Run', `Open roles are ${inScope.some(r=>r.open_roles!=null)?'read for some companies':'not read in this build'}, and the theme pass has ${(D.themes||[]).length?'matched '+num(D.themes.length)+' sentences':'produced no matches yet'}. The Website and Hiring block and the Themes view show their empty states.`, 'Careers pages and job boards were identified for ' + num(inScope.filter(r=>D.companies[r.company_number].website && D.companies[r.company_number].website.careers_url).length) + ' companies.', 'A job board read for every ranked company and a theme pass over every fetched page.')}`;
@@ -967,7 +1029,7 @@ function qaCard(q){
     ['Unit and period errors', q.pdf_unit_errors!=null ? `${num(q.pdf_unit_errors)} unit errors; period end agrees on ${pts(q.pdf_period_agree)}%` : null],
     ['Sector labels re-checked', q.labels_checked!=null ? `${num(q.labels_checked)} companies; ${pts(q.label_agreement_pct)}% agree` : null, q.label_method],
     ['Rubric sub-scores re-scored', q.subscores_checked!=null ? `${num(q.subscores_checked)} sub-scores; ${pts(q.subscore_within_one_pct)}% within one point, ${pts(q.subscore_exact_pct)}% exact` : null, q.subscore_method],
-    ['Investment Quality gap', q.iq_gap_mean!=null ? `${pts(q.iq_gap_mean)} points on average (pipeline minus checker)` : null],
+    ['Investment Quality gap', q.iq_gap_mean!=null ? `${pts(q.iq_gap_mean)} points on average, faster model minus stricter model` : null, 'ranked companies have since been re-scored with the stricter model'],
     ['Top 30 hand review', q.top30_reviewed!=null ? `${num(q.top30_reviewed)} reviewed; ${num(q.exclusions||0)} excluded with reasons in overrides.yaml` : null, q.exclusion_reasons ? Object.entries(q.exclusion_reasons).map(([k,v])=>`${k} ${v}`).join(', ') : null],
   ])}<p class="hint" style="margin-top:.5rem">Checked ${esc(date(q.computed_at))}. The checker model is ${esc(q.checker_model||'a second model')}, never used for the pipeline's own scores.</p></div>`;
 }
@@ -1006,11 +1068,11 @@ function coverageBlock(c){
 // ------------------------------------------------------------ shortlist
 function shortlistView(){
   const rows = [...shortlist].map(n=>RANK[n]).filter(Boolean).sort((a,b)=>(b.durability_score??-1)-(a.durability_score??-1));
-  const text = rows.map(r=>`${cname(r.name)} (company ${r.company_number}) · ${tc(r.post_town||'')} · ${SECTOR[r.vertical]||''}, ${r.sub_vertical||''} · ${ROUTE[r.route]||''} · EBITDA ${gbp(r.ebitda_proxy)} · turnover ${gbp(r.latest_turnover)} · Investment Quality ${pts(r.durability_score)} · Entry Fit ${pts(r.fit_score)} · ${bandLabel(r.size_fit)}${notes[r.company_number]?' · notes: '+notes[r.company_number].replace(/\s+/g,' '):''}`).join('\n');
+  const text = rows.map(r=>`${r.disp} (company ${r.company_number}) · ${tc(r.post_town||'')} · ${SECTOR[r.vertical]||''}, ${r.sub_vertical||''} · ${ROUTE[r.route]||''} · EBITDA ${gbp(r.ebitda_proxy)} · turnover ${gbp(r.latest_turnover)} · Investment Quality ${pts(r.durability_score)} · Entry Fit ${pts(r.fit_score)} · ${bandLabel(r.size_fit)}${notes[r.company_number]?' · notes: '+notes[r.company_number].replace(/\s+/g,' '):''}`).join('\n');
   main.innerHTML = `<span class="eyebrow">Shortlist</span><h1>Companies You Starred</h1>
     <p class="lead">Stars and notes are saved in this browser only. Copy the list into a message or a CRM, or open a company for its brief and outreach draft.</p>
     ${rows.length ? `<div class="toolbar"><button class="btn" id="s-copy" type="button">Copy as Text</button><button class="btn secondary" id="s-briefs" type="button">Copy All Briefs</button><button class="btn readmore" id="s-clear" type="button">Clear Shortlist</button></div>
-    <div class="tablewrap"><table><thead><tr><th></th><th>Company</th><th>Sector</th><th>Route</th><th>Size Band</th><th class="r">EBITDA (£M)</th><th class="r">Turnover (£M)</th><th class="r">Investment Quality (0–100)</th><th class="r">Entry Fit (0–100)</th><th>Notes</th></tr></thead><tbody>${rows.map(r=>`<tr class="row" data-n="${esc(r.company_number)}"><td><button class="star on" data-star="${esc(r.company_number)}" aria-label="Remove from shortlist">★</button></td><td><strong>${esc(cname(r.name))}</strong><span class="sub">${esc(tc(r.post_town||''))}${r.rank?` · rank ${r.rank}`:' · comparable'}</span></td><td>${sectorTag(r.vertical)}</td><td class="small">${esc(ROUTE[r.route]||'')}</td><td>${bandTag(r.size_fit)}</td><td class="r num">${mil(r.ebitda_proxy)}</td><td class="r num">${mil(r.latest_turnover)}</td><td class="r">${scoreCell(r.durability_score, r.grey)}</td><td class="r">${scoreCell(r.fit_score,false,'mid')}</td><td><textarea class="brief" style="min-height:60px;font-size:.82rem" data-note="${esc(r.company_number)}" placeholder="Private note">${esc(notes[r.company_number]||'')}</textarea></td></tr>`).join('')}</tbody></table></div>
+    <div class="tablewrap"><table><thead><tr><th></th><th>Company</th><th>Sector</th><th>Route</th><th>Size Band</th><th class="r">EBITDA (£M)</th><th class="r">Turnover (£M)</th><th class="r">Investment Quality (0–100)</th><th class="r">Entry Fit (0–100)</th><th>Notes</th></tr></thead><tbody>${rows.map(r=>`<tr class="row" data-n="${esc(r.company_number)}"><td><button class="star on" data-star="${esc(r.company_number)}" aria-label="Remove from shortlist">★</button></td><td><strong>${esc(r.disp)}</strong><span class="sub">${esc(tc(r.post_town||''))}${r.rank?` · rank ${r.rank}`:' · comparable'}</span></td><td>${sectorTag(r.vertical)}</td><td class="small">${esc(ROUTE[r.route]||'')}</td><td>${bandTag(r.size_fit)}</td><td class="r num">${mil(r.ebitda_proxy)}</td><td class="r num">${mil(r.latest_turnover)}</td><td class="r">${scoreCell(r.durability_score, r.grey)}</td><td class="r">${scoreCell(r.fit_score,false,'mid')}</td><td><textarea class="brief" style="min-height:60px;font-size:.82rem" data-note="${esc(r.company_number)}" placeholder="Private note">${esc(notes[r.company_number]||'')}</textarea></td></tr>`).join('')}</tbody></table></div>
     <h2>Side by Side</h2><p class="small">Rubric scores for each starred company. Hover a score for the rationale.</p>
     <div class="tablewrap"><table><thead><tr><th>Dimension</th>${rows.map(r=>`<th>${esc(shortName(r.name))}</th>`).join('')}</tr></thead><tbody>
       ${DIMS.map(k=>`<tr><td class="small">${k}. ${esc(DNAME(k))}</td>${rows.map(r=>{ const sc = (D.companies[r.company_number]||{scores:[]}).scores.find(x=>x.dimension===k)||{}; return `<td class="num" title="${esc(sc.rationale||'')}">${sc.score ?? DASH}<span class="sub">${esc(sc.confidence && sc.confidence!=='unscored' ? sc.confidence+' confidence' : '')}</span></td>`; }).join('')}</tr>`).join('')}

@@ -74,6 +74,12 @@ def main():
     numbers = scope["company_number"].to_list()
     drop = {"computed_at"}
     rankings = [{k: v for k, v in r.items() if k not in drop} for r in dicts(scope)]
+    tn = {r["company_number"]: r["trading_name"] for r in read_parquet("trading_names").to_dicts()} if parquet_exists("trading_names") else {}
+    deals = (yaml.safe_load((REPO / "overrides.yaml").read_text()) or {}).get("deals", {}) if (REPO / "overrides.yaml").exists() else {}
+    tn_fix = (yaml.safe_load((REPO / "overrides.yaml").read_text()) or {}).get("trading_names", {}) if (REPO / "overrides.yaml").exists() else {}
+    for r in rankings:
+        r["trading_name"] = tn_fix.get(r["company_number"]) or (tn.get(r["company_number"]) if len(tn.get(r["company_number"]) or "") >= 3 else None)
+        r["deal"] = deals.get(r["company_number"])
 
     def group(table, cols=None, limit=None, key="company_number"):
         if not parquet_exists(table):
@@ -141,6 +147,10 @@ def main():
         cdf = read_parquet_where("companies", "company_number", chain_numbers, ["company_number", "name", "inc_date", "account_category", "status", "category"])
         chain = {r["company_number"]: r for r in dicts(cdf)}
     companies = {}
+    team: dict = {}
+    if parquet_exists("team"):
+        for o in read_parquet("team").filter(pl.col("name").is_not_null()).drop("computed_at").to_dicts():
+            team.setdefault(o.pop("company_number"), []).append(o)
     officers: dict = {}
     if parquet_exists("officers"):
         for o in read_parquet("officers").drop("fetched_at").to_dicts():
@@ -148,7 +158,7 @@ def main():
     for r in rankings:
         n = r["company_number"]
         companies[n] = {"scores": scores.get(n, []), "why_now": why.get(n, []), "jobs": jobs.get(n, []), "website": web.get(n, {}),
-                        "accounts": accounts.get(n, []), "psc": psc.get(n, []), "officers": officers.get(n, [])}
+                        "accounts": accounts.get(n, []), "psc": psc.get(n, []), "officers": officers.get(n, []), "team": team.get(n, [])}
 
     themes = []
     if parquet_exists("themes"):

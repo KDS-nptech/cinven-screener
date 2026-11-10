@@ -58,6 +58,14 @@ target:
   ebitda_early_floor_gbp: 8000000          # at-scale gate: Strategic Fund band starts here
   ebitda_target_min_gbp: 30000000          # flagship band starts here (UK flagship entries: Kurt Geiger ~GBP 21M, JLA GBP 36M, True Potential GBP 42M, NPS GBP 74M EBITDA)
   ebitda_target_max_gbp: 300000000         # above this the deal is a mega-cap club deal (TK Elevator, STADA): outliers
+  # Sub-sectors that pass the rules but that Cinven has not bought in any of the 69 entries measured since 2015
+  # (docs/research/02a, 02b). Our judgment; these stay on the site as comparables with the reason shown.
+  rank_exclude_subsectors:
+    - {label: "motor retail", sic_prefixes: ["451", "4519"], pattern: "dealership|car dealer|vehicle dealer|motor retail"}
+    - {label: "fuel forecourts", sic_prefixes: ["4730"], pattern: "forecourt"}
+    - {label: "construction contracting and housebuilding", sic_prefixes: ["41", "421", "422", "429"], pattern: "housebuild|main contractor|construction (and|main|contract)|demolition|civils|building contractor|engineering and construction"}
+    - {label: "energy supply", sic_prefixes: ["351", "352"], pattern: "energy supplier|utilities management and"}
+    - {label: "commodity trading", sic_prefixes: [], pattern: "coffee trading|import/export|commodity trad"}
   strategic_fund_sectors: ["financial_services", "business_services", "tmt"]
 
 # Theme maps: every company in scope whose site uses a theme's vocabulary, whatever its route, so a sourcing team

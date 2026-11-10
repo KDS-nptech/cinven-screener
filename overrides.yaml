@@ -1,108 +1,178 @@
-# Hand review of the ranked list, 9 November 2026 (docs/qa/top30_review.md). Exclusions keep the company on
-# the site as a comparable with the reason shown; corrections replace a field the register got wrong.
-top30_reviewed: 112
+top30_reviewed: 127
 exclude:
-  - company_number: "06132144"
-    category: uk_arm_of_foreign_group
-    reason: "UK subsidiary of Vantage Data Centers, a US data centre platform; the PSC is DigitalBridge Group, Inc. and the accounts show no UK employees. The UK entity is not for sale on its own."
-  - company_number: "09516131"
-    category: not_a_buyout_business
-    reason: "Proprietary systematic trading firm; turnover is trading income and the partners' capital is the business."
-  - company_number: "00006400"
-    category: charity
-    reason: "The Girls' Day School Trust is a registered charity; the website found (schoolrecruiter.com) is a recruitment portal, not the trust's own site."
-  - company_number: "10238654"
-    category: unit_of_larger_group
-    reason: "Blick Rothenberg is one firm inside Azets (Hg and PAI); its accounts cover the firm only and the group is the asset."
-  - company_number: "06941589"
-    category: unit_of_larger_group
-    reason: "One printing plant of Walstead Group (Rutland Partners); the accounts cover the plant only."
-  - company_number: "04512575"
-    category: wrong_website
-    reason: "Wrong website: seasalt.com is an unrelated US food business. Seasalt Holdings is the Cornish clothing retailer, so the sector label and rubric read the wrong pages."
-  - company_number: "04134880"
-    category: recently_sold_by_cinven
-    reason: "NewDay was a Cinven and CVC company; KKR agreed to acquire its consumer credit business in September 2025 (cinven.com), which is why the register now shows KKR."
-  - company_number: "09415174"
-    category: not_a_buyout_business
-    reason: "XTX Markets is a proprietary market maker; turnover is trading income."
-  - company_number: "12832334"
-    category: not_a_buyout_business
-    reason: "XTX Markets trading entity; proprietary market maker."
-  - company_number: "03311531"
-    category: not_a_buyout_business
-    reason: "Winton is a quantitative hedge fund manager controlled by its founder; fee income rests on the funds' performance."
-  - company_number: "14124097"
-    category: not_a_buyout_business
-    reason: "Arini is a credit hedge fund manager founded in 2022; fee income rests on the funds' performance."
-  - company_number: "02036243"
-    category: unit_of_larger_group
-    reason: "Operating subsidiary of Jupiter Fund Management plc, a listed company; the register match on the word Fund is a false sponsor reading."
-  - company_number: "10710033"
-    category: figures_implausible
-    reason: "PDF read gives £359M turnover for a small advice firm; almost certainly a unit error in the filing or the read. Needs a manual check of the accounts."
-  - company_number: "06279650"
-    category: infrastructure_concession
-    reason: "AirTanker holds the RAF Voyager PFI concession (Equitix and partners); a contracted infrastructure asset."
-  - company_number: "02387216"
-    category: infrastructure_concession
-    reason: "Onpath Energy owns wind and solar generation for Brookfield; an infrastructure asset."
-  - company_number: "02551144"
-    category: uk_arm_of_foreign_group
-    reason: "UK arm of AllianceBernstein L.P., a US asset manager."
-  - company_number: "03105704"
-    category: uk_arm_of_foreign_group
-    reason: "UK arm of Hearst Networks, a US media joint venture."
-  - company_number: "05260268"
-    category: uk_arm_of_foreign_group
-    reason: "UK production arm of Vice Media."
-  - company_number: "05221898"
-    category: unit_of_larger_group
-    reason: "Love Productions is majority-owned by Sky; the register match on the word Ventures is Sky Ventures."
-  - company_number: "03941727"
-    category: not_a_buyout_business
-    reason: "Boutique equity manager controlled by its two founders; a key-person business."
-  - company_number: "02909193"
-    category: not_a_buyout_business
-    reason: "Egerton Capital is a founder-controlled hedge fund manager."
-  - company_number: "03000514"
-    category: not_a_buyout_business
-    reason: "Silchester is a founder-controlled long-only equity manager."
-  - company_number: "06015572"
-    category: wrong_website
-    reason: "Wrong website: mapp.com is Mapp Digital, a US marketing software company; MAPP Holdings is an unrelated UK business."
-  - company_number: "03925319"
-    category: wrong_website
-    reason: "The site found is a GlobalData marketing sub-brand, so the sector label describes one product line of the listed group."
-  - company_number: "07469777"
-    category: wrong_website
-    reason: "Wrong website: imperialhotels.com is a Thai hotel group; Imperial London Hotels is an unrelated family business."
-  - company_number: "06019739"
-    category: wrong_website
-    reason: "Wrong website: quartzinvest.be is a Belgian advisory firm."
-  - company_number: "01338135"
-    category: wrong_website
-    reason: "Wrong website: pgi.ae belongs to a Gulf company with a similar name."
-  - company_number: "07463960"
-    category: wrong_website
-    reason: "The site found is a flight simulation game; the turnover read does not fit it."
-  - company_number: "07015689"
-    category: wrong_website
-    reason: "The site found belongs to a consulting firm with similar initials."
-  - company_number: "03246086"
-    category: wrong_website
-    reason: "The site and sector label do not match a company of this size; needs a manual check."
-  - company_number: "01050970"
-    category: wrong_website
-    reason: "Wrong website: Newarthill is the Sir Robert McAlpine parent; the site found is Laing O'Rourke's."
-  - company_number: "04999927"
-    category: figures_implausible
-    reason: "£1.1B turnover read for a dried fruit business of ~£150M; the label (meat-free food) is also wrong."
+- company_number: '06132144'
+  category: uk_arm_of_foreign_group
+  reason: UK subsidiary of Vantage Data Centers, a US data centre platform; the PSC is DigitalBridge Group, Inc. and the accounts show no UK employees. The UK entity is not for sale on its own.
+- company_number: 09516131
+  category: not_a_buyout_business
+  reason: Proprietary systematic trading firm; turnover is trading income and the partners' capital is the business.
+- company_number: '00006400'
+  category: charity
+  reason: The Girls' Day School Trust is a registered charity; the website found (schoolrecruiter.com) is a recruitment portal, not the trust's own site.
+- company_number: '10238654'
+  category: unit_of_larger_group
+  reason: Blick Rothenberg is one firm inside Azets (Hg and PAI); its accounts cover the firm only and the group is the asset.
+- company_number: 06941589
+  category: unit_of_larger_group
+  reason: One printing plant of Walstead Group (Rutland Partners); the accounts cover the plant only.
+- company_number: '04512575'
+  category: wrong_website
+  reason: 'Wrong website: seasalt.com is an unrelated US food business. Seasalt Holdings is the Cornish clothing retailer, so the sector label and rubric read the wrong pages.'
+- company_number: 04134880
+  category: recently_sold_by_cinven
+  reason: NewDay was a Cinven and CVC company; KKR agreed to acquire its consumer credit business in September 2025 (cinven.com), which is why the register now shows KKR.
+- company_number: 09415174
+  category: not_a_buyout_business
+  reason: XTX Markets is a proprietary market maker; turnover is trading income.
+- company_number: '12832334'
+  category: not_a_buyout_business
+  reason: XTX Markets trading entity; proprietary market maker.
+- company_number: '03311531'
+  category: not_a_buyout_business
+  reason: Winton is a quantitative hedge fund manager controlled by its founder; fee income rests on the funds' performance.
+- company_number: '14124097'
+  category: not_a_buyout_business
+  reason: Arini is a credit hedge fund manager founded in 2022; fee income rests on the funds' performance.
+- company_number: '02036243'
+  category: unit_of_larger_group
+  reason: Operating subsidiary of Jupiter Fund Management plc, a listed company; the register match on the word Fund is a false sponsor reading.
+- company_number: '10710033'
+  category: figures_implausible
+  reason: PDF read gives £359M turnover for a small advice firm; almost certainly a unit error in the filing or the read. Needs a manual check of the accounts.
+- company_number: 06279650
+  category: infrastructure_concession
+  reason: AirTanker holds the RAF Voyager PFI concession (Equitix and partners); a contracted infrastructure asset.
+- company_number: 02387216
+  category: infrastructure_concession
+  reason: Onpath Energy owns wind and solar generation for Brookfield; an infrastructure asset.
+- company_number: '02551144'
+  category: uk_arm_of_foreign_group
+  reason: UK arm of AllianceBernstein L.P., a US asset manager.
+- company_number: '03105704'
+  category: uk_arm_of_foreign_group
+  reason: UK arm of Hearst Networks, a US media joint venture.
+- company_number: 05260268
+  category: uk_arm_of_foreign_group
+  reason: UK production arm of Vice Media.
+- company_number: 05221898
+  category: unit_of_larger_group
+  reason: Love Productions is majority-owned by Sky; the register match on the word Ventures is Sky Ventures.
+- company_number: 03941727
+  category: not_a_buyout_business
+  reason: Boutique equity manager controlled by its two founders; a key-person business.
+- company_number: 02909193
+  category: not_a_buyout_business
+  reason: Egerton Capital is a founder-controlled hedge fund manager.
+- company_number: '03000514'
+  category: not_a_buyout_business
+  reason: Silchester is a founder-controlled long-only equity manager.
+- company_number: '06015572'
+  category: wrong_website
+  reason: 'Wrong website: mapp.com is Mapp Digital, a US marketing software company; MAPP Holdings is an unrelated UK business.'
+- company_number: 03925319
+  category: wrong_website
+  reason: The site found is a GlobalData marketing sub-brand, so the sector label describes one product line of the listed group.
+- company_number: 07469777
+  category: wrong_website
+  reason: 'Wrong website: imperialhotels.com is a Thai hotel group; Imperial London Hotels is an unrelated family business.'
+- company_number: 06019739
+  category: wrong_website
+  reason: 'Wrong website: quartzinvest.be is a Belgian advisory firm.'
+- company_number: 01338135
+  category: wrong_website
+  reason: 'Wrong website: pgi.ae belongs to a Gulf company with a similar name.'
+- company_number: 07463960
+  category: wrong_website
+  reason: The site found is a flight simulation game; the turnover read does not fit it.
+- company_number: 07015689
+  category: wrong_website
+  reason: The site found belongs to a consulting firm with similar initials.
+- company_number: 03246086
+  category: wrong_website
+  reason: The site and sector label do not match a company of this size; needs a manual check.
+- company_number: 01050970
+  category: wrong_website
+  reason: 'Wrong website: Newarthill is the Sir Robert McAlpine parent; the site found is Laing O''Rourke''s.'
+- company_number: 04999927
+  category: figures_implausible
+  reason: £1.1B turnover read for a dried fruit business of ~£150M; the label (meat-free food) is also wrong.
+- company_number: 04099287
+  category: uk_arm_of_foreign_group
+  reason: Welcome Break is a subsidiary of Applegreen, an Irish roadside operator that bought a majority in 2018 and is itself majority-owned by Blackstone Infrastructure; it is a division of a trade owner.
+- company_number: '07265372'
+  category: operations_outside_uk
+  reason: IXcellerate's data centres are in Moscow; the UK company is a holding entity for Russian operations.
+- company_number: 00483844
+  category: not_a_buyout_business
+  reason: Broadland Properties is a family property and estates company; Hever Castle is one of its holdings.
+- company_number: 07403794
+  category: wrong_website
+  reason: 'Wrong website: Stoneacre Limited is the Stoneacre motor dealer group (turnover ~£1.4B); the site found belongs to a care home.'
+- company_number: '06703227'
+  category: uk_arm_of_foreign_group
+  reason: UK arm of Royal Sanders, a Dutch personal care manufacturer owned by 3i.
+- company_number: '10138375'
+  category: wrong_website
+  reason: The site found is a small communications agency; it does not fit a company with £313M of turnover. Needs a manual check.
 corrections:
-  "SC222302":
-    sponsor_names: ["Veritas Capital"]
-    hold_start: "2023-02-01"
-    note: "The register shows Charterhouse Nadia 5 Limited, a holding company that kept its name from Charterhouse's 2009 to 2012 ownership. Verisk sold Wood Mackenzie to Veritas Capital in February 2023 (press), so the sponsor and hold start are corrected by hand."
-  "04349805":
+  SC222302:
+    sponsor_names:
+    - Veritas Capital
+    hold_start: '2023-02-01'
+    note: The register shows Charterhouse Nadia 5 Limited, a holding company that kept its name from Charterhouse's 2009 to 2012 ownership. Verisk sold Wood Mackenzie to Veritas Capital in February 2023 (press), so the sponsor and hold start are corrected by hand.
+  04349805:
     name_match: true
-    note: "Woodthorpe Hall Garden Centres trades as British Garden Centres, so the website is the right one although it does not carry the legal name."
+    note: Woodthorpe Hall Garden Centres trades as British Garden Centres, so the website is the right one although it does not carry the legal name.
+  05754538:
+    sponsor_names:
+    - USS
+    - CVC
+    hold_start: '2015-12-04'
+    note: The register shows Moto Ventures Limited. USS bought Moto in October 2015 and sold 40% to CVC's Strategic Opportunities platform in December 2015 (cvc.com).
+  06856641:
+    sponsor_names:
+    - CBPE
+    hold_start: '2024-10-29'
+    note: The register shows Apollo 2024 Bidco Limited, a project name. CBPE invested in HealthNet Homecare in October 2024 (press).
+  '00053417':
+    route: founder_family
+    sponsor_names: []
+    hold_start: null
+    note: The register shows EOI Fire SARL, a Luxembourg holding company. The company's own governance page says EOI holds ~80% and is the Murray family's vehicle, so this is a family-controlled AIM-listed company with no sponsor.
+trading_names:
+  09523048: Pozitive Energy
+  00406954: Otter Controls
+deals:
+  '14553673':
+    summary: Queen's Park Equity invested in October 2024; terms undisclosed.
+    url: https://app.mergerlinks.com/transactions/2024-10-30-psychiatry-uk
+  05754538:
+    summary: USS bought Moto from a Macquarie-led group in October 2015 and sold 40% to CVC's long-hold Strategic Opportunities platform in December 2015; the two have joint control.
+    url: https://www.cvc.com/media/news/2015/2015-12-04-cvc-strategic-opportunities-fund-partners-with-uss-to-invest-in-moto/
+  '10800773':
+    summary: Apposite Capital bought a majority in July 2017 and has added more than a dozen bolt-ons since. Trade press has reported a sale process; unconfirmed.
+    url: https://www.privateequitywire.co.uk/apposite-capital-acquires-swanton-care-community-limited/
+  '14933280':
+    summary: Charme Capital Partners bought a majority from Livingbridge in June 2023; Livingbridge reinvested.
+    url: https://www.clearwatercf.com/experience/transactions/clearwater-advises-livingbridge-on-the-sale-of-bright-futures-to-charme-capital-partners/
+  06856641:
+    summary: CBPE invested in October 2024; terms undisclosed. Management had bought the company out of Lexon UK in 2021.
+    url: https://app.mergerlinks.com/transactions/2024-10-29-healthnet-homecare
+  '10113769':
+    summary: Synova invested £30M in the management buyout of Oakland Primecare in July 2016.
+    url: https://www.synova.pe/news/synova-backs-oakland-mbo
+  '07556525':
+    summary: 'Apollo took wagamama''s parent, The Restaurant Group, private in a deal announced in October 2023: £506M for the equity, an enterprise value of ~£701M, ~9x adjusted EBITDA. wagamama is one division of that group.'
+    url: https://www.restaurantonline.co.uk/Article/2023/10/12/Apollo-Group-acquires-The-Restaurant-Group-in-700m-deal
+  '03140521':
+    summary: Pollen Street Capital took Mattioli Woods private at 804p a share, £432M for the equity, announced in March 2024 and completed that September.
+    url: https://www.cityam.com/?p=2132800
+  '02677625':
+    summary: BGF invested £4.7M of growth capital in August 2018; trade press describes BGF as the majority owner since.
+    url: https://www.theconstructionindex.co.uk/news/view/bgf-investment-brings-molson-and-plantforce-back-together
+  '00053417':
+    summary: 'No sponsor: EOI Fire SARL, the Murray family''s holding company, has held ~80% for more than two decades.'
+    url: https://www.londonsecurity.org/about-us/corporate-governance
+  SC222302:
+    summary: Veritas Capital bought Wood Mackenzie from Verisk in February 2023.
+    url: null
